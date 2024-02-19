@@ -1,26 +1,26 @@
 body {
-    font-family: Arial, sans-serif; 
-    background-color: #f0f0f0; 
-    padding: 20px; 
+    font-family: Arial, sans-serif; /* Fuente utilizada para el texto */
+    background-color: #f0f0f0; /* Color de fondo del cuerpo de la página */
+    padding: 20px; /* Espaciado interno del cuerpo de la página */
 }
 
 h1 {
-    color: #fff; 
-    background-color: #333;
-    text-align: center; 
-    text-transform: uppercase; 
-    letter-spacing: 2px;
-    padding: 10px ; /* Añade un relleno interno */
-    border-radius: 8px; /* Añade bordes redondeados */
+    color: #fff; /* Color del texto del título */
+    background-color: #333; /* Color de fondo del título */
+    text-align: center; /* Alineación del texto al centro */
+    text-transform: uppercase; /* Transforma el texto a mayúsculas */
+    letter-spacing: 2px; /* Espacio entre las letras */
+    padding: 10px; /* Relleno interno del título */
+    border-radius: 8px; /* Bordes redondeados del título */
 }
 
 p {
-    color: #555;
-    line-height: 1.6;
+    color: #555; /* Color del texto de los párrafos */
+    line-height: 1.6; /* Altura de línea de los párrafos */
 }
 
 img {
-    display: block; 
-    margin: 0 auto;
-    border-radius: 8px; 
+    display: block; /* Muestra la imagen como un bloque */
+    margin: 0 auto; /* Centra la imagen horizontalmente */
+    border-radius: 8px; /* Bordes redondeados de la imagen */
 }
