@@ -1,0 +1,26 @@
+body {
+    font-family: Arial, sans-serif; 
+    background-color: #f0f0f0; 
+    padding: 20px; 
+}
+
+h1 {
+    color: #fff; 
+    background-color: #333;
+    text-align: center; 
+    text-transform: uppercase; 
+    letter-spacing: 2px;
+    padding: 10px ; /* Añade un relleno interno */
+    border-radius: 8px; /* Añade bordes redondeados */
+}
+
+p {
+    color: #555;
+    line-height: 1.6;
+}
+
+img {
+    display: block; 
+    margin: 0 auto;
+    border-radius: 8px; 
+}
