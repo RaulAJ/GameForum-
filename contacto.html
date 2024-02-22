@@ -1,12 +1,24 @@
 <!DOCTYPE html>
 <html lang="es">
-<link>
+<head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Formulario de contacto</title>
-    <link rel="stylesheet" href="css/estiloContacto.css"></link>
+    <link rel="stylesheet" href="css/estiloContacto.css">
+    <link rel="stylesheet" href="css/estiloNavegacion.css">
+
 </head>
 <body>
+    <nav class="navbar">
+        <ul class="nav-links">
+          <li><a href="index.html">Inicio</a></li>
+          <li><a href="bocetos.html">Bocetos</a></li>
+          <li><a href="detalles.html">Detalles</a></li>
+          <li><a href="miembros.html">Miembros</a></li>          
+          <li><a href="contacto.html">Contacto</a></li>
+        </ul>
+      </nav>
+    <h2>Formulario de contacto:</h2>
     <form action="mailto:destinatario@gmail.com" method="post">
         <label for="nombre">Nombre:</label>
         <input type="text" id="nombre" name="nombre" required>
@@ -17,13 +29,14 @@
         </div>
 
         <div id="campoEvaluacion">
-            <label for="motivo">Motivo de la consulta:</label>
-            <input type="radio" id="evaluacion" name="motivo" value="Evaluación">
-            <label for="evaluacion">Evaluación</label>
-            <input type="radio" id="sugerencias" name="motivo" value="Sugerencias">
-            <label for="sugerencias">Sugerencias</label>
-            <input type="radio" id="criticas" name="motivo" value="Críticas">
-            <label for="criticas">Críticas</label>   
+            <p>Motivo de la consulta:
+                <input type="radio" id="evaluacion" name="motivo" value="Evaluación">
+                <label for="evaluacion">Evaluación</label>
+                <input type="radio" id="sugerencias" name="motivo" value="Sugerencias">
+                <label for="sugerencias">Sugerencias</label>
+                <input type="radio" id="criticas" name="motivo" value="Críticas">
+                <label for="criticas">Críticas</label>  
+            </p> 
         </div>
 
         <div id="campoPolitica">
