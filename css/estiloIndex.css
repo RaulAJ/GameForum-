@@ -1,14 +1,3 @@
-
-h1 {
-    color: #fff; /* Color del texto del título */
-    background-color: #333; /* Color de fondo del título */
-    text-align: center; /* Alineación del texto al centro */
-    text-transform: uppercase; /* Transforma el texto a mayúsculas */
-    letter-spacing: 2px; /* Espacio entre las letras */
-    padding: 10px; /* Relleno interno del título */
-    border-radius: 8px; /* Bordes redondeados del título */
-}
-
 p {
     color: #555; /* Color del texto de los párrafos */
     line-height: 1.6; /* Altura de línea de los párrafos */
