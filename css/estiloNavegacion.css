@@ -1,0 +1,16 @@
+/* Remueve el padding y los bullets de la lista */
+.nav-links {
+    list-style: none;
+    padding: 0;
+  }
+  
+  /* Hace que cada elemento de la lista se muestre en línea */
+  .nav-links li {
+    display: inline;
+  }
+  
+  /* Para añadir algo de espacio entre los enlaces */
+  .nav-links li a {
+    margin-right: 10px; /* Añade espacio a la derecha de cada enlace */
+  }
+  
