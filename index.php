@@ -10,6 +10,8 @@
 <body>
     <?php
         require_once 'config.php';
+        require 'login.php';
+
     ?>
     <nav class="navbar">
         <ul class="nav-links">
@@ -28,6 +30,5 @@
     <p>Se podrán sugerir y dar de alta videojuegos por parte de usuarios registrados, de manera que esos sean luego los videojuegos que podrán ser valorados y criticados.</p>
     <p>Los tipos de usuarios que habrá serán usuarios no registrados, usuarios registrados, expertos, moderadores y administradores.</p>
     <img src="fotos/logo.jpg" alt="Foto del proyecto" width="350" height="250">
-    <?php require 'login.php' ?>
 </body>
 </html>

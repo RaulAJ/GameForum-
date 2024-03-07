@@ -10,3 +10,5 @@ $contenidoPrincipal=<<<EOS
 <h1>Acceso al sistema</h1>
 $htmlFormLogin
 EOS;
+
+require 'vistas/cabecera.php';
