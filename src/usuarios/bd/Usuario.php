@@ -8,8 +8,8 @@ class Usuario
     public static function login($nombreUsuario, $password)
     {
         $usuario = self::buscaUsuario($nombreUsuario);
-        if ($usuario && $usuario->compruebaPassword($password)) {
-            return true;
+        if ($usuario && $usuario->password == $password) { //$usuario->compruebaPassword($password)
+            return $usuario;
         }
         return false;
     }
@@ -24,7 +24,7 @@ class Usuario
     public static function buscaUsuario($nombreUsuario)
     {
         $conn = BD::getInstance()->getConexionBd();
-        $query = sprintf("SELECT * FROM usuarios U WHERE U.Usuario='%s'", $conn->real_escape_string($nombreUsuario));
+        $query = sprintf("SELECT * FROM usuarios  WHERE Usuario='%s'", $conn->real_escape_string($nombreUsuario));
         $rs = $conn->query($query);
         $result = false;
         if ($rs) {
@@ -206,6 +206,30 @@ class Usuario
     public function getNombreCompleto()
     {
         return $this->nombreCompleto;
+    }
+
+    public function getEdad()
+    {
+        return $this->edad;
+    }
+
+    public function getCorreo()
+    {
+        return $this->correo;
+    }
+
+    public function getExperto()
+    {
+        return $this->experto;
+    }
+
+    public function getAdmin()
+    {
+        return $this->admin;
+    }
+    public function getModerador()
+    {
+        return $this->moderador;
     }
 
     public function tieneRol($role)

@@ -34,7 +34,7 @@ $_SESSION['moderador'] = $usuario->moderador;
 
 
 $contenidoPrincipal=<<<EOS
-	<h1>Bienvenido {$_SESSION['nombre']}</h1>
+	<h1>Bienvenido {$_SESSION['usuario']}</h1>
 	<p>Usa el menú de la izquierda para navegar.</p>
 EOS;
 //cambiar en el futuro
