@@ -9,7 +9,7 @@ class Usuario
     {
         $usuario = self::buscaUsuario($nombreUsuario);
         if ($usuario && $usuario->compruebaPassword($password)) {
-            return self::cargaRoles($nombreUsuario);
+            return true;
         }
         return false;
     }
@@ -24,13 +24,13 @@ class Usuario
     public static function buscaUsuario($nombreUsuario)
     {
         $conn = BD::getInstance()->getConexionBd();
-        $query = sprintf("SELECT * FROM Usuarios U WHERE U.Usuario='%s'", $conn->real_escape_string($nombreUsuario));
+        $query = sprintf("SELECT * FROM usuarios U WHERE U.Usuario='%s'", $conn->real_escape_string($nombreUsuario));
         $rs = $conn->query($query);
         $result = false;
         if ($rs) {
             $fila = $rs->fetch_assoc();
             if ($fila) {
-                $result = new Usuario($fila['usuario'], $fila['contraseña'], $fila['nombre completo'], $fila['edad'], $fila['correo'], $fila['experto'], $fila['moderador'], $fila['admin']);
+                $result = new Usuario($fila['Usuario'], $fila['Contraseña'], $fila['Nombre Completo'], $fila['Edad'], $fila['Correo'], $fila['Experto'], $fila['Moderador'], $fila['Admin']);
             }
             $rs->free();
         } else {
@@ -105,7 +105,7 @@ class Usuario
         return $result;
     }
    
-    private static function insertaRoles($usuario)
+    /*private static function insertaRoles($usuario)
     {
         $conn = BD::getInstance()->getConexionBd();
         foreach($usuario->roles as $rol) {
@@ -119,7 +119,7 @@ class Usuario
             }
         }
         return $usuario;
-    }
+    }*/
     
     private static function actualiza($usuario)
     {
@@ -189,7 +189,7 @@ class Usuario
     {
         $this->nombreUsuario = $nombreUsuario;
         $this->password = $password;
-        $this->nombreCompleto = $nombre;
+        $this->nombreCompleto = $nombreCompleto;
         $this->edad = $edad;
         $this->correo = $correo;
         $this->experto = $experto;

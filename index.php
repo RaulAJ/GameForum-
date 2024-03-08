@@ -10,7 +10,7 @@
 <body>
     <?php
         require_once 'config.php';
-        require 'login.php';
+        require 'vistas/cabecera.php';
 
     ?>
     <nav class="navbar">

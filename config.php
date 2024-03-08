@@ -2,7 +2,7 @@
 /* */
 /* Parámetros de configuración de la aplicación */
 /* 
-CREATE USER 'ejercicio02'@'%' IDENTIFIED BY 'gameforum'; GRANT USAGE ON *.* TO 'gameforum'@'%' REQUIRE NONE WITH MAX_QUERIES_PER_HOUR 0 MAX_CONNECTIONS_PER_HOUR 0 MAX_UPDATES_PER_HOUR 0 MAX_USER_CONNECTIONS 0; CREATE DATABASE IF NOT EXISTS `gameforum` COLLATE utf8mb4_general_ci; GRANT ALL PRIVILEGES ON `gameforum`.* TO 'gameforum'@'%';
+CREATE USER 'gameforum'@'%' IDENTIFIED BY 'gameforum'; GRANT USAGE ON *.* TO 'gameforum'@'%' REQUIRE NONE WITH MAX_QUERIES_PER_HOUR 0 MAX_CONNECTIONS_PER_HOUR 0 MAX_UPDATES_PER_HOUR 0 MAX_USER_CONNECTIONS 0; CREATE DATABASE IF NOT EXISTS `gameforum` COLLATE utf8mb4_general_ci; GRANT ALL PRIVILEGES ON `gameforum`.* TO 'gameforum'@'%';
 */
 
 // Parámetros de configuración generales
