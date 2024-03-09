@@ -8,7 +8,7 @@ function saludo()
     if (estaLogado()) {
         $urlLogout = Utils::buildUrl('/logout.php');
         $html = <<<EOS
-        Bienvenido, {$_SESSION['nombre']} <a href="{$urlLogout}">(salir)</a>
+        Bienvenido, {$_SESSION['usuarioNombre']} <a href="{$urlLogout}">(salir)</a>
         EOS;
     } else {
         $urlLogin = Utils::buildUrl('/login.php');
@@ -20,10 +20,11 @@ function saludo()
     return $html;
 }
 
+//TODO
 function logout()
 {
     //Doble seguridad: unset + destroy
-    unset($_SESSION['idUsuario']);
+    unset($_SESSION['usuario']);
     unset($_SESSION['roles']);
     unset($_SESSION['nombre']);
     

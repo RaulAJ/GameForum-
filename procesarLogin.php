@@ -18,9 +18,7 @@ if (!$esValido) {
 		<p>El usuario o contraseña no son válidos.</p>
 		$htmlFormLogin
 	EOS;
-    ?>
-    <?= $contenidoPrincipal ?> 
-    <?php
+	require 'vistas/comun/layout.php';
 	exit();
 }
 
@@ -32,11 +30,35 @@ $_SESSION['correo'] = $usuario->correo;
 $_SESSION['admin'] = $usuario->admin;
 $_SESSION['moderador'] = $usuario->moderador;
 
+//DEBUG {
+$rolesUsuario = '';
+if ($_SESSION['admin']) {
+    $rolesUsuario .= 'Administrador, ';
+}
+if ($_SESSION['moderador']) {
+    $rolesUsuario .= 'Moderador, ';
+}
+if (!$_SESSION['admin'] && !$_SESSION['moderador']) { // Suponiendo que todos son al menos 'Usuario' si no son admin o moderador
+    $rolesUsuario .= 'Usuario, ';
+}
+$rolesUsuario = rtrim($rolesUsuario, ', ');
 
+$datosUsuario = <<<HTML
+<ul>
+    <li>Nombre de usuario: {$_SESSION['usuario']}</li>
+    <li>Nombre completo: {$_SESSION['usuarioNombre']}</li>
+    <li>Edad: {$_SESSION['edad']}</li>
+    <li>Experto: {$_SESSION['experto']}</li>
+    <li>Correo electrónico: {$_SESSION['correo']}</li>
+    <li>Rol: $rolesUsuario</li>
+</ul>
+HTML;	
+//}
 $contenidoPrincipal=<<<EOS
 	<h1>Bienvenido {$_SESSION['usuario']}</h1>
+	<p>Datos:</p>
+	$datosUsuario
 	<p>Usa el menú de la izquierda para navegar.</p>
 EOS;
-//cambiar en el futuro
-?>
-<?= $contenidoPrincipal ?> 
+
+require 'vistas/comun/layout.php';
