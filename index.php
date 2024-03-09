@@ -8,6 +8,11 @@
     <link rel="stylesheet" href="css/estiloNavegacion.css">
 </head>
 <body>
+    <?php
+        require_once 'config.php';
+        require 'vistas/cabecera.php';
+
+    ?>
     <nav class="navbar">
         <ul class="nav-links">
             <li><a href="index.html">Inicio</a></li>
