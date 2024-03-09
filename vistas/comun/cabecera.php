@@ -1,5 +1,6 @@
 <?php
 require_once 'vistas/helpers/usuarios.php';
+require_once 'vistas/helpers/juegos.php'
 ?>
 <!DOCTYPE html>
 <html lang="es">
@@ -14,6 +15,14 @@ require_once 'vistas/helpers/usuarios.php';
         <div class="container">
             <div class="logo">
                 <h1>GameForum!</h1>
+            </div>
+            <div class="topJuegosBtn">
+            <?php
+            //TODO: Comprobar si se puede hacer así
+            if (basename($_SERVER['PHP_SELF']) == 'topJuegos.php') {
+                    echo mostrarBotonAgregarJuego(); 
+                }
+            ?>
             </div>
             <div class="login">
                 <?= saludo() ?>

@@ -14,7 +14,7 @@ class Juego
     private $desarrollador;
     /** @var string El género del juego. */
     private $genero;
-    /** @var float La nota o calificación del juego. */
+    /** @var int La nota o calificación del juego. */
     private $nota;
     /** @var string Una breve descripción del juego. */
     private $descripcion;
@@ -29,7 +29,7 @@ class Juego
      * @param int $anioDeSalida El año de salida del juego.
      * @param string $desarrollador El desarrollador del juego.
      * @param string $genero El género del juego.
-     * @param float $nota La nota o calificación del juego.
+     * @param int $nota La nota o calificación del juego.
      * @param string $descripcion Una breve descripción del juego.
      */
     private function __construct($nombreJuego, $anioDeSalida, $desarrollador, $genero, $nota, $descripcion) {
@@ -109,6 +109,36 @@ class Juego
     private static function borra(Juego $juego)
     {
 
+    }
+
+     /**
+     * Obtiene los juegos ordenados por nota de mayor a menor.
+     *
+     * @return Juego[] Array de objetos Juego ordenados por nota.
+     */
+    public static function obtenerTopJuegos() {
+        $conn = BD::getInstance()->getConexionBd();
+        $query = "SELECT * FROM videojuegos ORDER BY Nota DESC";
+        $result = $conn->query($query);
+        
+        $juegos = [];
+        if ($result) {
+            while ($fila = $result->fetch_assoc()) {
+                $juegos[] = new Juego(
+                    $fila['Juego'],
+                    $fila['Año de salida'],
+                    $fila['Desarrollador'],
+                    $fila['Genero'],
+                    $fila['Nota'],
+                    $fila['Descripcion']
+                );
+            }
+            $result->free();
+        } else {
+            error_log("Error BD ({$conn->errno}): {$conn->error}");
+        }
+        
+        return $juegos;
     }
 
 }
