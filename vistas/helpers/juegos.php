@@ -37,26 +37,26 @@
         return '';
     }
 
-    function buildFormularioAgregarJuego() {
+     function buildFormularioAgregarJuego() {
         return <<<HTML
-        <form action="juegos/nuevoJuego.php" method="post">
+        <form class="formulario" action="juegos/nuevoJuego.php" method="post">
             <label for="titulo">Título del juego:</label>
-            <input type="text" id="titulo" name="titulo">
+            <input type="text" id="titulo" name="titulo" required>
             
             <label for="anioDeSalida">Año de Salida:</label>
-            <input type="number" id="anioDeSalida" name="anioDeSalida">
+            <input type="number" id="anioDeSalida" name="anioDeSalida" required>
             
             <label for="desarrollador">Desarrollador:</label>
-            <input type="text" id="desarrollador" name="desarrollador">
+            <input type="text" id="desarrollador" name="desarrollador" required>
             
             <label for="genero">Género:</label>
-            <input type="text" id="genero" name="genero">
+            <input type="text" id="genero" name="genero" required>
             
             <label for="nota">Nota:</label>
-            <input type="number" step="0.1" id="nota" name="nota">
+            <input type="number" step="0.1" id="nota" name="nota" required>
             
             <label for="descripcion">Descripción del juego:</label>
-            <textarea id="descripcion" name="descripcion"></textarea>
+            <textarea id="descripcion" name="descripcion" required></textarea>
             
             <input type="submit" value="Añadir videojuego">
         </form>
