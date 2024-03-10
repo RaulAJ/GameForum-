@@ -112,6 +112,7 @@ class Juego
         );
         $resultadoSugerencia = $conn->query($querySugerencia);
         $fila = $resultadoSugerencia->fetch_assoc();
+        $resultadoSugerencia->free();
 
         if ($fila['existe'] == 0) {
             // El juego no existe en sugerencias, insertar primero allí
@@ -162,7 +163,8 @@ class Juego
         );
         $resultadoVerificacion = $conn->query($queryVerificacion);
         $fila = $resultadoVerificacion->fetch_assoc();
-
+        $resultadoVerificacion->free(); 
+        
         if ($fila['cantidad'] > 0) {
             // Ya existe una sugerencia con este nombre, no insertar duplicados
             return false; 
