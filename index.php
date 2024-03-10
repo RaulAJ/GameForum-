@@ -1,4 +1,5 @@
 <<<<<<< HEAD
+<<<<<<< HEAD
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -29,6 +30,8 @@
 </body>
 </html>
 =======
+=======
+>>>>>>> ea54716cddd911ced1b0928408bcfc785dc7dd8c
 <?php
 
 require_once 'config.php';
@@ -39,5 +42,9 @@ $contenidoPrincipal=<<<EOS
 
 EOS;
 
+<<<<<<< HEAD
 require 'vistas/comun/layout.php';
 >>>>>>> jorge
+=======
+require 'vistas/comun/layout.php';
+>>>>>>> ea54716cddd911ced1b0928408bcfc785dc7dd8c
