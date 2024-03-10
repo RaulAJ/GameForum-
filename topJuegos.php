@@ -1,3 +1,4 @@
+<title>Top Juegos</title>
 <?php
 
 require_once 'config.php';
