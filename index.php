@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -27,3 +28,16 @@
     <img src="fotos/logo.jpg" alt="Foto del proyecto" width="350" height="250">
 </body>
 </html>
+=======
+<?php
+
+require_once 'config.php';
+
+$tituloPagina = 'GameForum!';
+
+$contenidoPrincipal=<<<EOS
+
+EOS;
+
+require 'vistas/comun/layout.php';
+>>>>>>> jorge
