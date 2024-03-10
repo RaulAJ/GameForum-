@@ -9,6 +9,12 @@ require_once '../src/juegos/bd/Juego.php';
 
 verificaLogado(Utils::buildUrl('/topJuegos.php'));
 
+if (!($_SESSION['admin'] || $_SESSION['moderador'] || $_SESSION['experto'])) {
+    // Si el usuario no tiene un rol permitido, redirige a topJuegos.php con un mensaje de error
+    Utils::redirige(Utils::buildUrl('/topJuegos.php', ['error' => 'noAutorizado']));
+    exit();
+}
+
 //Validar datos recibidos:
 $titulo = filter_input(INPUT_POST, 'titulo', FILTER_SANITIZE_SPECIAL_CHARS);
 $anioDeSalida = filter_input(INPUT_POST, 'anioDeSalida', FILTER_SANITIZE_NUMBER_INT);

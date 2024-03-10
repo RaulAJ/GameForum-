@@ -22,7 +22,7 @@ if ($titulo && $anioDeSalida && $desarrollador && $genero && $descripcion) {
     if ($exito) {
         Utils::redirige(Utils::buildUrl('/topJuegos.php', ['exitoSugerencia' => '1']));
     } else {
-        Utils::redirige(Utils::buildUrl('/topJuegos.php', ['errorSugerencia' => '1']));
+        Utils::redirige(Utils::buildUrl('/topJuegos.php', ['error' => 'errorSugerencia']));
     }
 } else {
     Utils::redirige(Utils::buildUrl('/topJuegos.php?accion=sugerirJuego', ['errorDatos' => 'datosInvalidos']));

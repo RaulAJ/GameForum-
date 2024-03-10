@@ -19,18 +19,24 @@ if (isset($_GET['exitoSugerencia'])) {
     $mensaje = '<div class="alerta exito">La sugerencia del juego ha sido enviada con éxito.</div>';
 }
 
-// Verificar si hay mensaje de error al añadir juegos
+// Verificar si hay mensaje de error
 if (isset($_GET['error'])) {
-    if ($_GET['error'] == '1') {
-        $mensaje = '<div class="alerta error">Hubo un error al añadir el juego.</div>';
-    } elseif ($_GET['error'] == 'datosInvalidos') {
-        $mensaje = '<div class="alerta error">Los datos proporcionados son inválidos.</div>';
+    switch ($_GET['error']) {
+        case '1': // al añadir juegos
+            $mensaje = '<div class="alerta error">Hubo un error al añadir el juego.</div>';
+            break;
+        case 'datosInvalidos':
+            $mensaje = '<div class="alerta error">Los datos proporcionados son inválidos.</div>';
+            break;
+        case 'errorSugerencia':
+            $mensaje = '<div class="alerta error">Hubo un error al enviar la sugerencia del juego. Es posible que el juego ya exista o que el juego ya haya sido sugerido anteriormente.</div>';
+            break;
+        case 'noAutorizado':
+            $mensaje = '<div class="alerta error">No tienes autorización para realizar esta acción.</div>';
+            break;
+        default:
+            break;
     }
-}
-
-// Verificar si hay mensaje de error en sugerencias
-if (isset($_GET['errorSugerencia'])) {
-    $mensaje = '<div class="alerta error">Hubo un error al enviar la sugerencia del juego. Es posible que el juego ya exista o que el juego ya haya sido sugerido anteriormente.</div>';
 }
 
 // Menú de ordenación
