@@ -33,8 +33,8 @@ require_once 'vistas/helpers/juegos.php'
     <nav>
         <div class="container">
             <ul>
-                <li><a href="#">Foro</a></li>
-                <li><a href="#">Noticias</a></li>
+                <li><a href="index.php">Foro</a></li>
+                <li><a href="index.php">Noticias</a></li>
                 <li><a href="topJuegos.php">Top Juegos</a></li>
 
                 <li class="spacer"></li><!-- Este elemento crea un espacio entre "Top Juegos" y el cuadro de búsqueda -->
