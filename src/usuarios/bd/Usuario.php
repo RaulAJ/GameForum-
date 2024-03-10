@@ -16,8 +16,7 @@ class Usuario
     
     public static function crea($nombreUsuario, $nombreCompleto, $edad, $correo, $password, $experto, $moderador, $admin)
     {
-        $user = new Usuario($nombreUsuario, self::hashPassword($password), $nombreCompleto, $edad, $correo, $experto, $moderador, $admin);
-        //$user->añadeRol($rol);
+        $user = new Usuario($nombreUsuario, $nombreCompleto, $edad, $correo, $password, $experto, $moderador, $admin);
         return $user->guarda();
     }
 
@@ -91,35 +90,27 @@ class Usuario
     {
         $result = false;
         $conn = BD::getInstance()->getConexionBd();
-        $query=sprintf("INSERT INTO Usuarios(nombreUsuario, nombre, password) VALUES ('%s', '%s', '%s')"
+        $query=sprintf("INSERT INTO Usuarios (Usuario, `Nombre Completo`, Edad, Correo, Contraseña, Experto, Moderador, Admin) 
+        VALUES ('%s', '%s', %d, '%s', '%s', %d, %d, %d)"
             , $conn->real_escape_string($usuario->nombreUsuario)
-            , $conn->real_escape_string($usuario->nombre)
+            , $conn->real_escape_string($usuario->nombreCompleto)
+            , $conn->real_escape_string($usuario->edad)
+            , $conn->real_escape_string($usuario->correo)
             , $conn->real_escape_string($usuario->password)
+            , $conn->real_escape_string($usuario->experto)
+            , $conn->real_escape_string($usuario->moderador)
+            , $conn->real_escape_string($usuario->admin)
         );
         if ( $conn->query($query) ) {
-            $usuario->id = $conn->insert_id;
-            $result = self::insertaRoles($usuario);
+            //$usuario->nombreUsuario = $conn->insert_id;
+            //$result = self::insertaRoles($usuario);
+            $result = true;
         } else {
             error_log("Error BD ({$conn->errno}): {$conn->error}");
         }
         return $result;
     }
-   
-    /*private static function insertaRoles($usuario)
-    {
-        $conn = BD::getInstance()->getConexionBd();
-        foreach($usuario->roles as $rol) {
-            $query = sprintf("INSERT INTO RolesUsuario(usuario, rol) VALUES (%d, %d)"
-                , $usuario->id
-                , $rol
-            );
-            if ( ! $conn->query($query) ) {
-                error_log("Error BD ({$conn->errno}): {$conn->error}");
-                return false;
-            }
-        }
-        return $usuario;
-    }*/
+
     
     private static function actualiza($usuario)
     {
@@ -132,10 +123,10 @@ class Usuario
             , $usuario->id
         );
         if ( $conn->query($query) ) {
-            $result = self::borraRoles($usuario);
+            /*$result = self::borraRoles($usuario);
             if ($result) {
                 $result = self::insertaRoles($usuario);
-            }
+            }*/
         } else {
             error_log("Error BD ({$conn->errno}): {$conn->error}");
         }
@@ -252,9 +243,6 @@ class Usuario
     
     public function guarda()
     {
-        if ($this->id !== null) {
-            return self::actualiza($this);
-        }
         return self::inserta($this);
     }
     
