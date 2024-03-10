@@ -53,16 +53,9 @@ session_start([
 	'cookie_path' => RUTA_APP, // Para evitar problemas si tenemos varias aplicaciones en htdocs
 ]);
 
-/* */
-/* Inicialización de las clases que simulan una BD en memoria */
-/*
-Usuario::init();
-Mensaje::init();
-*/
 
 /* */
 /* Clases que usan una BD para almacenar el estado */
 /* */
 require_once 'src/BD.php';
 require_once 'src/usuarios/bd/Usuario.php';
-//require_once 'src/mensajes/bd/Mensaje.php';

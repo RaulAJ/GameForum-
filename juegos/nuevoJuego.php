@@ -18,7 +18,6 @@ $nota = filter_input(INPUT_POST, 'nota', FILTER_VALIDATE_FLOAT);
 $descripcion = filter_input(INPUT_POST, 'descripcion', FILTER_SANITIZE_SPECIAL_CHARS);
 
 // Crear y guardar el juego si todos los datos son válidos
-//TODO: Aun falta comprobar y evitar que se agreguen juegos con el mismo nombre (datos exactos), resultando en duplicados
 if ($titulo && $anioDeSalida && $desarrollador && $genero && $nota !== false && $descripcion) {
     $juego = Juego::crea($titulo, $anioDeSalida, $desarrollador, $genero, $nota, $descripcion);
     

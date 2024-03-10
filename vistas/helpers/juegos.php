@@ -3,7 +3,6 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Título de tu página</title>
     <link rel="stylesheet" href="css/juegos.css">
 </head>
 <body>
@@ -67,31 +66,52 @@
         return <<<HTML
         <form action="juegos/procesarSugerirJuego.php" method="post">
             <label for="titulo">Título del juego:</label>
-            <input type="text" id="titulo" name="titulo">
+            <input type="text" id="titulo" name="titulo" required>
+            
+            <label for="anioDeSalida">Año de Salida:</label>
+            <input type="number" id="anioDeSalida" name="anioDeSalida" required>
+            
+            <label for="desarrollador">Desarrollador:</label>
+            <input type="text" id="desarrollador" name="desarrollador" required>
+            
+            <label for="genero">Género:</label>
+            <input type="text" id="genero" name="genero" required>
             
             <label for="descripcion">Descripción del juego:</label>
-            <textarea id="descripcion" name="descripcion"></textarea>
+            <textarea id="descripcion" name="descripcion" required></textarea>
             
             <input type="submit" value="Sugerir videojuego">
         </form>
         HTML;
     }
 
-    //TODO: Lista juegos
-    function listaJuegos() {
-        $juegos = Juego::obtenerTopJuegos(); // Obtiene los juegos
-        $listaHtml = '<div class="lista-juegos">';
-        
-        $posicion = 1; // Variable para almacenar la posición del juego
-        foreach ($juegos as $juego) {
-            $listaHtml .= "<div class=\"juego\">
-                <div class=\"posicion-juego\">Top $posicion</div>
-                <div class=\"nombre-juego\">{$juego->getNombreJuego()}</div>
-                <div class=\"nota-juego\">{$juego->getNota()}</div>
-            </div>";
-            $posicion++; // Incrementa la posición para el siguiente juego
+    function listaJuegos($orden = 'notaDesc') {
+        switch ($orden) {
+            case 'notaAsc':
+                $juegos = Juego::obtenerJuegosPorNotaAscendente();
+                break;
+            case 'anioAsc':
+                $juegos = Juego::obtenerJuegosPorAnioAscendente();
+                break;
+            case 'anioDesc':
+                $juegos = Juego::obtenerJuegosPorAnioDescendente();
+                break;
+            default: // 'notaDesc'
+                $juegos = Juego::obtenerTopJuegos();
+                break;
         }
-        
+
+        $listaHtml = '<div class="lista-juegos">';
+        $posicion = 1;
+        foreach ($juegos as $juego) {
+            $nombreYAnio = htmlspecialchars($juego->getNombreJuego()) . ' (' . htmlspecialchars($juego->getAnioDeSalida()) . ')';
+            $listaHtml .= "<div class=\"juego\">
+            <div class=\"posicion-juego\">Top $posicion</div>
+            <div class=\"nombre-juego\">$nombreYAnio</div>
+            <div class=\"nota-juego\">{$juego->getNota()}</div>
+        </div>";
+            $posicion++;
+        }
         $listaHtml .= '</div>';
         return $listaHtml;
     }

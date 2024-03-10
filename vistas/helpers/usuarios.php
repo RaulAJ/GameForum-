@@ -20,14 +20,20 @@ function saludo()
     return $html;
 }
 
-//TODO
 function logout()
 {
+    if (session_status() == PHP_SESSION_NONE) {
+        session_start();
+    }
     //Doble seguridad: unset + destroy
     unset($_SESSION['usuario']);
-    unset($_SESSION['roles']);
-    unset($_SESSION['nombre']);
-    
+    unset($_SESSION['usuarioNombre']);
+    unset($_SESSION['edad']);
+    unset($_SESSION['experto']);
+    unset($_SESSION['correo']);
+    unset($_SESSION['admin']);
+    unset($_SESSION['moderador']);
+
     session_destroy();
     session_start();
 }

@@ -18,7 +18,6 @@ require_once 'vistas/helpers/juegos.php'
             </div>
             <div class="topJuegosBtn">
             <?php
-            //TODO: Comprobar si se puede hacer así
             if (basename($_SERVER['PHP_SELF']) == 'topJuegos.php') {
                     echo mostrarBotonAgregarJuego(); 
                 }
@@ -45,8 +44,6 @@ require_once 'vistas/helpers/juegos.php'
             </ul>
         </div>
     </nav>
-
-    <!-- El resto del contenido de tu página va aquí -->
 
 </body>
 </html>
