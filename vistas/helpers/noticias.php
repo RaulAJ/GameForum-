@@ -37,7 +37,7 @@ function listaNoticias(){ //cambiar br's por lineas o algo
         foreach ($noticias as $noticia) {
             $nombreYFecha = htmlspecialchars($noticia->getTitulo()) . ' (' . htmlspecialchars($noticia->getFecha()) . ')';
             $listaHtml .= "<div class=\"noticia\">
-            <div class=\"titulo-noticia\">$nombreYFecha</div>
+            <h3 class=\"titulo-noticia\">$nombreYFecha</h3>
             <div class=\"contenido-noticia\">{$noticia->getContenido()}</div><br><br>
         </div>";
         }
