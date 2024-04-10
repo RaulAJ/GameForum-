@@ -1,0 +1,46 @@
+.lista-noticias {
+    display: grid;
+    gap: 20px;
+}
+
+.noticia {
+    border: 1px solid #ccc;
+    padding: 20px;
+    margin-bottom: 20px; /* Márgenes entre las noticias */
+    border-radius: 10px; /* Bordes redondeados */
+}
+
+.noticia {
+    display: grid;
+    border: 1px solid #828282;
+    padding: 20px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Sombra suave */
+    margin-left: 20px; /* Margen izquierdo */
+    margin-right: 20px; /* Margen derecho */
+    margin-bottom: 20px; /* Márgenes entre las noticias */
+    border-radius: 10px; /* Bordes redondeados */
+    grid-template-areas:
+    'titulo titulo titulo titulo titulo fecha'
+    'contenido contenido contenido contenido contenido contenido'
+    ' . . . . . usuario'
+}
+
+.titulo-noticia {
+    grid-area: titulo;
+    font-size: 3ex;
+}
+
+.fecha-noticia{
+    grid-area: fecha;
+    text-align: right;
+}
+
+.usuario-noticia {
+    grid-area: usuario;
+    text-align: right
+}
+
+.contenido-noticia {
+    grid-area: contenido;
+    text-align: left;
+}
