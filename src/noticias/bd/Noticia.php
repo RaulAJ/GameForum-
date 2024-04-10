@@ -113,6 +113,30 @@ class Noticia {
         return $noticias;
     }
 
+    public function borrate()
+    {
+        if ($this->id !== null) {
+            return self::borraNoticia($this->id);
+        }
+        return false;
+    }
+
+    private static function borraNoticia($id)
+    {
+        $conn = BD::getInstance()->getConexionBd();
+        if (!$conn) {
+            return false;
+        }
+
+        $query = sprintf("DELETE FROM noticias WHERE ID = %d", $id);
+
+        if ($conn->query($query)) {
+            return true;
+        } else {
+            error_log("Error al borrar la noticia ({$conn->errno}): {$conn->error}");
+            return false;
+        }
+    }
     // Métodos para obtener y establecer los valores de los atributos
     public function getId() {
         return $this->id;
