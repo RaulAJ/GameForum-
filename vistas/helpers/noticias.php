@@ -30,7 +30,7 @@
     function mostrarBotonAgregarNoticia() {
         if (estaLogado()) {
             if ($_SESSION['admin'] || $_SESSION['moderador'] || $_SESSION['experto']) {
-                return '<a href="noticias.php?accion=agregarNoticia" class="button">Redactar Noticia</a>';
+                return '<a href="noticias.php?accion=agregarNoticia" class="noticia-button">Redactar Noticia</a>';
             } 
         }
         return '';
@@ -54,7 +54,8 @@
                         <p class=\"fecha-noticia\">$fecha</p>
                         <p class=\"usuario-noticia\">Escrita por: $usuario </p>
                         <div class=\"contenido-noticia\">{$noticia->getContenido()}</div>
-                        <a href='noticias/borrarNoticia.php?id=$id' class='button'>Borrar</a>
+
+                        <p><a href='noticias/borrarNoticia.php?id=$id' class='borrar-button'>Borrar</a></p>
                         <br><br>
                         </div>";
                     }

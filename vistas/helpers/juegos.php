@@ -7,9 +7,9 @@ require_once 'autorizacion.php';
 function mostrarBotonAgregarJuego() {
     if (estaLogado()) {
         if ($_SESSION['admin'] || $_SESSION['moderador'] || $_SESSION['experto']) {
-            return '<a href="topJuegos.php?accion=agregarJuego" class="button">Añadir Juego</a>';
+            return '<a href="topJuegos.php?accion=agregarJuego" class="juego-button">Añadir Juego</a>';
         } else {
-            return '<a href="topJuegos.php?accion=sugerirJuego" class="button">Sugerir Juego</a>';
+            return '<a href="topJuegos.php?accion=sugerirJuego" class="juego-button">Sugerir Juego</a>';
         }
     }
     return '';

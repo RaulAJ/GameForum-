@@ -69,7 +69,7 @@
     color: #009688; /* Color de la nota */
 }
 
-.button {
+.juego-button {
     display: inline-block;
     padding: 15px 30px; /* Aumentar el padding para hacer el botón más grande */
     font-size: 20px; /* Aumentar el tamaño del texto del botón */
@@ -80,7 +80,7 @@
     text-decoration: none; /* Quitar subrayado del enlace */
 }
 
-.button:hover {
+.juego-button:hover {
     background-color: #4caf4fbc; /* Cambiar color de fondo al pasar el mouse */
     border-color: #4caf4fbc; /* Cambiar color del borde al pasar el mouse */
 }
