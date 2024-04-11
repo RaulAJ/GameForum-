@@ -14,13 +14,13 @@ if (!($_SESSION['admin'] || $_SESSION['moderador'] || $_SESSION['experto'])) {
 
 // Sanitizar y obtener valores de cada campo del formulario
 $titulo = filter_input(INPUT_POST, 'titulo', FILTER_SANITIZE_SPECIAL_CHARS);
-$usuario = filter_input(INPUT_POST, 'usuario', FILTER_SANITIZE_SPECIAL_CHARS);
+//$usuario = filter_input(INPUT_POST, 'usuario', FILTER_SANITIZE_SPECIAL_CHARS);
 $fecha = filter_input(INPUT_POST, 'fecha', FILTER_SANITIZE_SPECIAL_CHARS);
 $contenido = filter_input(INPUT_POST, 'contenido', FILTER_SANITIZE_SPECIAL_CHARS);
 
 
-if($titulo && $usuario && $fecha && $contenido){
-    $noticia = Noticia::crea($titulo, $usuario, $fecha, $contenido);
+if($titulo && $fecha && $contenido){
+    $noticia = Noticia::crea($titulo, idUsuarioLogado(), $fecha, $contenido);
 
     if($noticia){
         Utils::redirige(Utils::buildUrl('/noticias.php', ['exito' => '1']));
