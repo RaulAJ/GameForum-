@@ -1,17 +1,10 @@
-<!DOCTYPE html>
-<html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="css/noticias.css">
-</head>
-<body>
-
-
-    <?php
-    require_once 'autorizacion.php'; 
-    function buildFormularioNoticia() {
-        return <<<HTML
+<?php
+// Link CSS
+echo '<link rel="stylesheet" href="css/noticias.css">';
+require_once 'autorizacion.php';
+function buildFormularioNoticia()
+{
+    return <<<HTML
         <form class="formulario" action="noticias/procesarNoticia.php" method="post">
             <label for="titulo">Título:</label>
             <input type="text" id="titulo" name="titulo" required>
@@ -25,31 +18,32 @@
             <input type="submit" value="Enviar">
         </form>
         HTML;
-    }
+}
 
-    function mostrarBotonAgregarNoticia() {
-        if (estaLogado()) {
-            if ($_SESSION['admin'] || $_SESSION['moderador'] || $_SESSION['experto']) {
-                return '<a href="noticias.php?accion=agregarNoticia" class="noticia-button">Redactar Noticia</a>';
-            } 
+function mostrarBotonAgregarNoticia()
+{
+    if (estaLogado()) {
+        if ($_SESSION['admin'] || $_SESSION['moderador'] || $_SESSION['experto']) {
+            return '<a href="noticias.php?accion=agregarNoticia" class="noticia-button">Redactar Noticia</a>';
         }
-        return '';
     }
+    return '';
+}
 
+function listaNoticias()
+{
+    $noticias = Noticia::obtenerNoticias();
 
-    function listaNoticias(){ //cambiar br's por lineas o algo
-        $noticias = Noticia::obtenerNoticias();
+    $listaHtml = '<div class="lista-noticias">';
+    foreach ($noticias as $noticia) {
+        $nombre = htmlspecialchars($noticia->getTitulo());
+        $fecha = htmlspecialchars($noticia->getFecha());
+        $usuario = htmlspecialchars($noticia->getUsuario());
+        $id = $noticia->getId();
 
-        $listaHtml = '<div class="lista-noticias">';
-            foreach ($noticias as $noticia) {
-                $nombre = htmlspecialchars($noticia->getTitulo());
-                $fecha = htmlspecialchars($noticia->getFecha());
-                $usuario = htmlspecialchars($noticia->getUsuario());
-                $id = $noticia->getId();
-            
-                if(estaLogado()){
-                    if(esMismoUsuario($usuario) || $_SESSION['admin'] || $_SESSION['moderador']){
-                        $listaHtml .= "<div class=\"noticia\">
+        if (estaLogado()) {
+            if (esMismoUsuario($usuario) || $_SESSION['admin'] || $_SESSION['moderador']) {
+                $listaHtml .= "<div class=\"noticia\">
                         <h3 class=\"titulo-noticia\">$nombre</h3>
                         <p class=\"fecha-noticia\">$fecha</p>
                         <p class=\"usuario-noticia\">Escrita por: $usuario </p>
@@ -58,21 +52,16 @@
                         <p><a href='noticias/borrarNoticia.php?id=$id' class='borrar-button'>Borrar</a></p>
                         <br><br>
                         </div>";
-                    }
-                }
-                else{
-                    $listaHtml .= "<div class=\"noticia\">
+            }
+        } else {
+            $listaHtml .= "<div class=\"noticia\">
                     <h3 class=\"titulo-noticia\">$nombre</h3>
                     <p class=\"fecha-noticia\">$fecha</p>
                     <p class=\"usuario-noticia\">Escrita por: $usuario</p>
                     <div class=\"contenido-noticia\">{$noticia->getContenido()}</div><br><br>
                     </div>";
-                }
-            }
-            $listaHtml .= '</div>';
-            return $listaHtml;
+        }
     }
-    ?>
-
-</body>
-</html>
+    $listaHtml .= '</div>';
+    return $listaHtml;
+}
