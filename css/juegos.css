@@ -1,3 +1,7 @@
+.menu-ordenacion{
+    padding: 20px;
+}
+
 .lista-juegos {
     display: flex;
     flex-wrap: wrap;

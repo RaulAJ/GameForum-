@@ -1,13 +1,14 @@
 /* Estilos generales */
 h1{
   color: #fff; /*color del texto del titulo*/
-  background-color: #333;
+  background-color: #6600A1;
   text-align: center;
   text-transform: uppercase;
   letter-spacing: 2px;
   padding: 10px;
   border-radius: 8px;
   margin-bottom: 20px;
+  font-weight: 800;
 }
 body {
   font-family: Arial, sans-serif;

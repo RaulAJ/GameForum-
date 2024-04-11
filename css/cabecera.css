@@ -10,9 +10,10 @@ body {
 }
 
 header {
-    background-color: #333;
+    background-color: #6600A1;
     color: #fff;
     padding: 20px 0; /* Aumentamos el espacio en la cabecera */
+    font-weight: 600;
 }
 
 header .container {
@@ -31,9 +32,10 @@ header .container {
 }
 
 nav {
-    background-color: #444;
+    background-color: #560187;
     color: #fff;
     padding: 16px 0; /* Aumentamos el espacio en la barra de navegación */
+    
 }
 
 nav ul {
@@ -55,6 +57,7 @@ nav ul li a {
     color: #fff;
     text-decoration: none;
     font-size: 22px; /* Tamaño de fuente predeterminado */
+    font-weight: 800; /*Grosor fuente*/
     display: inline-block; /* Para que se apliquen las dimensiones */
     padding: 10px 20px; /* Ajustamos el relleno para hacer un cuadrado */
     border-radius: 5px; /* Añadimos bordes redondeados */
