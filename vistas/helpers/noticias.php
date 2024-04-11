@@ -12,12 +12,9 @@
 
     function buildFormularioNoticia() {
         return <<<HTML
-        <form action="noticias/procesarNoticia.php" method="post">
+        <form class="formulario" action="noticias/procesarNoticia.php" method="post">
             <label for="titulo">Título:</label>
             <input type="text" id="titulo" name="titulo" required>
-            
-            <label for="usuario">Usuario:</label>
-            <input type="text" id="usuario" name="usuario" required>
             
             <label for="fecha">Fecha:</label>
             <input type="date" id="fecha" name="fecha" required>
