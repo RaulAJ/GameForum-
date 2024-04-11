@@ -33,35 +33,29 @@ function mostrarBotonAgregarNoticia()
 function listaNoticias()
 {
     $noticias = Noticia::obtenerNoticias();
-
     $listaHtml = '<div class="lista-noticias">';
+
     foreach ($noticias as $noticia) {
         $nombre = htmlspecialchars($noticia->getTitulo());
         $fecha = htmlspecialchars($noticia->getFecha());
         $usuario = htmlspecialchars($noticia->getUsuario());
         $id = $noticia->getId();
 
-        if (estaLogado()) {
-            if (esMismoUsuario($usuario) || $_SESSION['admin'] || $_SESSION['moderador']) {
-                $listaHtml .= "<div class=\"noticia\">
+        $listaHtml .= "<div class=\"noticia\">
                         <h3 class=\"titulo-noticia\">$nombre</h3>
                         <p class=\"fecha-noticia\">$fecha</p>
                         <p class=\"usuario-noticia\">Escrita por: $usuario </p>
-                        <div class=\"contenido-noticia\">{$noticia->getContenido()}</div>
+                        <div class=\"contenido-noticia\">{$noticia->getContenido()}</div>";
 
-                        <p><a href='noticias/borrarNoticia.php?id=$id' class='borrar-button'>Borrar</a></p>
-                        <br><br>
-                        </div>";
+        if (estaLogado()) {
+            if (esMismoUsuario($usuario) || $_SESSION['admin'] || $_SESSION['moderador']) {
+                $listaHtml .= "<p><a href='noticias/borrarNoticia.php?id=$id' class='borrar-button'>Borrar</a></p>";
             }
-        } else {
-            $listaHtml .= "<div class=\"noticia\">
-                    <h3 class=\"titulo-noticia\">$nombre</h3>
-                    <p class=\"fecha-noticia\">$fecha</p>
-                    <p class=\"usuario-noticia\">Escrita por: $usuario</p>
-                    <div class=\"contenido-noticia\">{$noticia->getContenido()}</div><br><br>
-                    </div>";
         }
+
+        $listaHtml .= "<br><br></div>";
     }
+
     $listaHtml .= '</div>';
     return $listaHtml;
 }

@@ -110,6 +110,33 @@ class Noticia {
         }
         return $noticias;
     }
+    public static function obtenerNoticiaPorId($id) {
+        $conn = BD::getInstance()->getConexionBd();
+        if (!$conn) {
+            error_log("Error al conectar a la base de datos");
+            return null;
+        }
+
+        $query = sprintf("SELECT * FROM noticias WHERE ID = %d", intval($id));
+        $result = $conn->query($query);
+        if ($result) {
+            $fila = $result->fetch_assoc();
+            if ($fila) {
+                return new Noticia(
+                    $fila['Titulo'],
+                    $fila['Usuario'],
+                    $fila['Fecha'],
+                    $fila['Contenido'],
+                    $fila['ID']
+                );
+            }
+            $result->free();
+        } else {
+            error_log("Error al obtener la noticia por ID: ({$conn->errno}): {$conn->error}");
+        }
+        return null;
+    }
+
 
     public function borrate()
     {
