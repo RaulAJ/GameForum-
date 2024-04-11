@@ -84,18 +84,17 @@ class Noticia {
     }
 
     public static function obtenerNoticias(){
-        $conn = BD::getInstance()->getConexionBd(); 
+        $conn = BD::getInstance()->getConexionBd();
         if (!$conn) {
-            error_log("Error al conectar a la base de datos");
+            error_log("Unable to connect to the database");
             return [];
         }
 
-        $query = "SELECT * FROM noticias" ;
+        $query = "SELECT * FROM noticias ORDER BY Fecha DESC";
         $result = $conn->query($query);
 
         $noticias = [];
-
-        if($result){
+        if ($result) {
             while ($fila = $result->fetch_assoc()) {
                 $noticias[] = new Noticia(
                     $fila['Titulo'],
@@ -105,10 +104,8 @@ class Noticia {
                 );
             }
             $result->free();
-
-        }
-        else {
-            error_log("Error al obtener las noticias: ({$conn->errno}): {$conn->error}");
+        } else {
+            error_log("Error retrieving recent news: ({$conn->errno}): {$conn->error}");
         }
         return $noticias;
     }
