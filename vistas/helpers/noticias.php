@@ -9,7 +9,7 @@
 
 
     <?php
-
+    require_once 'autorizacion.php'; 
     function buildFormularioNoticia() {
         return <<<HTML
         <form class="formulario" action="noticias/procesarNoticia.php" method="post">
@@ -45,12 +45,28 @@
                 $nombre = htmlspecialchars($noticia->getTitulo());
                 $fecha = htmlspecialchars($noticia->getFecha());
                 $usuario = htmlspecialchars($noticia->getUsuario());
+                $id = $noticia->getId();
+            
+                if(estaLogado()){
+                    if(esMismoUsuario($usuario) || $_SESSION['admin'] || $_SESSION['moderador']){
+                        $listaHtml .= "<div class=\"noticia\">
+                        <h3 class=\"titulo-noticia\">$nombre</h3>
+                        <p class=\"fecha-noticia\">$fecha</p>
+                        <p class=\"usuario-noticia\">Escrita por: $usuario </p>
+                        <div class=\"contenido-noticia\">{$noticia->getContenido()}</div>
+                        <a href='noticias/borrarNoticia.php?id=$id' class='button'>Borrar</a>
+                        <br><br>
+                        </div>";
+                    }
+                }
+                else{
                 $listaHtml .= "<div class=\"noticia\">
                 <h3 class=\"titulo-noticia\">$nombre</h3>
                 <p class=\"fecha-noticia\">$fecha</p>
                 <p class=\"usuario-noticia\">Escrita por: $usuario</p>
                 <div class=\"contenido-noticia\">{$noticia->getContenido()}</div><br><br>
-            </div>";
+                </div>";
+                }
             }
             $listaHtml .= '</div>';
             return $listaHtml;

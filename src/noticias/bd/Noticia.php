@@ -12,8 +12,8 @@ class Noticia {
     private $contenido;
 
     // Constructor
-    public function __construct($titulo, $usuario, $fecha, $contenido) {
-        $this->id = null;
+    public function __construct($titulo, $usuario, $fecha, $contenido, $id = null) {
+        $this->id = $id;
         $this->titulo = $titulo;
         $this->usuario = $usuario;
         $this->fecha = $fecha;
@@ -101,7 +101,8 @@ class Noticia {
                     $fila['Titulo'],
                     $fila['Usuario'],
                     $fila['Fecha'],
-                    $fila['Contenido']
+                    $fila['Contenido'],
+                    $fila['ID']
                 );
             }
             $result->free();
@@ -121,7 +122,7 @@ class Noticia {
         return false;
     }
 
-    private static function borraNoticia($id)
+    public static function borraNoticia($id)
     {
         $conn = BD::getInstance()->getConexionBd();
         if (!$conn) {
