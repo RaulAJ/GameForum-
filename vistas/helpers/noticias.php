@@ -4,25 +4,22 @@ echo '<!DOCTYPE html><html lang="es"><head><meta charset="UTF-8"><meta name="vie
 
 require_once 'autorizacion.php';
 
-function buildFormularioNoticia() {
-    return <<<HTML
-    <form action="noticias/procesarNoticia.php" method="post">
-        <label for="titulo">Título:</label>
-        <input type="text" id="titulo" name="titulo" required>
+    function buildFormularioNoticia() {
+        return <<<HTML
+        <form class= "formulario" action="noticias/procesarNoticia.php" method="post">
+            <label for="titulo">Título:</label>
+            <input type="text" id="titulo" name="titulo" required>
         
-        <label for="usuario">Usuario:</label>
-        <input type="text" id="usuario" name="usuario" required>
-        
-        <label for="fecha">Fecha:</label>
-        <input type="date" id="fecha" name="fecha" required>
-        
-        <label for="contenido">Contenido:</label>
-        <textarea id="contenido" name="contenido" rows="4" cols="50" required></textarea><br><br>
-        
-        <input type="submit" value="Enviar">
-    </form>
-    HTML;
-}
+            <label for="fecha">Fecha:</label>
+            <input type="date" id="fecha" name="fecha" required>
+            
+            <label for="contenido">Contenido:</label>
+            <textarea id="contenido" name="contenido" rows="4" cols="50" required></textarea><br><br>
+            
+            <input type="submit" value="Enviar">
+        </form>
+        HTML;
+    }
 
 function mostrarBotonAgregarNoticia() {
     if (estaLogado()) {
