@@ -1,11 +1,16 @@
 .menu-ordenacion{
-    padding: 20px;
+    margin-bottom: 20px;
+    margin-left: 20px;
+    margin-right: 20px;
+    margin-top:20px;     /*queda mejor que con padding: 20px */
+    text-align: right;
 }
 
 .lista-juegos {
     display: flex;
     flex-wrap: wrap;
     gap: 20px;
+    padding: 20px;
 }
 
 .juego {
@@ -56,16 +61,16 @@
     display: inline-block;
     padding: 15px 30px; /* Aumentar el padding para hacer el botón más grande */
     font-size: 20px; /* Aumentar el tamaño del texto del botón */
-    background-color: #ff6600; /* Color de fondo más vistoso */
+    background-color: #4CAF50; /* Color de fondo más vistoso */
     color: #fff; /* Color del texto */
-    border: 2px solid #ff6600; /* Borde alrededor del botón */
+    border: 2px solid #4CAF50; /* Borde alrededor del botón */
     border-radius: 5px; /* Bordes redondeados */
     text-decoration: none; /* Quitar subrayado del enlace */
 }
 
 .button:hover {
-    background-color: #ff8533; /* Cambiar color de fondo al pasar el mouse */
-    border-color: #ff8533; /* Cambiar color del borde al pasar el mouse */
+    background-color: #4CAF50; /* Cambiar color de fondo al pasar el mouse */
+    border-color: #4CAF50; /* Cambiar color del borde al pasar el mouse */
 }
 
 /*Formulario*/
