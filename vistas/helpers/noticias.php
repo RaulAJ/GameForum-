@@ -1,11 +1,13 @@
 <?php
 // Link CSS
 echo '<link rel="stylesheet" href="css/noticias.css">';
+
 require_once 'autorizacion.php';
+
 function buildFormularioNoticia()
 {
     return <<<HTML
-        <form class="formulario" action="noticias/procesarNoticia.php" method="post">
+        <form class="formulario-noticia" action="noticias/procesarNoticia.php" method="post">
             <label for="titulo">Título:</label>
             <input type="text" id="titulo" name="titulo" required>
             

@@ -17,7 +17,7 @@ function mostrarBotonAgregarJuego() {
 
 function buildFormularioAgregarJuego() {
     return <<<HTML
-    <form class="formulario" action="juegos/nuevoJuego.php" method="post">
+    <form class="formulario-agregar" action="juegos/nuevoJuego.php" method="post">
         <label for="titulo">Título del juego:</label>
         <input type="text" id="titulo" name="titulo" required>
         
@@ -43,7 +43,7 @@ function buildFormularioAgregarJuego() {
 
 function buildFormularioSugerirJuego() {
     return <<<HTML
-    <form action="juegos/procesarSugerirJuego.php" method="post">
+    <form class="formulario-sugerir" action="juegos/procesarSugerirJuego.php" method="post">
         <label for="titulo">Título del juego:</label>
         <input type="text" id="titulo" name="titulo" required>
         

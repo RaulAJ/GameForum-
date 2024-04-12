@@ -1,124 +1,241 @@
-.menu-ordenacion{
-    margin-bottom: 20px;
-    margin-left: 20px;
-    margin-right: 20px;
-    margin-top:20px;     /*queda mejor que con padding: 20px */
-    text-align: right;
+/* Estilos para el menú de ordenación */
+.menu-ordenacion {
+    margin-bottom: 20px; /* Margen inferior */
+    margin-left: 20px; /* Margen izquierdo */
+    margin-right: 20px; /* Margen derecho */
+    margin-top: 20px; /* Margen superior */
+    text-align: right; /* Alineación del texto a la derecha */
 }
 
+/* Estilos para la lista de juegos */
 .lista-juegos {
-    display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
-    gap: 20px;
-    padding: 20px;
+    display: grid; /* Muestra la lista como una cuadrícula */
+    grid-template-columns: 1fr 1fr 1fr; /* Tres columnas de igual tamaño */
+    gap: 20px; /* Espacio entre elementos de la cuadrícula */
+    padding: 20px; /* Relleno interior */
 }
 
+/* Estilos para cada juego */
 .juego {
     background-color: #f5f5f5; /* Color de fondo del juego */
     border-radius: 10px; /* Bordes redondeados */
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Sombra */
-    display: grid;
-    grid-template-areas:
-    'posicion nombre nota';
+    display: grid; /* Muestra el juego como una cuadrícula */
+    grid-template-areas: 'posicion nombre nota'; /* Áreas de la cuadrícula */
 }
 
+/* Estilos para la información de cada juego */
 .info {
-    padding: 20px;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    height: 100%;
+    padding: 20px; /* Relleno interior */
+    display: flex; /* Muestra los elementos en línea */
+    flex-direction: column; /* Dirección de los elementos */
+    justify-content: space-between; /* Distribuye el espacio entre los elementos */
+    height: 100%; /* Altura del elemento */
 }
 
+/* Estilos para la posición y nombre del juego */
 .posicion-nombre {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 10px;
+    display: flex; /* Muestra los elementos en línea */
+    justify-content: space-between; /* Distribuye el espacio entre los elementos */
+    align-items: center; /* Alinea los elementos verticalmente */
+    margin-bottom: 10px; /* Margen inferior */
 }
 
+/* Estilos para la posición del juego */
 .posicion-juego {
-    grid-area: posicion;
-    font-size: 34px;
-    margin-left: 20px;
-    margin-top: 3px;
-    color: #333;
-    font-weight: bold;
-    margin-right: 10px; /* Espaciado entre la posición y el nombre */
+    grid-area: posicion; /* Define el área de la cuadrícula */
+    font-size: 34px; /* Tamaño de fuente */
+    margin-left: 20px; /* Margen izquierdo */
+    margin-top: 3px; /* Margen superior */
+    color: #333; /* Color del texto */
+    font-weight: bold; /* Grosor de la fuente */
+    margin-right: 10px; /* Margen derecho */
 }
 
+/* Estilos para el nombre del juego */
 .nombre-juego {
-    grid-area: nombre;
-    text-align: center;
-    font-weight: bold;
-    margin-top: 10px;
-    margin-bottom: 10px;
-    font-size: 22px;
-    color: #555;
-    flex-grow: 1; /* Permite que el nombre del juego ocupe todo el espacio restante */
-    margin-right: 10px; /* Espaciado entre el nombre del juego y la nota */
+    grid-area: nombre; /* Define el área de la cuadrícula */
+    text-align: center; /* Alineación del texto al centro */
+    font-weight: bold; /* Grosor de la fuente */
+    margin-top: 10px; /* Margen superior */
+    margin-bottom: 10px; /* Margen inferior */
+    font-size: 22px; /* Tamaño de fuente */
+    color: #555; /* Color del texto */
+    flex-grow: 1; /* Permite que el nombre ocupe todo el espacio restante */
+    margin-right: 10px; /* Margen derecho */
 }
 
+/* Estilos para la nota del juego */
 .nota-juego {
-    grid-area: nota;
-    font-size: 34px;
-    margin-top: 3px;
-    font-weight: bold;
-    text-align: right;
-    margin-right: 20px;
-    color: #009688; /* Color de la nota */
+    grid-area: nota; /* Define el área de la cuadrícula */
+    font-size: 34px; /* Tamaño de fuente */
+    margin-top: 3px; /* Margen superior */
+    font-weight: bold; /* Grosor de la fuente */
+    text-align: right; /* Alineación del texto a la derecha */
+    margin-right: 20px; /* Margen derecho */
+    color: #009688; /* Color del texto */
 }
 
+/* Estilos para los botones de los juegos */
 .juego-button {
-    display: inline-block;
-    padding: 15px 30px; /* Aumentar el padding para hacer el botón más grande */
-    font-size: 20px; /* Aumentar el tamaño del texto del botón */
-    background-color: #4CAF50; /* Color de fondo más vistoso */
+    display: inline-block; /* Muestra el botón como un bloque en línea */
+    padding: 15px 30px; /* Relleno interior */
+    font-size: 20px; /* Tamaño de fuente */
+    background-color: #4CAF50; /* Color de fondo del botón */
     color: #fff; /* Color del texto */
-    border: 2px solid #4CAF50; /* Borde alrededor del botón */
-    border-radius: 5px; /* Bordes redondeados */
-    text-decoration: none; /* Quitar subrayado del enlace */
+    border: 2px solid transparent; /* Borde del botón (transparente inicialmente) */
+    border-radius: 25px; /* Bordes redondeados */
+    text-decoration: none; /* Quita el subrayado del enlace */
+    transition: background-color 0.3s, color 0.3s, transform 0.3s, border-color 0.3s; /* Transiciones suaves */
+    cursor: pointer; /* Cambia el cursor al pasar por encima */
 }
 
+/* Efecto hover para los botones de los juegos */
 .juego-button:hover {
-    background-color: #4caf4fbc; /* Cambiar color de fondo al pasar el mouse */
-    border-color: #4caf4fbc; /* Cambiar color del borde al pasar el mouse */
+    background-color: #45a049; /* Cambia el color de fondo al pasar el ratón */
+    color: #fff; /* Cambia el color del texto al pasar el ratón */
+    border-color: #45a049; /* Cambia el color del borde al pasar el ratón */
+    transform: scale(1.05); /* Aumenta ligeramente el tamaño del botón al pasar el ratón */
 }
 
-/*Formulario*/
-.formulario {
-    max-width: 400px;
-    margin: 0 auto;
-    padding: 20px;
+/* Efecto al hacer clic en el botón */
+.juego-button:active {
+    transform: scale(0.95); /* Reduce ligeramente el tamaño del botón al hacer clic */
+}
+
+
+
+/* Estilo para el formulario de añadir juego */
+.formulario-agregar {
+    max-width: 500px;
+    margin: 50px auto; /* Mayor margen superior e inferior para mayor espacio */
+    padding: 30px; /* Mayor espacio alrededor del contenido */
     background-color: #f9f9f9;
-    border-radius: 5px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    border-radius: 10px; /* Bordes más redondeados */
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.2); /* Sombra más pronunciada */
+    transition: transform 0.3s ease;
 }
 
-.formulario label {
+/* Efecto de escala al pasar el mouse */
+.formulario-agregar:hover {
+    transform: translateY(-5px); /* Levantar un poco el formulario */
+}
+
+/* Estilo para las etiquetas */
+.formulario-agregar label {
     display: block;
-    margin-bottom: 10px;
+    margin-bottom: 10px; /* Menor espacio entre etiquetas */
+    font-weight: bold; /* Texto más destacado */
+    color: #333; /* Color de texto más oscuro */
 }
 
-.formulario input[type="text"],
-.formulario input[type="number"],
-.formulario textarea {
-    width: 100%;
+/* Estilo para los campos de entrada */
+.formulario-agregar input[type="text"],
+.formulario-agregar input[type="number"],
+.formulario-agregar textarea {
+    width: calc(100% - 20px); /* Ajuste para el ancho del borde */
     padding: 10px;
-    margin-bottom: 20px;
-    border: 1px solid #ccc;
+    margin-bottom: 20px; /* Mayor espacio entre campos de entrada */
+    border: 2px solid #ccc; /* Borde más grueso */
     border-radius: 5px;
+    box-sizing: border-box;
+    transition: border-color 0.3s ease;
+    resize: none; /* Evita que se pueda redimensionar */
 }
 
-.formulario input[type="submit"] {
-    background-color: #007bff;
-    color: #fff;
-    padding: 10px 20px;
+/* Efecto de color al pasar el mouse sobre los campos de entrada */
+.formulario-agregar input[type="text"]:hover,
+.formulario-agregar input[type="number"]:hover,
+.formulario-agregar textarea:hover {
+    border-color: #4CAF50; /* Cambio de color al pasar el mouse */
+}
+
+/* Estilo para el botón de enviar */
+.formulario-agregar input[type="submit"] {
+    background-color: #d21717;
+    color: white;
+    padding: 15px 20px; /* Mayor tamaño de botón */
     border: none;
-    border-radius: 5px;
+    border-radius: 6px;
     cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.3s ease;
 }
 
-.formulario input[type="submit"]:hover {
-    background-color: #0056b3;
+/* Estilo para el botón de enviar al pasar el mouse */
+.formulario-agregar input[type="submit"]:hover {
+    background-color: #45a049;
+    transform: scale(1.05);
+}
+
+/* Estilo para el botón de enviar al hacer clic */
+.formulario-agregar input[type="submit"]:active {
+    transform: scale(0.95);
+}
+
+
+/* Estilo para el formulario de sugerir */
+.formulario-sugerir {
+    max-width: 500px;
+    margin: 50px auto; /* Mayor margen superior e inferior para mayor espacio */
+    padding: 30px; /* Mayor espacio alrededor del contenido */
+    background-color: #f9f9f9;
+    border-radius: 10px; /* Bordes más redondeados */
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.2); /* Sombra más pronunciada */
+    transition: transform 0.3s ease;
+}
+
+/* Efecto de escala al pasar el mouse */
+.formulario-sugerir:hover {
+    transform: translateY(-5px); /* Levantar un poco el formulario */
+}
+
+/* Estilo para las etiquetas */
+.formulario-sugerir label {
+    display: block;
+    margin-bottom: 10px; /* Menor espacio entre etiquetas */
+    font-weight: bold; /* Texto más destacado */
+    color: #333; /* Color de texto más oscuro */
+}
+
+/* Estilo para los campos de entrada */
+.formulario-sugerir input[type="text"],
+.formulario-sugerir input[type="number"],
+.formulario-sugerir textarea {
+    width: calc(100% - 20px); /* Ajuste para el ancho del borde */
+    padding: 10px;
+    margin-bottom: 20px; /* Mayor espacio entre campos de entrada */
+    border: 2px solid #ccc; /* Borde más grueso */
+    border-radius: 5px;
+    box-sizing: border-box;
+    transition: border-color 0.3s ease;
+    resize: none; /* Evita que se pueda redimensionar */
+}
+
+/* Efecto de color al pasar el mouse sobre los campos de entrada */
+.formulario-sugerir input[type="text"]:hover,
+.formulario-sugerir input[type="number"]:hover,
+.formulario-sugerir textarea:hover {
+    border-color: #4CAF50; /* Cambio de color al pasar el mouse */
+}
+
+/* Estilo para el botón de enviar */
+.formulario-sugerir input[type="submit"] {
+    background-color: #4CAF50;
+    color: white;
+    padding: 15px 20px; /* Mayor tamaño de botón */
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+/* Estilo para el botón de enviar al pasar el mouse */
+.formulario-sugerir input[type="submit"]:hover {
+    background-color: #45a049;
+    transform: scale(1.05);
+}
+
+/* Estilo para el botón de enviar al hacer clic */
+.formulario-sugerir input[type="submit"]:active {
+    transform: scale(0.95);
 }

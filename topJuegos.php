@@ -45,13 +45,14 @@ if (empty($mensaje) && !isset($_GET['accion'])) {
     $orden = isset($_GET['orden']) ? $_GET['orden'] : 'notaDesc';
     // Si no hay formulario activo ni mensaje de error, mostrar los juegos
     // Menú de ordenación
-    $contenidoPrincipal .= '<div class="menu-ordenacion">
+    $contenidoPrincipal .= 
+    '</div> <h1>MEJORES JUEGOS:</h1>
+    <div class="menu-ordenacion">
     <div>Ordenar por:  <a href="?orden=notaAsc">Nota Ascendente</a> |
     <a href="?orden=notaDesc">Nota Descendente</a> |
     <a href="?orden=anioAsc">Año Ascendente</a> |
     <a href="?orden=anioDesc">Año Descendente</a>
-    </div>
-    </div> <h1>MEJORES JUEGOS:</h1>';
+    </div>';
     $contenidoPrincipal .= listaJuegos($orden); // Modificada para aceptar el parámetro de orden
 }
 

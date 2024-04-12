@@ -1,33 +1,35 @@
-/* Estilos generales */
-h1{
-  color: #fff; /*color del texto del titulo*/
-  background-color: #6600A1;
-  text-align: center;
-  text-transform: uppercase;
-  letter-spacing: 2px;
-  padding: 10px;
-  border-radius: 8px;
-  margin-bottom: 20px;
-  font-weight: 800;
+/* Estilos para los títulos */
+h1 {
+  color: #fff; /* Color del texto del título */
+  background-color: #6600A1; /* Color de fondo del título */
+  text-align: center; /* Centra el texto del título */
+  text-transform: uppercase; /* Transforma el texto del título a mayúsculas */
+  letter-spacing: 2px; /* Espaciado entre letras */
+  padding: 10px; /* Espaciado interno del título */
+  border-radius: 8px; /* Bordes redondeados del título */
+  margin-bottom: 20px; /* Margen inferior del título */
+  font-weight: 800; /* Grosor de la fuente del título */
 }
+
+/* Estilos generales para el cuerpo del documento */
 body {
-  font-family: Arial, sans-serif;
-  background-color: #f0f0f0; /* Fondo oscuro */
-  padding: 20px;
+  font-family: Arial, sans-serif; /* Fuente del texto del cuerpo */
+  background-color: #f0f0f0; /* Color de fondo del cuerpo */
+  padding: 20px; /* Espaciado interno del cuerpo */
 }
-/* Remueve el padding y los bullets de la lista */
+
+/* Estilos para la lista de enlaces de navegación */
 .nav-links {
-    list-style: none;
-    padding: 0;
+  list-style: none; /* Quita los bullets de la lista */
+  padding: 0; /* Elimina el relleno de la lista */
 }
-  
-  /* Hace que cada elemento de la lista se muestre en línea */
+
+/* Hace que cada elemento de la lista se muestre en línea */
 .nav-links li {
-    display: inline;
+  display: inline; /* Hace que los elementos de la lista se muestren en línea */
 }
-  
-  /* Para añadir algo de espacio entre los enlaces */
+
+/* Estilos para los enlaces de navegación */
 .nav-links li a {
-    margin-right: 10px; /* Añade espacio a la derecha de cada enlace */
+  margin-right: 10px; /* Añade espacio a la derecha de cada enlace */
 }
-  

@@ -44,21 +44,22 @@ if (!$_SESSION['admin'] && !$_SESSION['moderador']) { // Suponiendo que todos so
 $rolesUsuario = rtrim($rolesUsuario, ', ');
 
 $datosUsuario = <<<HTML
-<ul>
-    <li>Nombre de usuario: {$_SESSION['usuario']}</li>
-    <li>Nombre completo: {$_SESSION['usuarioNombre']}</li>
-    <li>Edad: {$_SESSION['edad']}</li>
-    <li>Experto: {$_SESSION['experto']}</li>
-    <li>Correo electrónico: {$_SESSION['correo']}</li>
-    <li>Rol: $rolesUsuario</li>
-</ul>
-HTML;	
+<div class="datos-usuario">
+    <ul>
+        <li><span class="dato-usuario">Nombre de usuario:</span> {$_SESSION['usuario']}</li>
+        <li><span class="dato-usuario">Nombre completo:</span> {$_SESSION['usuarioNombre']}</li>
+        <li><span class="dato-usuario">Edad:</span> {$_SESSION['edad']}</li>
+        <li><span class="dato-usuario">Experto:</span> {$_SESSION['experto']}</li>
+        <li><span class="dato-usuario">Correo electrónico:</span> {$_SESSION['correo']}</li>
+        <li><span class="dato-usuario">Rol:</span> $rolesUsuario</li>
+    </ul>
+</div>
+HTML;		
 //}
 $contenidoPrincipal=<<<EOS
 	<h1>Bienvenido {$_SESSION['usuario']}</h1>
-	<p>Datos:</p>
+	<h2>Datos:</h2>
 	$datosUsuario
-	<p>Usa el menú de la izquierda para navegar.</p>
 EOS;
 
 require 'vistas/comun/layout.php';

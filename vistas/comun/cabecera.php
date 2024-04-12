@@ -17,19 +17,17 @@ require_once 'vistas/helpers/noticias.php';
             <div class="logo">
                 <h1>GameForum!</h1>
             </div>
-            <div class="topJuegosBtn">
-            <?php
-            if (basename($_SERVER['PHP_SELF']) == 'topJuegos.php') {
+            <div class="Btn">
+                <?php
+                if (basename($_SERVER['PHP_SELF']) == 'topJuegos.php') {
                     echo mostrarBotonAgregarJuego(); 
-            }
-            ?>
-            </div>
-            <div class='noticiasBtn'>
-            <?php
-            if (basename($_SERVER['PHP_SELF']) == 'noticias.php') {
-                echo mostrarBotonAgregarNoticia(); 
-            }
-            ?>
+                }
+                ?>
+                <?php
+                if (basename($_SERVER['PHP_SELF']) == 'noticias.php') {
+                    echo mostrarBotonAgregarNoticia(); 
+                }
+                ?>
             </div>
             <div class="login">
                 <?= saludo() ?>
