@@ -39,20 +39,20 @@ if (isset($_GET['error'])) {
     }
 }
 
-// Menú de ordenación
-$orden = isset($_GET['orden']) ? $_GET['orden'] : 'notaDesc';
-$contenidoPrincipal .= '<div class="menu-ordenacion">
-    <p>Ordenar por: </p>
-    <a href="?orden=notaAsc">Nota Ascendente</a> |
-    <a href="?orden=notaDesc">Nota Descendente</a> |
-    <a href="?orden=anioAsc">Año Ascendente</a> |
-    <a href="?orden=anioDesc">Año Descendente</a>
-</div>';
 
 // Verificar si no hay formulario activo ni mensaje de error
 if (empty($mensaje) && !isset($_GET['accion'])) {
+    $orden = isset($_GET['orden']) ? $_GET['orden'] : 'notaDesc';
     // Si no hay formulario activo ni mensaje de error, mostrar los juegos
-    $contenidoPrincipal .= '<h1>MEJORES JUEGOS:</h1>';
+    // Menú de ordenación
+    $contenidoPrincipal .= 
+    '</div> <h1>MEJORES JUEGOS:</h1>
+    <div class="menu-ordenacion">
+    <div>Ordenar por:  <a href="?orden=notaAsc">Nota Ascendente</a> |
+    <a href="?orden=notaDesc">Nota Descendente</a> |
+    <a href="?orden=anioAsc">Año Ascendente</a> |
+    <a href="?orden=anioDesc">Año Descendente</a>
+    </div>';
     $contenidoPrincipal .= listaJuegos($orden); // Modificada para aceptar el parámetro de orden
 }
 

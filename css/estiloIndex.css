@@ -8,3 +8,51 @@ img {
     margin: 0 auto; /* Centra la imagen horizontalmente */
     border-radius: 8px; /* Bordes redondeados de la imagen */
 }
+
+.datos-usuario {
+    background-color: #f9f9f9; /* Color de fondo del contenedor de datos de usuario */
+    border: 1px solid #ccc; /* Borde del contenedor */
+    border-radius: 5px; /* Bordes redondeados del contenedor */
+    padding: 20px; /* Espaciado interno del contenedor */
+    margin-top: 20px; /* Margen superior del contenedor */
+}
+
+.datos-usuario ul {
+    list-style-type: none; /* Quita los marcadores de lista */
+    padding: 0; /* Elimina el relleno de la lista */
+}
+
+.dato-usuario {
+    font-weight: bold; /* Texto en negrita */
+}
+
+/* Estilos para el menú de ordenación */
+.menu-ordenacion {
+    margin-top: 20px; /* Margen superior */
+    text-align: center; /* Centra el texto */
+}
+
+.menu-ordenacion a {
+    display: inline-block; /* Hacer que los enlaces sean bloques en línea */
+    padding: 10px 20px; /* Espaciado interno */
+    margin: 0 5px; /* Margen entre los enlaces */
+    border-radius: 5px; /* Bordes redondeados */
+    background-color: #3498db; /* Color de fondo original */
+    color: #fff; /* Color de texto */
+    text-decoration: none; /* Quita el subrayado */
+    transition: transform 0.2s ease, box-shadow 0.2s ease; /* Transiciones suaves */
+}
+
+.menu-ordenacion a:hover {
+    transform: translateY(-2px); /* Levantar al pasar el ratón */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Sombra al pasar el ratón */
+}
+
+.menu-ordenacion a:focus {
+    outline: none; /* Quitar el contorno al enfocar */
+}
+
+.menu-ordenacion a:active {
+    transform: translateY(1px); /* Desplazar ligeramente hacia abajo al hacer clic */
+    box-shadow: none; /* Quitar la sombra al hacer clic */
+}

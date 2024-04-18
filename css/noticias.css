@@ -1,0 +1,175 @@
+/* Estilos para la lista de noticias */
+.lista-noticias {
+    display: grid; /* Utiliza CSS Grid para organizar las noticias */
+    gap: 20px; /* Espacio entre las noticias */
+}
+
+/* Estilos para cada noticia individual */
+.noticia {
+    display: grid; /* Utiliza CSS Grid para organizar el contenido de la noticia */
+    border: 3px solid #560187; /* Borde de 1px sólido con color #828282 */
+    padding: 20px; /* Espaciado interno de 20px */
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Sombra suave */
+    margin-left: 20px; /* Margen izquierdo de 20px */
+    margin-right: 20px; /* Margen derecho de 20px */
+    margin-bottom: 20px; /* Márgenes entre las noticias */
+    border-radius: 10px; /* Bordes redondeados */
+    /* Definición del diseño del grid para la noticia */
+    grid-template-areas:
+    'titulo titulo titulo titulo titulo fecha'
+    'contenido contenido contenido contenido contenido contenido'
+    ' . . . . . usuario'; /* Áreas del grid: título, contenido, fecha y usuario */
+}
+
+/* Estilos para el título de la noticia */
+.titulo-noticia {
+    grid-area: titulo; /* Asigna el área del grid para el título */
+    font-size: 3ex; /* Tamaño de fuente del título */
+}
+
+/* Estilos para la fecha de la noticia */
+.fecha-noticia{
+    grid-area: fecha; /* Asigna el área del grid para la fecha */
+    text-align: right; /* Alineación de texto a la derecha */
+}
+
+/* Estilos para el usuario de la noticia */
+.usuario-noticia {
+    grid-area: usuario; /* Asigna el área del grid para el usuario */
+    text-align: right; /* Alineación de texto a la derecha */
+}
+
+/* Estilos para el contenido de la noticia */
+.contenido-noticia {
+    grid-area: contenido; /* Asigna el área del grid para el contenido */
+    text-align: left; /* Alineación de texto a la izquierda */
+}
+
+.noticia-button {
+    display: inline-block; /* Muestra el botón como un bloque en línea */
+    padding: 15px 30px; /* Relleno interior */
+    font-size: 20px; /* Tamaño de fuente */
+    background-color: #FF5733; /* Color de fondo del botón */
+    color: #fff; /* Color del texto */
+    border: 2px solid transparent; /* Borde del botón (transparente inicialmente) */
+    border-radius: 25px; /* Bordes redondeados */
+    text-decoration: none; /* Quita el subrayado del enlace */
+    transition: background-color 0.3s, color 0.3s, transform 0.3s, border-color 0.3s; /* Transiciones suaves */
+    cursor: pointer; /* Cambia el cursor al pasar por encima */
+}
+
+/* Efecto hover para los botones */
+.noticia-button:hover {
+    background-color: #FF8C00; /* Cambia el color de fondo al pasar el ratón */
+    color: #fff; /* Cambia el color del texto al pasar el ratón */
+    border-color: #FF8C00; /* Cambia el color del borde al pasar el ratón */
+    transform: scale(1.05); /* Aumenta ligeramente el tamaño del botón al pasar el ratón */
+}
+
+/* Efecto al hacer clic en el botón */
+.noticia-button:active {
+    transform: scale(0.95); /* Reduce ligeramente el tamaño del botón al hacer clic */
+}
+
+
+
+.borrar-button {
+    display: inline-block;
+    padding: 6px 12px; /* Reducir el padding para hacer el botón muy pequeño */
+    font-size: 15px; /* Reducir el tamaño del texto del botón */
+    background-color: #ff6347; /* Color de fondo */
+    color: #fff; /* Color del texto */
+    border: 1px solid #ff6347; /* Borde */
+    border-radius: 2px; /* Bordes redondeados */
+    text-decoration: none; /* Quitar subrayado del enlace */
+}
+
+.borrar-button:hover {
+    background-color: #d22a00; /* Cambiar color de fondo al pasar el mouse */
+    border-color: #d22a00; /* Cambiar color del borde al pasar el mouse */
+}
+/* Estilo para el formulario de noticia */
+.formulario-noticia {
+    max-width: 600px;
+    margin: 50px auto; /* Mayor margen superior e inferior para mayor espacio */
+    padding: 40px; /* Mayor espacio alrededor del contenido */
+    background-color: #f9f9f9; /* Color de fondo */
+    border-radius: 15px; /* Bordes redondeados */
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.2); /* Sombra */
+    transition: transform 0.3s ease;
+}
+
+/* Efecto de escala al pasar el mouse */
+.formulario-noticia:hover {
+    transform: translateY(-5px); /* Levantar un poco el formulario */
+}
+
+/* Estilo para las etiquetas */
+.formulario-noticia label {
+    display: block;
+    margin-bottom: 20px; /* Mayor espacio entre etiquetas */
+    font-weight: bold;
+    color: #333; /* Color del texto de la etiqueta */
+}
+
+/* Estilo para los campos de entrada */
+.formulario-noticia input[type="text"],
+.formulario-noticia input[type="date"],
+.formulario-noticia textarea {
+    width: 100%;
+    padding: 15px;
+    margin-bottom: 30px; /* Mayor espacio entre campos de entrada */
+    border: 2px solid #ccc; /* Borde */
+    border-radius: 10px; /* Bordes redondeados */
+    box-sizing: border-box;
+    transition: border-color 0.3s ease;
+}
+
+/* Efecto de color al pasar el mouse sobre los campos de entrada */
+.formulario-noticia input[type="text"]:hover,
+.formulario-noticia input[type="date"]:hover,
+.formulario-noticia textarea:hover {
+    border-color: #4CAF50; /* Cambio de color al pasar el mouse */
+}
+
+/* Estilo para el botón de enviar */
+.formulario-noticia input[type="submit"] {
+    background-color: #4CAF50;
+    color: white;
+    padding: 18px 25px; /* Mayor tamaño de botón */
+    border: none;
+    border-radius: 10px; /* Bordes redondeados */
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+/* Estilo para el botón de enviar al pasar el mouse */
+.formulario-noticia input[type="submit"]:hover {
+    background-color: #45a049;
+    transform: scale(1.05);
+}
+
+/* Estilo para el botón de enviar al hacer clic */
+.formulario-noticia input[type="submit"]:active {
+    transform: scale(0.95);
+}
+
+/* Estilo para el contenido */
+.formulario-noticia textarea {
+    height: 200px; /* Mayor altura para el campo de contenido */
+    resize: none; /* Evita que se pueda redimensionar */
+}
+
+/* Estilo para el título */
+.formulario-noticia #titulo {
+    font-size: 1.5em; /* Tamaño de fuente más grande para el título */
+    color: #333; /* Color del texto del título */
+    border-bottom: 2px solid #ccc; /* Línea inferior */
+    margin-bottom: 20px; /* Mayor espacio después del título */
+}
+
+/* Estilo para la fecha */
+.formulario-noticia #fecha {
+    font-size: 1.2em; /* Tamaño de fuente más grande para la fecha */
+    color: #666; /* Color del texto de la fecha */
+}

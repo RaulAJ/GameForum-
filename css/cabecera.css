@@ -1,91 +1,119 @@
+/* Establece la fuente predeterminada para el cuerpo del documento */
 body {
     font-family: Arial, sans-serif;
-    margin: 0;
-    padding: 0;
+    margin: 0; /* Elimina el margen exterior */
+    padding: 0; /* Elimina el relleno exterior */
 }
 
+/* Define un contenedor centralizado con un ancho del 80% */
 .container {
     width: 80%;
-    margin: 0 auto;
+    margin: 0 auto; /* Centra el contenedor horizontalmente */
 }
 
+/* Estilos para la cabecera */
 header {
-    background-color: #333;
-    color: #fff;
-    padding: 20px 0; /* Aumentamos el espacio en la cabecera */
+    background-color: #6600A1; /* Color de fondo */
+    color: #fff; /* Color del texto */
+    padding: 20px 0; /* Aumenta el espacio interno superior e inferior */
+    font-weight: 600; /* Grosor del texto */
 }
 
+/* Estilos específicos para el contenedor dentro de la cabecera */
 header .container {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+    display: flex; /* Muestra los elementos en línea */
+    justify-content: space-between; /* Distribuye los elementos de manera uniforme */
+    align-items: center; /* Centra verticalmente los elementos */
 }
 
+/* Estilos para el logotipo en la cabecera */
 .logo h1 {
-    margin: 0;
+    margin: 0; /* Elimina el margen interior del logotipo */
 }
 
+/* Estilos para el enlace de inicio de sesión en la cabecera */
 .login a {
-    color: #fff;
-    text-decoration: none;
+    color: #fff; /* Color del texto */
+    text-decoration: none; /* Quita el subrayado */
 }
 
+/* Estilos para la barra de navegación */
 nav {
-    background-color: #444;
-    color: #fff;
-    padding: 16px 0; /* Aumentamos el espacio en la barra de navegación */
+    background-color: #560187; /* Color de fondo */
+    color: #fff; /* Color del texto */
+    padding: 16px 0; /* Aumenta el espacio interno superior e inferior */
 }
 
+/* Estilos para la lista de elementos de navegación */
 nav ul {
-    list-style: none;
-    margin: 0;
-    padding: 0;
-    display: flex;
+    list-style: none; /* Quita los puntos de lista */
+    margin: 0; /* Elimina el margen exterior */
+    padding: 0; /* Elimina el relleno exterior */
+    display: flex; /* Muestra los elementos en línea */
 }
 
+/* Estilos para cada elemento de la lista de navegación */
 nav ul li {
-    margin-right: 20px;
+    margin-right: 20px; /* Espaciado a la derecha entre elementos */
 }
 
-nav ul li:last-child {
-    margin-right: 0;
-}
-
+/* Estilos para los enlaces dentro de la lista de navegación */
 nav ul li a {
-    color: #fff;
-    text-decoration: none;
-    font-size: 22px; /* Tamaño de fuente predeterminado */
-    display: inline-block; /* Para que se apliquen las dimensiones */
-    padding: 10px 20px; /* Ajustamos el relleno para hacer un cuadrado */
-    border-radius: 5px; /* Añadimos bordes redondeados */
+    transition: all 0.3s ease; /* Agrega una transición suave para todos los cambios */
 }
 
+/* Estilos para los enlaces de navegación al pasar el mouse */
+nav ul li a:hover {
+    color: #ff0000; /* Cambia el color al pasar el mouse */
+    transform: scale(1.1) rotate(5deg); /* Aumenta el tamaño y gira ligeramente */
+}
+
+/* Estilos para el último elemento de la lista de navegación */
+nav ul li:last-child {
+    margin-right: 0; /* Elimina el margen a la derecha del último elemento */
+}
+
+/* Estilos para los enlaces de navegación */
+nav ul li a {
+    color: #fff; /* Color del texto */
+    text-decoration: none; /* Quita el subrayado */
+    font-size: 22px; /* Tamaño de fuente */
+    font-weight: 800; /* Grosor de fuente */
+    display: inline-block; /* Muestra los elementos como bloques en línea */
+    padding: 10px 20px; /* Ajusta el relleno para crear un cuadrado */
+    border-radius: 5px; /* Agrega bordes redondeados */
+}
+
+/* Estilos para el espacio flexible */
 .spacer {
-    flex: 1;
+    flex: 1; /* Permite que el elemento ocupe el espacio restante */
 }
 
-/* Estilos para el cuadrado de búsqueda */
+/* Estilos para la caja de búsqueda */
 .search-box {
-    display: flex;
-    align-items: center;
+    display: flex; /* Muestra los elementos en línea */
+    align-items: center; /* Centra verticalmente los elementos */
 }
 
+/* Estilos para el campo de entrada de búsqueda */
 .search-box input[type="text"] {
-    padding: 8px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    margin-right: 10px;
+    padding: 8px; /* Espaciado interno */
+    border: 1px solid #ccc; /* Borde */
+    border-radius: 5px; /* Bordes redondeados */
+    margin-right: 10px; /* Espaciado a la derecha */
 }
 
+/* Estilos para el botón de búsqueda */
 .search-box button {
-    padding: 8px 15px;
-    background-color: #4CAF50;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
+    padding: 8px 15px; /* Espaciado interno */
+    background-color: #4CAF50; /* Color de fondo */
+    color: white; /* Color del texto */
+    border: none; /* Sin borde */
+    border-radius: 5px; /* Bordes redondeados */
+    cursor: pointer; /* Cambia el cursor */
 }
 
+/* Estilos para el botón de búsqueda al pasar el mouse */
 .search-box button:hover {
-    background-color: #45a049;
+    background-color: #45a049; /* Cambia el color de fondo al pasar el mouse */
 }

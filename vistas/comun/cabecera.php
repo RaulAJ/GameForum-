@@ -1,6 +1,7 @@
 <?php
 require_once 'vistas/helpers/usuarios.php';
-require_once 'vistas/helpers/juegos.php'
+require_once 'vistas/helpers/juegos.php';
+require_once 'vistas/helpers/noticias.php';
 ?>
 <!DOCTYPE html>
 <html lang="es">
@@ -16,12 +17,17 @@ require_once 'vistas/helpers/juegos.php'
             <div class="logo">
                 <h1>GameForum!</h1>
             </div>
-            <div class="topJuegosBtn">
-            <?php
-            if (basename($_SERVER['PHP_SELF']) == 'topJuegos.php') {
+            <div class="Btn">
+                <?php
+                if (basename($_SERVER['PHP_SELF']) == 'topJuegos.php') {
                     echo mostrarBotonAgregarJuego(); 
                 }
-            ?>
+                ?>
+                <?php
+                if (basename($_SERVER['PHP_SELF']) == 'noticias.php') {
+                    echo mostrarBotonAgregarNoticia(); 
+                }
+                ?>
             </div>
             <div class="login">
                 <?= saludo() ?>
@@ -33,7 +39,7 @@ require_once 'vistas/helpers/juegos.php'
         <div class="container">
             <ul>
                 <li><a href="index.php">Foro</a></li>
-                <li><a href="index.php">Noticias</a></li>
+                <li><a href="noticias.php">Noticias</a></li>
                 <li><a href="topJuegos.php">Top Juegos</a></li>
 
                 <li class="spacer"></li><!-- Este elemento crea un espacio entre "Top Juegos" y el cuadro de búsqueda -->
