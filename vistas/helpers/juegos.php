@@ -64,6 +64,30 @@ function buildFormularioSugerirJuego() {
     HTML;
 }
 
+function mostrarJuego($id) {
+    // Obtener el juego desde la base de datos según su ID
+    $juego = Juego::obtenerJuego($id);
+    // Construir la estructura HTML para mostrar los detalles del juego
+    $nombre = htmlspecialchars($juego->getNombreJuego());
+    $anio = htmlspecialchars($juego->getAnioDeSalida());
+    $desarrollador = htmlspecialchars($juego->getDesarrollador());
+    $genero = htmlspecialchars($juego->getGenero());
+    $nota = $juego->getNota();
+    $descripcion = htmlspecialchars($juego->getDescripcion());
+
+    $html = <<<HTML
+    <div class="juego-detalle">
+        <h2>$nombre ($anio)</h2>
+        <p><strong>Desarrollador:</strong> $desarrollador</p>
+        <p><strong>Género:</strong> $genero</p>
+        <p><strong>Nota:</strong> $nota</p>
+        <p><strong>Descripción:</strong> $descripcion</p>
+    </div>
+    HTML;
+
+    return $html;
+}
+
 function listaJuegos($orden = 'notaDesc') {
     switch ($orden) {
         case 'notaAsc':
@@ -86,7 +110,7 @@ function listaJuegos($orden = 'notaDesc') {
         $nombreYAnio = htmlspecialchars($juego->getNombreJuego()) . ' (' . htmlspecialchars($juego->getAnioDeSalida()) . ')';
         $listaHtml .= "<div class=\"juego\">
         <div class=\"posicion-juego\">Top $posicion</div>
-        <div class=\"nombre-juego\">$nombreYAnio</div>
+        <div class=\"nombre-juego\"><a href=?accion=verJuego&id={$juego->getId()}>$nombreYAnio</a></div>
         <div class=\"nota-juego\">{$juego->getNota()}</div>
     </div>";
         $posicion++;

@@ -243,6 +243,30 @@ class Juego
         }
     }
 
+    
+public static function obtenerJuego($id) {
+    $conn = BD::getInstance()->getConexionBd();
+    $query = "SELECT * FROM videojuegos WHERE ID = $id";
+    $result = $conn->query($query);
+    
+    if ($result && $result->num_rows > 0) {
+        $fila = $result->fetch_assoc();
+        $juego = new Juego(
+            $fila['Juego'],
+            $fila['Año de salida'],
+            $fila['Desarrollador'],
+            $fila['Genero'],
+            $fila['Nota'],
+            $fila['Descripcion']
+        );
+        $result->free();
+        return $juego;
+    } else {
+        error_log("Error BD ({$conn->errno}): {$conn->error}");
+        return null;
+    }
+}
+
     /**
      * Obtiene una lista de juegos de la base de datos ordenados por su nota de mayor a menor.
      *
