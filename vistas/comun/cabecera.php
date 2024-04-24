@@ -38,7 +38,7 @@ require_once 'vistas/helpers/noticias.php';
     <nav>
         <div class="container">
             <ul>
-                <li><a href="index.php">Foro</a></li>
+                <li><a href="foro.php">Foro</a></li>
                 <li><a href="noticias.php">Noticias</a></li>
                 <li><a href="topJuegos.php">Top Juegos</a></li>
 

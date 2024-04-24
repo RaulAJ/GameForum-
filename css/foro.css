@@ -1,0 +1,46 @@
+/* Estilos para la lista de noticias */
+.lista-publicaciones {
+    display: grid; /* Utiliza CSS Grid para organizar las noticias */
+    gap: 20px; /* Espacio entre las noticias */
+}
+
+/* Estilos para cada noticia individual */
+.publicacion {
+    display: grid; /* Utiliza CSS Grid para organizar el contenido de la noticia */
+    border: 3px solid #560187; /* Borde de 1px sólido con color #828282 */
+    padding: 20px; /* Espaciado interno de 20px */
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Sombra suave */
+    margin-left: 20px; /* Margen izquierdo de 20px */
+    margin-right: 20px; /* Margen derecho de 20px */
+    margin-bottom: 20px; /* Márgenes entre las noticias */
+    border-radius: 10px; /* Bordes redondeados */
+    /* Definición del diseño del grid para la noticia */
+    grid-template-areas:
+    'titulo titulo titulo titulo titulo fecha'
+    'contenido contenido contenido contenido contenido contenido'
+    ' . . . . . usuario'; /* Áreas del grid: título, contenido, fecha y usuario */
+}
+
+/* Estilos para el título de la noticia */
+.titulo-publicacion {
+    grid-area: titulo; /* Asigna el área del grid para el título */
+    font-size: 3ex; /* Tamaño de fuente del título */
+}
+
+/* Estilos para la fecha de la noticia */
+.fecha-publicacion{
+    grid-area: fecha; /* Asigna el área del grid para la fecha */
+    text-align: right; /* Alineación de texto a la derecha */
+}
+
+/* Estilos para el usuario de la noticia */
+.usuario-publicacion {
+    grid-area: usuario; /* Asigna el área del grid para el usuario */
+    text-align: right; /* Alineación de texto a la derecha */
+}
+
+/* Estilos para el contenido de la noticia */
+.contenido-publicacion {
+    grid-area: contenido; /* Asigna el área del grid para el contenido */
+    text-align: left; /* Alineación de texto a la izquierda */
+}
