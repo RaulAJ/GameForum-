@@ -77,7 +77,8 @@ function mostrarJuego($id) {
 
     $html = <<<HTML
     <div class="juego-detalle">
-        <h2>$nombre ($anio)</h2>
+        <h2>$nombre</h2>
+        <p><strong>Año de salida:</strong> $anio</p>
         <p><strong>Desarrollador:</strong> $desarrollador</p>
         <p><strong>Género:</strong> $genero</p>
         <p><strong>Nota:</strong> $nota</p>
@@ -107,10 +108,10 @@ function listaJuegos($orden = 'notaDesc') {
     $listaHtml = '<div class="lista-juegos">';
     $posicion = 1;
     foreach ($juegos as $juego) {
-        $nombreYAnio = htmlspecialchars($juego->getNombreJuego()) . ' (' . htmlspecialchars($juego->getAnioDeSalida()) . ')';
+        $nombre = htmlspecialchars($juego->getNombreJuego());
         $listaHtml .= "<div class=\"juego\">
         <div class=\"posicion-juego\">Top $posicion</div>
-        <div class=\"nombre-juego\"><a href=?accion=verJuego&id={$juego->getId()}>$nombreYAnio</a></div>
+        <div class=\"nombre-juego\"><a href=?accion=verJuego&id={$juego->getId()}>$nombre</a></div>
         <div class=\"nota-juego\">{$juego->getNota()}</div>
     </div>";
         $posicion++;
