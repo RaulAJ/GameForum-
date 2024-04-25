@@ -22,6 +22,31 @@ function buildFormularioNoticia()
         HTML;
 }
 
+function editarformularioNoticia($id)
+{
+    $noticia = Noticia::obtenerNoticiaPorId($id);
+    $titulo = htmlspecialchars($noticia->getTitulo());
+    $fecha = htmlspecialchars($noticia->getFecha());
+    $contenido = htmlspecialchars($noticia->getContenido());
+    //$contenidoActual = htmlspecialchars($noticia->getContenido());
+    return <<<HTML
+        <form class="formulario-noticia" action="noticias/editarNoticia.php" method="post">
+            <input type='hidden' name='id' value= '$id'>
+
+            <label for="titulo">Título:</label>
+            <input type="text" id="titulo" name="titulo" value='$titulo' required>
+            
+            <label for="fecha">Fecha:</label>
+            <input type="date" id="fecha" name="fecha" value='$fecha' required>
+            
+            <label for="contenido">Contenido:</label>
+            <textarea id="contenido" name="contenido"  rows="4" cols="50" required>$contenido</textarea><br><br>
+            
+            <input type="submit" value="Enviar">
+        </form>
+        HTML;
+}
+
 function mostrarBotonAgregarNoticia()
 {
     if (estaLogado()) {
@@ -55,6 +80,11 @@ function listaNoticias()
                                    <input type='hidden' name='id' value='$id'>
                                    <button type='submit' class='borrar-button'>Borrar</button>
                                </form>";
+                $listaHtml .= "<form action='noticias.php'>
+                                    <input type='hidden' name='accion' value='editarNoticia'>
+                                    <input type='hidden' name='id' value='$id'>
+                                    <button type='submit' class='borrar-button'>Editar</button>
+                                </form>";
             }
         }
 

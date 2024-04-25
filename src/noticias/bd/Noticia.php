@@ -20,6 +20,11 @@ class Noticia {
         $this->contenido = $contenido;
     }
 
+    // Constructor adicional que acepta ID
+    public static function crearConId($id, $titulo, $usuario, $fecha, $contenido) {
+        return new Noticia($titulo, $usuario, $fecha, $contenido, $id);
+    }
+
     public static function crea($titulo, $usuario, $fecha, $contenido)
     {
         $noticia = new Noticia($titulo, $usuario, $fecha, $contenido);
@@ -59,7 +64,7 @@ class Noticia {
         }
     }
 
-    private static function actualiza(Noticia $noticia)
+    public static function actualiza(Noticia $noticia)
     {
         $conn = BD::getInstance()->getConexionBd();
         if (!$conn) {
