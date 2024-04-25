@@ -5,8 +5,8 @@ require_once '../src/noticias/bd/Noticia.php';
 require_once '../vistas/helpers/autorizacion.php';
 
 // Verifica si el usuario está logueado y si se ha enviado un ID de noticia
-if (estaLogado() && isset($_GET['id'])) {
-    $id_noticia = $_GET['id'];
+if (estaLogado() && isset($_POST['id'])) {
+    $id_noticia = $_POST['id'];
 
     // Obtén la noticia específica
     $noticia = Noticia::obtenerNoticiaPorId($id_noticia);

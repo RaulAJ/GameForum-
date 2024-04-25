@@ -51,11 +51,14 @@ function listaNoticias()
 
         if (estaLogado()) {
             if (esMismoUsuario($usuario) || $_SESSION['admin'] || $_SESSION['moderador']) {
-                $listaHtml .= "<p><a href='noticias/borrarNoticia.php?id=$id' class='borrar-button'>Borrar</a></p>";
+                $listaHtml .= "<form action='noticias/borrarNoticia.php' method='post'>
+                                   <input type='hidden' name='id' value='$id'>
+                                   <button type='submit' class='borrar-button'>Borrar</button>
+                               </form>";
             }
         }
 
-        $listaHtml .= "<br><br></div>";
+        $listaHtml .= "</div><br><br>";
     }
 
     $listaHtml .= '</div>';
