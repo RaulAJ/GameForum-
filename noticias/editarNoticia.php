@@ -20,14 +20,12 @@ $contenido = filter_input(INPUT_POST, 'contenido', FILTER_SANITIZE_SPECIAL_CHARS
 
 
 if($titulo && idUsuarioLogado() && $fecha && $contenido){
-    $noticia = Noticia::crearConId($titulo, $_SESSION['usuario'], $fecha, $contenido, $_POST['id']);
+    $id = intval($_POST['id']);
+    $noticia = new Noticia($titulo, $_SESSION['usuario'], $fecha, $contenido, $id);
     Noticia::actualiza($noticia);
 
     if($noticia){
-        if ($_SESSION['usuario'] == "dacendej" && $titulo == "Nintendo pone fecha a la próxima película de Super"){
-            Utils::redirige(Utils::buildUrl('/noticias.php', ['exito' => '1']));
-        }
-        Utils::redirige(Utils::buildUrl('/noticias.php', ['exito' => '0']));
+        Utils::redirige(Utils::buildUrl('/noticias.php', ['exito' => '1']));
         
     } else{
         Utils::redirige(Utils::buildUrl('/noticias.php', ['error' => '1']));

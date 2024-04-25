@@ -11,8 +11,8 @@ class Noticia {
     private $fecha;
     private $contenido;
 
-    // Constructor
-    public function __construct($titulo, $usuario, $fecha, $contenido, $id = null) {
+    // Constructor, la id ya no es siempre null para poder editar noticias
+    public function __construct($titulo, $usuario, $fecha, $contenido, $id) {
         $this->id = $id;
         $this->titulo = $titulo;
         $this->usuario = $usuario;
@@ -20,14 +20,9 @@ class Noticia {
         $this->contenido = $contenido;
     }
 
-    // Constructor adicional que acepta ID
-    public static function crearConId($id, $titulo, $usuario, $fecha, $contenido) {
-        return new Noticia($titulo, $usuario, $fecha, $contenido, $id);
-    }
-
     public static function crea($titulo, $usuario, $fecha, $contenido)
     {
-        $noticia = new Noticia($titulo, $usuario, $fecha, $contenido);
+        $noticia = new Noticia($titulo, $usuario, $fecha, $contenido, null);
         return $noticia->guarda();
     }
 
@@ -72,14 +67,15 @@ class Noticia {
         }
 
         $query = sprintf(
-            "UPDATE noticias SET Titulo='%s', Usuario='%s', Fecha='%s', Contenido='%s' WHERE ID=%d",
+            "UPDATE noticias SET Titulo='%s', Usuario='%s', Fecha='%s', Contenido='%s' WHERE ID= %d",
             $conn->real_escape_string($noticia->getTitulo()),
             $conn->real_escape_string($noticia->getUsuario()),
             $conn->real_escape_string($noticia->getFecha()),
             $conn->real_escape_string($noticia->getContenido()),
             $noticia->getId()
         );
-
+        
+        echo $query;
         if ($conn->query($query)) {
             return true; 
         } else {

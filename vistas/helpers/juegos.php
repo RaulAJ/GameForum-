@@ -64,31 +64,6 @@ function buildFormularioSugerirJuego() {
     HTML;
 }
 
-function mostrarJuego($id) {
-    // Obtener el juego desde la base de datos según su ID
-    $juego = Juego::obtenerJuego($id);
-    // Construir la estructura HTML para mostrar los detalles del juego
-    $nombre = htmlspecialchars($juego->getNombreJuego());
-    $anio = htmlspecialchars($juego->getAnioDeSalida());
-    $desarrollador = htmlspecialchars($juego->getDesarrollador());
-    $genero = htmlspecialchars($juego->getGenero());
-    $nota = $juego->getNota();
-    $descripcion = htmlspecialchars($juego->getDescripcion());
-
-    $html = <<<HTML
-    <div class="juego-detalle">
-        <h2>$nombre</h2>
-        <p><strong>Año de salida:</strong> $anio</p>
-        <p><strong>Desarrollador:</strong> $desarrollador</p>
-        <p><strong>Género:</strong> $genero</p>
-        <p><strong>Nota:</strong> $nota</p>
-        <p><strong>Descripción:</strong> $descripcion</p>
-    </div>
-    HTML;
-
-    return $html;
-}
-
 function listaJuegos($orden = 'notaDesc') {
     switch ($orden) {
         case 'notaAsc':
@@ -108,12 +83,16 @@ function listaJuegos($orden = 'notaDesc') {
     $listaHtml = '<div class="lista-juegos">';
     $posicion = 1;
     foreach ($juegos as $juego) {
+        $id = $juego->getId();
         $nombre = htmlspecialchars($juego->getNombreJuego());
         $listaHtml .= "<div class=\"juego\">
-        <div class=\"posicion-juego\">Top $posicion</div>
-        <div class=\"nombre-juego\"><a href=?accion=verJuego&id={$juego->getId()}>$nombre</a></div>
-        <div class=\"nota-juego\">{$juego->getNota()}</div>
-    </div>";
+                       <div class=\"posicion-juego\">Top $id</div>
+                       <form action='juegos/verJuego.php' method='post'>
+                            <input type='hidden' name='id' value='$id'>
+                            <button type='submit' class='borrar-button'>$nombre</button>
+                         </form>
+                         <div class=\"nota-juego\">{$juego->getNota()}</div>
+                       </div>";
         $posicion++;
     }
     $listaHtml .= '</div>';

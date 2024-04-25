@@ -246,7 +246,7 @@ class Juego
     
 public static function obtenerJuego($id) {
     $conn = BD::getInstance()->getConexionBd();
-    $query = "SELECT * FROM videojuegos WHERE ID = $id";
+    $query = sprintf("SELECT * FROM videojuegos WHERE ID = %d", $id);
     $result = $conn->query($query);
     
     if ($result && $result->num_rows > 0) {
