@@ -82,7 +82,7 @@ class Publicacion {
             $conn->real_escape_string($publicacion->getContenido()),
             $publicacion->getId()
         );
-        echo $query;
+        
         if ($conn->query($query)) {
             return true; 
         } else {

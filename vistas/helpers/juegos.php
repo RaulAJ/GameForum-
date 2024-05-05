@@ -86,8 +86,8 @@ function listaJuegos($orden = 'notaDesc') {
         $id = $juego->getId();
         $nombre = htmlspecialchars($juego->getNombreJuego());
         $listaHtml .= "<div class=\"juego\">
-                       <div class=\"posicion-juego\">Top $id</div>
-                       <form action='juegos/verJuego.php' method='post'>
+                       <div class=\"posicion-juego\">Top $posicion</div>
+                       <form action='verJuego.php' method='post'>
                             <input type='hidden' name='id' value='$id'>
                             <button type='submit' class='borrar-button'>$nombre</button>
                          </form>

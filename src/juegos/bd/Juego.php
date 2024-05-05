@@ -32,8 +32,8 @@ class Juego
      * @param int $nota La nota o calificación del juego.
      * @param string $descripcion Una breve descripción del juego.
      */
-    private function __construct($nombreJuego, $anioDeSalida, $desarrollador, $genero, $nota, $descripcion) {
-        $this->id = null;
+    private function __construct($id, $nombreJuego, $anioDeSalida, $desarrollador, $genero, $nota, $descripcion) {
+        $this->id = $id;
         $this->nombreJuego = $nombreJuego;
         $this->anioDeSalida = $anioDeSalida;
         $this->desarrollador = $desarrollador;
@@ -65,7 +65,7 @@ class Juego
      */
     public static function crea($nombreJuego, $anioDeSalida, $desarrollador, $genero, $nota, $descripcion)
     {
-        $juego = new Juego($nombreJuego, $anioDeSalida, $desarrollador, $genero, $nota, $descripcion);
+        $juego = new Juego(null, $nombreJuego, $anioDeSalida, $desarrollador, $genero, $nota, $descripcion);
         return $juego->guarda();
     }
 
@@ -243,6 +243,24 @@ class Juego
         }
     }
 
+    public static function obtenerIdJuego($nombre) {
+        $conn = BD::getInstance()->getConexionBd();
+        // Se usa la función mysqli_real_escape_string para evitar inyección SQL
+        $nombre = $conn->real_escape_string($nombre);
+        $query = sprintf("SELECT ID FROM videojuegos WHERE Juego = '%s'", $nombre);
+        $result = $conn->query($query);
+    
+        if ($result && $result->num_rows > 0) {
+            $fila = $result->fetch_assoc();
+            $idJuego = $fila['ID'];
+            $result->free();
+            return $idJuego; // Devuelve solo la ID del juego
+        } else {
+            error_log("Error BD ({$conn->errno}): {$conn->error}");
+            return null;
+        }
+    }
+    
     
 public static function obtenerJuego($id) {
     $conn = BD::getInstance()->getConexionBd();
@@ -252,6 +270,7 @@ public static function obtenerJuego($id) {
     if ($result && $result->num_rows > 0) {
         $fila = $result->fetch_assoc();
         $juego = new Juego(
+            $fila['ID'],
             $fila['Juego'],
             $fila['Año de salida'],
             $fila['Desarrollador'],
@@ -281,6 +300,7 @@ public static function obtenerJuego($id) {
         if ($result) {
             while ($fila = $result->fetch_assoc()) {
                 $juegos[] = new Juego(
+                    $fila['ID'],
                     $fila['Juego'],
                     $fila['Año de salida'],
                     $fila['Desarrollador'],
@@ -312,6 +332,7 @@ public static function obtenerJuego($id) {
         if ($result) {
             while ($fila = $result->fetch_assoc()) {
                 $juegos[] = new Juego(
+                    $fila['ID'],
                     $fila['Juego'],
                     $fila['Año de salida'],
                     $fila['Desarrollador'],
@@ -343,6 +364,7 @@ public static function obtenerJuego($id) {
         if ($result) {
             while ($fila = $result->fetch_assoc()) {
                 $juegos[] = new Juego(
+                    $fila['ID'],
                     $fila['Juego'],
                     $fila['Año de salida'],
                     $fila['Desarrollador'],
@@ -378,6 +400,7 @@ public static function obtenerJuego($id) {
         if ($result) {
             while ($fila = $result->fetch_assoc()) {
                 $juegos[] = new Juego(
+                    $fila['ID'],
                     $fila['Juego'],
                     $fila['Año de salida'],
                     $fila['Desarrollador'],

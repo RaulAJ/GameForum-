@@ -90,8 +90,8 @@ function listaPublicaciones()
         $listaHtml .= "<div class=\"Publicacion\">
                         <h3 class=\"titulo-publicacion\">$nombre</h3>
                         <p class=\"fecha-publicacion\">$fecha</p>
-                        <p class=\"tipo-publicacion\">$tipo</p>
-                        <p class=\"juego-publicacion\">$juego</p>
+                        <p class=\"tipo-publicacion\">Tipo: $tipo</p>
+                        <p class=\"juego-publicacion\">Juego: <a href='verJuego.php?nombre=$juego'>$juego</a></p>
                         <p class=\"usuario-publicacion\">Escrita por: $usuario </p>
                         <div class=\"contenido-publicacion\">{$publicacion->getContenido()}</div>";
 
