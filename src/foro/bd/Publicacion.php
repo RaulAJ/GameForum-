@@ -14,7 +14,7 @@ class Publicacion {
     private $contenido;
 
     // Constructor
-    public function __construct($titulo, $usuario, $juego, $tipo, $fecha, $contenido, $id = null) {
+    public function __construct($titulo, $usuario, $juego, $tipo, $fecha, $contenido, $id) {
         $this->id = $id;
         $this->titulo = $titulo;
         $this->usuario = $usuario;
@@ -26,7 +26,7 @@ class Publicacion {
 
     public static function crea($titulo, $usuario, $juego, $tipo, $fecha, $contenido)
     {
-        $publicacion = new Publicacion($titulo, $usuario, $juego, $tipo, $fecha, $contenido);
+        $publicacion = new Publicacion($titulo, $usuario, $juego, $tipo, $fecha, $contenido, null);
         return  $publicacion->guarda();
     }
 
@@ -65,7 +65,7 @@ class Publicacion {
         }
     }
 
-    private static function actualiza(Publicacion $publicacion)
+    public static function actualiza(Publicacion $publicacion)
     {
         $conn = BD::getInstance()->getConexionBd();
         if (!$conn) {
@@ -82,7 +82,7 @@ class Publicacion {
             $conn->real_escape_string($publicacion->getContenido()),
             $publicacion->getId()
         );
-
+        echo $query;
         if ($conn->query($query)) {
             return true; 
         } else {
@@ -156,6 +156,23 @@ class Publicacion {
             return self::borraPublicacion($this->id);
         }
         return false;
+    }
+
+    public static function borraRespuestas($id)   //borra las respuestas de la noticia, la id parametro es de la noticia
+    {
+        $conn = BD::getInstance()->getConexionBd();
+        if (!$conn) {
+            return false;
+        }
+
+        $query = sprintf("DELETE FROM respuestas WHERE `ID foro` = %d", $id);
+
+        if ($conn->query($query)) {
+            return true;
+        } else {
+            error_log("Error al borrar la publicacion ({$conn->errno}): {$conn->error}");
+            return false;
+        }
     }
 
     public static function borraPublicacion($id)

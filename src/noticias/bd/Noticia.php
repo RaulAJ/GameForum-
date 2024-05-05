@@ -75,7 +75,6 @@ class Noticia {
             $noticia->getId()
         );
         
-        echo $query;
         if ($conn->query($query)) {
             return true; 
         } else {

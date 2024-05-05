@@ -40,8 +40,8 @@ if (empty($mensaje) && !isset($_GET['accion'])) {
 
 if (isset($_GET['accion']) && $_GET['accion'] === 'agregarPublicacion') {
     //$contenidoPrincipal .= buildFormularioNoticia();
-} elseif (isset($_GET['accion']) && $_GET['accion'] === 'borrarPublicacion'){
-    //Noticia::borrate();
+}  elseif (isset($_GET['id']) && isset($_GET['accion']) && $_GET['accion'] === 'editarPublicacion'){
+    $contenidoPrincipal .= editarFormularioPublicacion($_GET['id']);
 }
 
 // Agregar mensaje a contenido principal
