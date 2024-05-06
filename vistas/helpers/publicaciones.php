@@ -139,7 +139,11 @@ function listaPublicaciones()
                         <h3 class=\"titulo-publicacion\">$nombre</h3>
                         <p class=\"fecha-publicacion\">$fecha</p>
                         <p class=\"tipo-publicacion\">Tipo: $tipo</p>
-                        <p class=\"juego-publicacion\">Juego: <a href='verJuego.php?nombre=$juego'>$juego</a></p>
+                        <p class=\"juego-publicacion\">Juego: 
+                        <form action='verJuego.php' method='post'>
+                            <input type='hidden' name='juego' value='$juego'>
+                            <button type='submit' class='verJuego-button'>$juego</button>
+                        </form></p>
                         <p class=\"usuario-publicacion\">Escrita por: $usuario </p>
                         <div class=\"contenido-publicacion\">{$publicacion->getContenido()}</div>";
 

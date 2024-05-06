@@ -10,8 +10,8 @@ $contenidoPrincipal = '';
 
 if (isset($_POST['id'])){         //Si viene desde topjuegos
     $id = intval($_POST['id']);
-}elseif(isset($_GET['nombre'])){  //Si viene desde foro
-    $id = Juego::obtenerIdJuego($_GET['nombre']);
+}elseif(isset($_POST['juego'])){  //Si viene desde foro
+    $id = Juego::obtenerIdJuego($_POST['juego']);
 }
 $juego = Juego::obtenerJuego($id);
 // Obtener los detalles del juego
