@@ -2,7 +2,7 @@
 
 require_once '../config.php';
 require_once '../vistas/helpers/autorizacion.php';
-require_once '../src/noticias/bd/Publicacion.php';
+require_once '../src/foro/bd/Publicacion.php';
 
 verificaLogado(Utils::buildUrl('/foro.php'));
 
@@ -21,9 +21,9 @@ $tipo = filter_input(INPUT_POST, 'tipo', FILTER_SANITIZE_SPECIAL_CHARS);
 $juego = filter_input(INPUT_POST, 'juego', FILTER_SANITIZE_SPECIAL_CHARS);
 
 if($titulo && idUsuarioLogado() && $fecha && $contenido && $tipo && $juego){
-    $publicacion = new Publicacion($titulo, $_SESSION['usuario'], $juego, $tipo, $fecha, $contenido, $id);
+    $publicacion = Publicacion::crea($titulo,  idUsuarioLogado(), $juego, $tipo, $fecha, $contenido);
 
-    if($noticia){
+    if($publicacion){
         Utils::redirige(Utils::buildUrl('/foro.php', ['exito' => '1']));
     } else{
         Utils::redirige(Utils::buildUrl('/foro.php', ['error' => '1']));

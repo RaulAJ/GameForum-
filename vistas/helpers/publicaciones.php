@@ -3,44 +3,88 @@
 echo '<link rel="stylesheet" href="css/foro.css">';
 
 require_once 'autorizacion.php';
-
+require_once 'src/juegos/bd/Juego.php';
 
 function buildFormularioPublicacion()
 {
+    $juegos = Juego::obtenerNombresJuegos();
+
+    $opcionesjuegos = '';
+    foreach ($juegos as $juego) {
+        $opcionesjuegos .= "<option value=\"$juego\">$juego</option>";
+    }
+
+    $opcionesTipo = '
+        <option value="Duda">Duda</option>
+        <option value="Guía">Guía</option>
+        <option value="Truco">Truco</option>
+        <option value="Otro">Otro</option>
+    ';
+
     return <<<HTML
-        <form class="formulario-notici" action="noticias/procesarPublicacion.php" method="post">
+        <form class="formulario-foro" action="foro/procesarPublicacion.php" method="post">
             <label for="titulo">Título:</label>
             <input type="text" id="titulo" name="titulo" required>
             
             <label for="fecha">Fecha:</label>
             <input type="date" id="fecha" name="fecha" required>
 
-            <label for="tipo">Fecha:</label>
-            <input type="text" id="tipo" name="tipo" required>
+            <label for="tipo">Tipo:</label>
+            <select id="tipo" name="tipo" required>
+                $opcionesTipo
+            </select>
 
-            <label for="juego">Fecha:</label>
-            <input type="text" id="juego" name="juego" required>
+            <label for="juego">Juego:</label>
+            <select id="juego" name="juego" required>
+                $opcionesjuegos
+            </select>
             
             <label for="contenido">Contenido:</label>
             <textarea id="contenido" name="contenido" rows="4" cols="50" required></textarea><br><br>
             
             <input type="submit" value="Enviar">
         </form>
-        HTML;
+    HTML;
 }
-
 
 function editarformularioPublicacion($id)
 {
+    $juegos = Juego::obtenerNombresJuegos();
     $publicacion = Publicacion::obtenerPublicacionPorId($id);
+
     $titulo = htmlspecialchars($publicacion->getTitulo());
     $fecha = htmlspecialchars($publicacion->getFecha());
     $tipo = htmlspecialchars($publicacion->getTipo());
     $juego = htmlspecialchars($publicacion->getJuego());
     $contenido = htmlspecialchars($publicacion->getContenido());
-    //$contenidoActual = htmlspecialchars($noticia->getContenido());
+
+    //Recopila los juegos posibles y selecciona del que se estaba hablando antes de editar
+    $opcionesjuegos = '';
+    foreach ($juegos as $juegoo) {
+        if ($juegoo == $juego) {
+            $selected = 'selected';
+        } else {
+            $selected = '';
+        }
+        $opcionesjuegos .= "<option value=\"$juegoo\" $selected>$juegoo</option>";
+    }
+
+    //Recopila los tipos posibles y selecciona del que se estaba hablando antes de editar
+    //Si el tipo es añadido en la BD manualmente y no cumple con las 4 opciones, se selecciona "Duda" por defecto
+    //Esto no le puede pasar al usuario ya que el formulario de creación restringe a estas 4 opciones
+    $opcionesTipo = '';
+    $tipos = ["Duda", "Guía", "Truco", "Otro"];
+    foreach ($tipos as $tipoo) {
+        if ($tipoo == $tipo) {
+            $selected = 'selected';
+        } else {
+            $selected = '';
+        }
+        $opcionesTipo .= "<option value=\"$tipoo\" $selected>$tipoo</option>";
+    }
+    
     return <<<HTML
-        <form class="formulario-noticia" action="foro/editarPublicacion.php" method="post">
+        <form class="formulario-foro" action="foro/editarPublicacion.php" method="post">
             <input type='hidden' name='id' value= '$id'>
 
             <label for="titulo">Título:</label>
@@ -50,30 +94,34 @@ function editarformularioPublicacion($id)
             <input type="date" id="fecha" name="fecha" value='$fecha' required>
 
             <label for="tipo">Tipo:</label>
-            <input type="text" id="tipo" name="tipo" value='$tipo' required>
+            <select id="tipo" name="tipo" required>
+                $opcionesTipo
+            </select>
 
             <label for="juego">Juego:</label>
-            <input type="text" id="juego" name="juego" value='$juego' required>
+            <select id="juego" name="juego" required>
+                $opcionesjuegos
+            </select>
             
             <label for="contenido">Contenido:</label>
             <textarea id="contenido" name="contenido"  rows="4" cols="50" required>$contenido</textarea><br><br>
             
             <input type="submit" value="Enviar">
         </form>
-        HTML;
+HTML;
 }
 
-/*
-function mostrarBotonAgregarNoticia()
+
+function mostrarBotonAgregarPublicacion()
 {
     if (estaLogado()) {
         if ($_SESSION['admin'] || $_SESSION['moderador'] || $_SESSION['experto']) {
-            return '<a href="noticias.php?accion=agregarNoticia" class="noticia-button">Redactar Noticia</a>';
+            return '<a href="foro.php?accion=agregarPublicacion" class="foro-button">Redactar publicación</a>';
         }
     }
     return '';
 }
- */
+ 
 function listaPublicaciones()
 {
     $publicaciones = Publicacion::obtenerPublicaciones();

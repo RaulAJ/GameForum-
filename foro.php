@@ -39,7 +39,7 @@ if (empty($mensaje) && !isset($_GET['accion'])) {
 } 
 
 if (isset($_GET['accion']) && $_GET['accion'] === 'agregarPublicacion') {
-    //$contenidoPrincipal .= buildFormularioNoticia();
+    $contenidoPrincipal .= buildFormularioPublicacion();
 }  elseif (isset($_GET['id']) && isset($_GET['accion']) && $_GET['accion'] === 'editarPublicacion'){
     $contenidoPrincipal .= editarFormularioPublicacion($_GET['id']);
 }

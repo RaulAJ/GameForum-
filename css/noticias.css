@@ -88,6 +88,7 @@
     background-color: #d22a00; /* Cambiar color de fondo al pasar el mouse */
     border-color: #d22a00; /* Cambiar color del borde al pasar el mouse */
 }
+
 /* Estilo para el formulario de noticia */
 .formulario-noticia {
     max-width: 600px;

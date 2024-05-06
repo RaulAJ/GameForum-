@@ -88,32 +88,3 @@ nav ul li a {
 .spacer {
     flex: 1; /* Permite que el elemento ocupe el espacio restante */
 }
-
-/* Estilos para la caja de búsqueda */
-.search-box {
-    display: flex; /* Muestra los elementos en línea */
-    align-items: center; /* Centra verticalmente los elementos */
-}
-
-/* Estilos para el campo de entrada de búsqueda */
-.search-box input[type="text"] {
-    padding: 8px; /* Espaciado interno */
-    border: 1px solid #ccc; /* Borde */
-    border-radius: 5px; /* Bordes redondeados */
-    margin-right: 10px; /* Espaciado a la derecha */
-}
-
-/* Estilos para el botón de búsqueda */
-.search-box button {
-    padding: 8px 15px; /* Espaciado interno */
-    background-color: #4CAF50; /* Color de fondo */
-    color: white; /* Color del texto */
-    border: none; /* Sin borde */
-    border-radius: 5px; /* Bordes redondeados */
-    cursor: pointer; /* Cambia el cursor */
-}
-
-/* Estilos para el botón de búsqueda al pasar el mouse */
-.search-box button:hover {
-    background-color: #45a049; /* Cambia el color de fondo al pasar el mouse */
-}

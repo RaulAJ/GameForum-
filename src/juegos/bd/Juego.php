@@ -317,6 +317,24 @@ public static function obtenerJuego($id) {
         return $juegos;
     }
 
+    public static function obtenerNombresJuegos() {
+        $conn = BD::getInstance()->getConexionBd();
+        $query = "SELECT Juego FROM videojuegos ORDER BY Nota DESC";
+        $result = $conn->query($query);
+        
+        $juegos = [];
+        if ($result) {
+            while ($fila = $result->fetch_assoc()) {
+                $juegos[] = $fila['Juego'];
+            }
+            $result->free();
+        } else {
+            error_log("Error BD ({$conn->errno}): {$conn->error}");
+        }
+        
+        return $juegos;
+    }
+
     /**
      * Obtiene los juegos ordenados por año de salida de menor a mayor (ascendente).
      *

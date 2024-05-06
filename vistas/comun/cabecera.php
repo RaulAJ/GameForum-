@@ -28,6 +28,11 @@ require_once 'vistas/helpers/noticias.php';
                     echo mostrarBotonAgregarNoticia(); 
                 }
                 ?>
+                 <?php
+                if (basename($_SERVER['PHP_SELF']) == 'foro.php') {
+                    echo mostrarBotonAgregarPublicacion(); 
+                }
+                ?>
             </div>
             <div class="login">
                 <?= saludo() ?>
@@ -40,13 +45,7 @@ require_once 'vistas/helpers/noticias.php';
             <ul>
                 <li><a href="foro.php">Foro</a></li>
                 <li><a href="noticias.php">Noticias</a></li>
-                <li><a href="topJuegos.php">Top Juegos</a></li>
-
-                <li class="spacer"></li><!-- Este elemento crea un espacio entre "Top Juegos" y el cuadro de búsqueda -->
-                <li class="search-box">
-                    <input type="text" placeholder="Buscar">
-                    <button type="submit">Buscar</button>
-                </li>
+                <li><a href="topJuegos.php">Top Juegos</a></li>      
             </ul>
         </div>
     </nav>
