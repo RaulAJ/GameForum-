@@ -1,6 +1,6 @@
 <?php
 // Link CSS
-echo '<link rel="stylesheet" href="css/foro.css">';
+echo '<link rel="stylesheet" href="css/estilos.css">';
 
 require_once 'autorizacion.php';
 require_once 'src/juegos/bd/Juego.php';

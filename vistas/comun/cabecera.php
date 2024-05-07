@@ -9,7 +9,7 @@ require_once 'vistas/helpers/noticias.php';
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title><?= $tituloPagina ?></title>
-    <link rel="stylesheet" href="css/cabecera.css">
+    <link rel="stylesheet" href="css/estilos.css">
 </head>
 <body>
     <header>
