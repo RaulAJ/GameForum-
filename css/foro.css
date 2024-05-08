@@ -182,3 +182,7 @@
     color: #666; /* Color del texto de la fecha */
 }
 
+.separador {
+    border-top: 2px solid #555; /* Establece una línea superior de 1 píxel de ancho y color gris */
+    margin: 20px 0; /* Espacio de margen arriba y abajo */
+}

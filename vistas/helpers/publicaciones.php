@@ -4,6 +4,7 @@ echo '<link rel="stylesheet" href="css/estilos.css">';
 
 require_once 'autorizacion.php';
 require_once 'src/juegos/bd/Juego.php';
+require_once 'src/respuestas/bd/Respuesta.php';
 
 function buildFormularioPublicacion()
 {
@@ -136,7 +137,11 @@ function listaPublicaciones()
         $id = $publicacion->getId();
 
         $listaHtml .= "<div class=\"Publicacion\">
-                        <h3 class=\"titulo-publicacion\">$nombre</h3>
+                        <h3 class=\"titulo-publicacion\">
+                        <form action='verPublicacion.php' method='post'>
+                            <input type='hidden' name='id' value='$id'>
+                            <button type='submit' class='borrar-button'>$nombre</button>
+                        </form></h3>
                         <p class=\"fecha-publicacion\">$fecha</p>
                         <p class=\"tipo-publicacion\">Tipo: $tipo</p>
                         <p class=\"juego-publicacion\">Juego: 
@@ -160,6 +165,24 @@ function listaPublicaciones()
                     </form>";
              }
         }
+
+        $listaHtml .= "<br><br></div>";
+    }
+    $listaHtml .= '</div>';
+    return $listaHtml;
+}
+     
+function listaRespuestas($idForo)
+{
+    $respuestas = Respuesta::obtenerRespuestas($idForo);
+    $listaHtml = '<div class="lista-respuestas">';
+    foreach ($respuestas as $respuesta) {
+        $fecha = htmlspecialchars($respuesta->getFecha());
+        $usuario = htmlspecialchars($respuesta->getUsuario());
+        $listaHtml .= "<div class=\"Respuesta\">
+                        <p class=\"fecha-respuesta\">$fecha</p>
+                        <p class=\"usuario-respuesta\">Escrita por: $usuario </p>
+                        <div class=\"contenido-respuesta\">{$respuesta->getContenido()}</div>";
 
         $listaHtml .= "<br><br></div>";
     }

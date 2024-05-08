@@ -149,30 +149,12 @@ class Publicacion {
         return null;
     }
 
-
     public function borrate()
     {
         if ($this->id !== null) {
             return self::borraPublicacion($this->id);
         }
         return false;
-    }
-
-    public static function borraRespuestas($id)   //borra las respuestas de la noticia, la id parametro es de la noticia
-    {
-        $conn = BD::getInstance()->getConexionBd();
-        if (!$conn) {
-            return false;
-        }
-
-        $query = sprintf("DELETE FROM respuestas WHERE `ID foro` = %d", $id);
-
-        if ($conn->query($query)) {
-            return true;
-        } else {
-            error_log("Error al borrar la publicacion ({$conn->errno}): {$conn->error}");
-            return false;
-        }
     }
 
     public static function borraPublicacion($id)

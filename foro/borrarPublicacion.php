@@ -13,7 +13,7 @@ if (estaLogado() && isset($_POST['id'])) {
 
     // Verifica si la noticia existe y si el usuario tiene permiso para borrarla
     if ($publicacion && (esMismoUsuario($publicacion->getUsuario()) || $_SESSION['admin'] || $_SESSION['moderador'])) {
-        Publicacion::borraRespuestas($id_publicacion);
+        Respuesta::borraRespuestas($id_publicacion);
         Publicacion::borraPublicacion($id_publicacion);
         header('Location: ../foro.php');
         exit();
