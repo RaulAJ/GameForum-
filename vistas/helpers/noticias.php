@@ -76,15 +76,22 @@ function listaNoticias()
 
         if (estaLogado()) {
             if (esMismoUsuario($usuario) || $_SESSION['admin'] || $_SESSION['moderador']) {
+                $listaHtml .= "<div class=\"form-container\">";
+    
+                // Botón de borrar noticia
                 $listaHtml .= "<form action='noticias/borrarNoticia.php' method='post'>
-                                   <input type='hidden' name='id' value='$id'>
-                                   <button type='submit' class='borrar-button'>Borrar</button>
-                               </form>";
+                                    <input type='hidden' name='id' value='$id'>
+                                    <button type='submit' class='borrar_button'>Borrar</button>
+                                </form>";
+
+                // Botón de editar noticia
                 $listaHtml .= "<form action='noticias.php'>
                                     <input type='hidden' name='accion' value='editarNoticia'>
                                     <input type='hidden' name='id' value='$id'>
-                                    <button type='submit' class='borrar-button'>Editar</button>
+                                    <button type='submit' class='editar-button'>Editar</button>
                                 </form>";
+
+                $listaHtml .= "</div>"; // Cierre del div de botones de acciones
             }
         }
 

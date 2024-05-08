@@ -1,5 +1,7 @@
 <?php
 
+echo '<link rel="stylesheet" href="css/estilos.css">';
+
 require_once 'config.php';
 require_once 'vistas/helpers/juegos.php';
 require_once 'src/juegos/bd/Juego.php';

@@ -21,6 +21,51 @@
     ' . . . juego tipo usuario'; /* Áreas del grid: título, contenido, fecha y usuario */
 }
 
+/* Estilo para el botón del título */
+.titulo-button {
+    background-color: transparent; /* Sin fondo */
+    border: none; /* Sin borde */
+    font-size: 1.2em; /* Tamaño de fuente más grande */
+    color: #333; /* Color del texto */
+    cursor: pointer; /* Cursor de puntero al pasar sobre él */
+    transition: color 0.3s; /* Transición suave para el color del texto */
+    text-decoration: underline; /* Subrayado */
+}
+
+/* Efecto de color al pasar el mouse sobre el botón del título */
+.titulo-button:hover {
+    color: #4CAF50; /* Cambia el color del texto al pasar el ratón */
+}
+
+/* Estilo para los botones de borrar y editar */
+.borrar_button, .editar-button {
+    background-color: transparent; /* Sin fondo */
+    border: none; /* Sin borde */
+    font-size: 1em; /* Tamaño de fuente */
+    color: #4b58af; /* Color del texto menos llamativo */
+    cursor: pointer; /* Cursor de puntero al pasar sobre él */
+    transition: color 0.3s; /* Transición suave para el color del texto */
+    padding: 5px 10px; /* Ajuste del relleno */
+    border: 1px solid #4b58af; /* Borde fino */
+    border-radius: 3px; /* Bordes redondeados */
+}
+
+/* Efecto de color al pasar el mouse sobre los botones de borrar y editar */
+.borrar_button:hover, .editar-button:hover {
+    color: #734242; /* Cambia el color del texto al pasar el ratón */
+    border-color: #734242; /* Cambia el color del borde al pasar el ratón */
+}
+
+/* Efecto al hacer clic en los botones de borrar y editar */
+.borrar_button:active, .editar-button:active {
+    transform: translateY(1px); /* Efecto de pulsación */
+}
+
+
+.form-container {
+    margin-top: 20px; /* Ajusta el margen superior según sea necesario */
+}
+
 /* Estilos para el título de la noticia */
 .titulo-publicacion {
     grid-area: titulo; /* Asigna el área del grid para el título */
@@ -80,8 +125,7 @@
     transform: scale(0.95); /* Reduce ligeramente el tamaño del botón al hacer clic */
 }
 
-
-/* Estilo para el formulario de noticia */
+/* Estilo para el formulario */
 .formulario-foro {
     max-width: 600px;
     margin: 50px auto; /* Mayor margen superior e inferior para mayor espacio */
@@ -100,7 +144,7 @@
 /* Estilo para las etiquetas */
 .formulario-foro label {
     display: block;
-    margin-bottom: 20px; /* Mayor espacio entre etiquetas */
+    margin-bottom: 30px; /* Mayor espacio entre etiquetas */
     font-weight: bold;
     color: #333; /* Color del texto de la etiqueta */
 }
@@ -129,7 +173,7 @@
 .formulario-foro input[type="submit"] {
     background-color: #4CAF50;
     color: white;
-    padding: 18px 25px; /* Mayor tamaño de botón */
+    padding: 20px 30px; /* Mayor tamaño de botón */
     border: none;
     border-radius: 10px; /* Bordes redondeados */
     cursor: pointer;
@@ -148,7 +192,7 @@
 }
 
 /* Estilo para los carruseles desplegables */
-.formulario-foro  select {
+.formulario-foro select {
     width: 100%;
     padding: 8px;
     font-size: 16px;
@@ -157,7 +201,7 @@
     box-sizing: border-box;
 }
 
-.formulario-foro  select:focus {
+.formulario-foro select:focus {
     outline: none;
     border-color: #007bff; 
 }
@@ -173,7 +217,7 @@
     font-size: 1.5em; /* Tamaño de fuente más grande para el título */
     color: #333; /* Color del texto del título */
     border-bottom: 2px solid #ccc; /* Línea inferior */
-    margin-bottom: 20px; /* Mayor espacio después del título */
+    margin-bottom: 30px; /* Mayor espacio después del título */
 }
 
 /* Estilo para la fecha */
@@ -182,7 +226,16 @@
     color: #666; /* Color del texto de la fecha */
 }
 
+.formulario-foro #juego {
+    margin-bottom: 30px; /* Añade espacio antes del elemento */
+}
+
+.formulario-foro #tipo {
+    margin-bottom: 30px; /* Añade espacio antes del elemento */
+}
+
+
 .separador {
     border-top: 2px solid #555; /* Establece una línea superior de 1 píxel de ancho y color gris */
-    margin: 20px 0; /* Espacio de margen arriba y abajo */
+    margin: 30px 0; /* Espacio de margen arriba y abajo */
 }
