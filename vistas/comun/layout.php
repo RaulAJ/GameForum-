@@ -18,5 +18,7 @@
 		<?= $contenidoPrincipal ?>
 	</article>
 </main>
+    <script type="text/javascript" src="js/jquery-3.7.1.min.js"></script>
+    <script type="text/javascript" src="js/validaCorreo.js"></script>
 </body>
 </html>

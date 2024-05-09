@@ -13,3 +13,4 @@ $htmlFormRegistro
 EOS;
 
 require_once 'vistas/comun/layout.php';
+?>
