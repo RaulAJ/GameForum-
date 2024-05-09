@@ -23,7 +23,11 @@ class Noticia {
     public static function crea($titulo, $usuario, $fecha, $contenido)
     {
         $noticia = new Noticia($titulo, $usuario, $fecha, $contenido, null);
-        return $noticia->guarda();
+        if ($noticia->guarda()) {
+            return $noticia->getId(); // Devuelve el ID en lugar de true
+        } else {
+            return false;
+        }
     }
 
     public function guarda() 

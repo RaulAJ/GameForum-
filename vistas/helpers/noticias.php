@@ -3,11 +3,12 @@
 echo '<link rel="stylesheet" href="css/estilos.css">';
 
 require_once 'autorizacion.php';
+require_once 'src/imagenes/bd/Imagen.php';
 
 function buildFormularioNoticia()
 {
     return <<<HTML
-        <form class="formulario-noticia" action="noticias/procesarNoticia.php" method="post">
+        <form class="formulario-noticia" action="noticias/procesarNoticia.php" method="post" enctype="multipart/form-data">
             <label for="titulo">Título:</label>
             <input type="text" id="titulo" name="titulo" required>
             
@@ -17,10 +18,14 @@ function buildFormularioNoticia()
             <label for="contenido">Contenido:</label>
             <textarea id="contenido" name="contenido" rows="4" cols="50" required></textarea><br><br>
             
+            <label for="imagen">Imagen:</label>
+            <input type="file" id="imagen" name="imagen"><br><br>
+            
             <input type="submit" value="Enviar">
         </form>
         HTML;
 }
+
 
 function editarformularioNoticia($id)
 {
@@ -67,11 +72,21 @@ function listaNoticias()
         $fecha = htmlspecialchars($noticia->getFecha());
         $usuario = htmlspecialchars($noticia->getUsuario());
         $id = $noticia->getId();
+        $imagenes = Imagen::obtenerPorNoticiaId($id); // Obtener las imágenes asociadas
+
+        $imagenesHtml = ''; // Inicializar el HTML para imágenes
+        foreach ($imagenes as $imagen) {
+            // Añadir cada imagen al HTML
+            $rutaImagen = htmlspecialchars($imagen->getRuta());
+            $descripcionImagen = htmlspecialchars($imagen->getDescripcion());
+            $imagenesHtml .= "<img src='{$rutaImagen}' alt='{$descripcionImagen}' style='width: 100px; height: auto;'>";
+        }
 
         $listaHtml .= "<div class=\"noticia\">
                         <h3 class=\"titulo-noticia\">$nombre</h3>
                         <p class=\"fecha-noticia\">$fecha</p>
-                        <p class=\"usuario-noticia\">Escrita por: $usuario </p>
+                        <p class=\"usuario-noticia\">Escrita por: $usuario</p>
+                        <div class=\"imagenes-noticia\">$imagenesHtml</div>
                         <div class=\"contenido-noticia\">{$noticia->getContenido()}</div>";
 
         if (estaLogado()) {

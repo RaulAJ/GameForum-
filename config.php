@@ -7,6 +7,8 @@ CREATE USER 'gameforum'@'%' IDENTIFIED BY 'gameforum'; GRANT USAGE ON *.* TO 'ga
 
 // Parámetros de configuración generales
 define('RUTA_APP', '/SW');
+define('RUTA_RAIZ', realpath($_SERVER['DOCUMENT_ROOT'])); //Ruta absoluta a la raiz
+define('RUTA_UPLOADS', RUTA_RAIZ . RUTA_APP . '/uploads'); //ruta absoluta al directorio uplods
 define('RUTA_IMGS', RUTA_APP . '/img');
 define('RUTA_CSS', RUTA_APP . '/css');
 define('RUTA_JS', RUTA_APP . '/js');
