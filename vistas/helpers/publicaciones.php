@@ -174,21 +174,4 @@ function listaPublicaciones()
     return $listaHtml;
 }
      
-function listaRespuestas($idForo)
-{
-    $respuestas = Respuesta::obtenerRespuestas($idForo);
-    $listaHtml = '<div class="lista-respuestas">';
-    foreach ($respuestas as $respuesta) {
-        $fecha = htmlspecialchars($respuesta->getFecha());
-        $usuario = htmlspecialchars($respuesta->getUsuario());
-        $listaHtml .= "<div class=\"Respuesta\">
-                        <p class=\"fecha-respuesta\">$fecha</p>
-                        <p class=\"usuario-respuesta\">Escrita por: $usuario </p>
-                        <div class=\"contenido-respuesta\">{$respuesta->getContenido()}</div>";
 
-        $listaHtml .= "<br><br></div>";
-    }
-
-    $listaHtml .= '</div>';
-    return $listaHtml;
-}
