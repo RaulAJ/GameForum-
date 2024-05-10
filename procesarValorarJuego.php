@@ -7,7 +7,7 @@ require_once 'src/juegos/bd/Juego.php';
 
 $tituloPagina = 'Valorar Juego';
 
-$nota = filter_input(INPUT_POST, 'nota', FILTER_VALIDATE_INT);
+$nota = filter_input(INPUT_POST, 'nota', FILTER_VALIDATE_FLOAT);
 
 // Verificar si la nota es válida
 if ($nota === false) {

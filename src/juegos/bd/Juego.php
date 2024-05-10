@@ -69,9 +69,9 @@ class Juego
     {
         return $this->nota;
     }
-    public function getnResenias() 
+    public function getnResenias()
     {
-         return $this->nResenias; 
+        return $this->nResenias;
     }
     public function getDescripcion()
     {
@@ -237,33 +237,33 @@ class Juego
     }
 
     public static function nuevaResenia($idJuego, $nuevaNota)
-{
-    $conn = BD::getInstance()->getConexionBd();
-    if (!$conn) {
-        return false;
+    {
+        $conn = BD::getInstance()->getConexionBd();
+        if (!$conn) {
+            return false;
+        }
+
+        $juegoActual = self::obtenerJuego($idJuego);
+        $nReseniasAntes = $juegoActual->getnResenias();
+        $notaActual = $juegoActual->getNota();
+
+        // Calcular la nueva nota media
+        $nuevaNotaMedia = ((float)$notaActual * (int)$nReseniasAntes + (float)$nuevaNota) / ((int)$nReseniasAntes + 1);
+
+        // Actualizar la base de datos con los nuevos valores
+        $query = sprintf(
+            "UPDATE videojuegos SET Nota = %f, nResenias = nResenias + 1 WHERE ID = %d",
+            $nuevaNotaMedia,
+            $idJuego
+        );
+
+        if ($conn->query($query)) {
+            return true;
+        } else {
+            error_log("Error al actualizar la nueva resenia del juego en la BD ({$conn->errno}): {$conn->error}");
+            return false;
+        }
     }
-
-    $juegoActual = self::obtenerJuego($idJuego);
-    $nReseniasAntes = $juegoActual->getnResenias();
-    $notaActual = $juegoActual->getNota();
-
-    // Calcular la nueva nota media
-    $nuevaNotaMedia = ($notaActual * $nReseniasAntes + $nuevaNota) / ($nReseniasAntes + 1);
-
-    // Actualizar la base de datos con los nuevos valores
-    $query = sprintf(
-        "UPDATE videojuegos SET Nota = %f, nResenias = nResenias + 1 WHERE ID = %d",
-        $nuevaNotaMedia,
-        $idJuego
-    );
-
-    if ($conn->query($query)) {
-        return true;
-    } else {
-        error_log("Error al actualizar la nueva resenia del juego en la BD ({$conn->errno}): {$conn->error}");
-        return false;
-    }
-}
 
 
     /**
@@ -568,5 +568,4 @@ class Juego
 
         return $sugerenciasJuegos;
     }
-
 }
