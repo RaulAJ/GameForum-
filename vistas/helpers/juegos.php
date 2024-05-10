@@ -80,11 +80,25 @@ function listaSugerencias()
     foreach ($sugerencias as $sugerencia) {
         $id = $sugerencia->getId();
         $nombre = htmlspecialchars($sugerencia->getNombreJuego());
+        $imagenes = Imagen::obtenerPorSugerenciaJuegoId($id); // Fetch images for this suggestion
+
+        $imagenesHtml = '<div class="imagenes-juego">';
+        if ($imagenes) {
+            foreach ($imagenes as $imagen) {
+                // Construct HTML for each image
+                $imagenesHtml .= "<img src='{$imagen->getRuta()}' alt='{$imagen->getDescripcion()}' style='width: 100px; height: auto;'>";
+            }
+        } else {
+            $imagenesHtml .= "<p>No images available.</p>";
+        }
+        $imagenesHtml .= '</div>';
+
         $listaHtml .= "<div class=\"juego\">
                        <form action='verJuego.php' method='post'>
                             <input type='hidden' name='id' value='$id'>
                             <button type='submit' class='borrar-button'>$nombre</button>
                         </form>
+                        $imagenesHtml
                         <form action='juegos/aceptarSugerirJuego.php' method='post'>
                             <input type='hidden' name='id' value='$id'>
                             <button>Aceptar juego</button>
@@ -93,7 +107,7 @@ function listaSugerencias()
                             <input type='hidden' name='id' value='$id'>
                             <button>Rechazar juego</button>
                         </form>                       
-                        </div>";
+                       </div>";
     }
     $listaHtml .= '</div>';
     return $listaHtml;

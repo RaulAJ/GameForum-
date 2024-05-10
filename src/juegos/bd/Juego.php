@@ -115,7 +115,7 @@ class Juego
     }
 
     /**
-     * Inserta un nuevo juego en la base de datos. Verifica primero si el juego ya existe en la tabla de sugerencias
+     * Inserta un nuevo juego en la base de datos. Verifica primero si el juego ya existe
      * y lo inserta si no existe. Luego inserta el juego en la tabla de videojuegos.
      * 
      * @param Juego $juego La instancia del juego a insertar.
@@ -127,21 +127,7 @@ class Juego
         if (!$conn) {
             return false;
         }
-
-        //Comprobar si el juego ya existe en sugerencias
-        $querySugerencia = sprintf(
-            "SELECT COUNT(*) AS existe FROM sugerenciasjuegos WHERE Juego = '%s'",
-            $conn->real_escape_string($juego->getNombreJuego())
-        );
-        $resultadoSugerencia = $conn->query($querySugerencia);
-        $fila = $resultadoSugerencia->fetch_assoc();
-        $resultadoSugerencia->free();
-
-        if ($fila['existe'] == 0) {
-            // El juego no existe en sugerencias, insertar primero allí
-            self::sugiere($juego->getNombreJuego(), $juego->getAnioDeSalida(), $juego->getDesarrollador(), $juego->getGenero(), $juego->getDescripcion());
-        }
-
+        //Todo: evitar insertar juegos con el mismo nombre
         // Insertar en Videojuegos
         $query = sprintf(
             "INSERT INTO videojuegos (Juego, `Año de salida`, Desarrollador, Genero, Nota, Descripcion) VALUES ('%s', '%s', '%s', '%s', '%f', '%s')",
@@ -203,7 +189,7 @@ class Juego
         );
 
         if ($conn->query($query)) {
-            return true;
+            return $conn->insert_id; //Devolver id
         } else {
             error_log("Error BD ({$conn->errno}): {$conn->error}");
             return false;
@@ -336,6 +322,7 @@ class Juego
         $result = $conn->query($query);
 
         if ($result && $result->num_rows > 0) {
+            $nota = 0;
             $fila = $result->fetch_assoc();
             $juego = new Juego(
                 $fila['ID'],
@@ -343,7 +330,7 @@ class Juego
                 $fila['Año de salida'],
                 $fila['Desarrollador'],
                 $fila['Genero'],
-                $fila['Nota'],
+                $nota,
                 $fila['Descripcion']
             );
             $result->free();

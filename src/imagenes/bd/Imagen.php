@@ -38,7 +38,7 @@ class Imagen
         return $this->descripcion;
     }
 
-    public static function crea($file, $descripcion, $videojuego_id = null, $noticia_id = null, $foro_id = null, $sugerencia_juego_id = null)
+    public static function crea($file, $descripcion = null, $videojuego_id = null, $noticia_id = null, $foro_id = null, $sugerencia_juego_id = null)
     {
         $imagen = new Imagen(null, $file['name'], $descripcion, $videojuego_id, $noticia_id, $foro_id, $sugerencia_juego_id);
         return $imagen->guarda($file);
@@ -313,4 +313,35 @@ class Imagen
             return false;
         }
     }
+     /**
+     * Modifica una imagen, eliminando la referencia de sugerencias(null) y
+     * reemplazandola por un  id que referencia a la tabla videojuegos
+     *
+     * @param int $id ID de la imagen a actualizar.
+     * @return bool True si la operación fue exitosa, false en caso contrario.
+     */
+    public static function actualizaImagenJuegoId($imagenId, $nuevoJuegoId)
+    {
+        $conn = BD::getInstance()->getConexionBd();
+        if (!$conn) {
+            error_log("No se pudo conectar a la base de datos.");
+            return false;
+        }
+
+        // Preparar la consulta para actualizar la imagen
+        $query = sprintf(
+            "UPDATE imagenes SET videojuego_id = %d, sugerencia_juego_id = NULL WHERE id = %d",
+            $conn->real_escape_string($nuevoJuegoId),
+            $conn->real_escape_string($imagenId)
+        );
+
+        // Ejecutar la consulta
+        if ($conn->query($query)) {
+            return true;
+        } else {
+            error_log("Error al actualizar la imagen en la base de datos ({$conn->errno}): {$conn->error}");
+            return false;
+        }
+    }
+
 }
