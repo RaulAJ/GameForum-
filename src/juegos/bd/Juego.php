@@ -16,6 +16,7 @@ class Juego
     private $genero;
     /** @var int La nota o calificación del juego. */
     private $nota;
+    private $nResenias;
     /** @var string Una breve descripción del juego. */
     private $descripcion;
 
@@ -32,13 +33,14 @@ class Juego
      * @param int $nota La nota o calificación del juego.
      * @param string $descripcion Una breve descripción del juego.
      */
-    private function __construct($id, $nombreJuego, $anioDeSalida, $desarrollador, $genero, $nota, $descripcion) {
+    private function __construct($id, $nombreJuego, $anioDeSalida, $desarrollador, $genero, $nota, $nResenias, $descripcion) {
         $this->id = $id;
         $this->nombreJuego = $nombreJuego;
         $this->anioDeSalida = $anioDeSalida;
         $this->desarrollador = $desarrollador;
         $this->genero = $genero;
         $this->nota = $nota;
+        $this->nResenias = $nResenias;
         $this->descripcion = $descripcion;
     }
 
@@ -48,6 +50,7 @@ class Juego
     public function getDesarrollador() { return $this->desarrollador; }
     public function getGenero() { return $this->genero; }
     public function getNota() { return $this->nota; }
+    public function getnResenias() { return $this->nResenias; }
     public function getDescripcion() { return $this->descripcion; }
 
     /**
@@ -63,9 +66,9 @@ class Juego
      * @param string $descripcion Una breve descripción del juego.
      * @return bool True si el juego se guardó con éxito, false en caso contrario.
      */
-    public static function crea($nombreJuego, $anioDeSalida, $desarrollador, $genero, $nota, $descripcion)
+    public static function crea($nombreJuego, $anioDeSalida, $desarrollador, $genero, $nota, $nResenias, $descripcion)
     {
-        $juego = new Juego(null, $nombreJuego, $anioDeSalida, $desarrollador, $genero, $nota, $descripcion);
+        $juego = new Juego(null, $nombreJuego, $anioDeSalida, $desarrollador, $genero, $nota, $nResenias, $descripcion);
         return $juego->guarda();
     }
 
@@ -127,6 +130,7 @@ class Juego
             $conn->real_escape_string($juego->getDesarrollador()),
             $conn->real_escape_string($juego->getGenero()),
             $juego->getNota(),
+            $juego->getnResenias(),
             $conn->real_escape_string($juego->getDescripcion())
         );
 
@@ -207,6 +211,7 @@ class Juego
             $conn->real_escape_string($juego->getDesarrollador()),
             $conn->real_escape_string($juego->getGenero()),
             $juego->getNota(),
+            $juego->getnResenias(),
             $conn->real_escape_string($juego->getDescripcion()),
             $juego->getId()
         );
@@ -219,13 +224,43 @@ class Juego
         }
     }
 
+    public static function nuevaResenia($idJuego, $nuevaNota)
+{
+    $conn = BD::getInstance()->getConexionBd();
+    if (!$conn) {
+        return false;
+    }
+
+    $juegoActual = self::obtenerJuego($idJuego);
+    $nReseniasAntes = $juegoActual->getnResenias();
+    $notaActual = $juegoActual->getNota();
+
+    // Calcular la nueva nota media
+    $nuevaNotaMedia = ($notaActual * $nReseniasAntes + $nuevaNota) / ($nReseniasAntes + 1);
+
+    // Actualizar la base de datos con los nuevos valores
+    $query = sprintf(
+        "UPDATE videojuegos SET Nota = %f, nResenias = nResenias + 1 WHERE ID = %d",
+        $nuevaNotaMedia,
+        $idJuego
+    );
+
+    if ($conn->query($query)) {
+        return true;
+    } else {
+        error_log("Error al actualizar la nueva resenia del juego en la BD ({$conn->errno}): {$conn->error}");
+        return false;
+    }
+}
+
+
     /**
      * Borra un juego específico de la base de datos en la tabla videojuegos utilizando su ID único.
      * 
      * @param int $id El ID del juego a borrar.
      * @return bool True si el juego se borró con éxito, false en caso contrario.
      */
-
+     
     private static function borraDeVideojuegos($id)
     {
         $conn = BD::getInstance()->getConexionBd();
@@ -257,7 +292,7 @@ class Juego
             error_log("Error al borrar la sugerencia de juego ({$conn->errno}): {$conn->error}");
             return false;
         }
-}
+    }
 
 
     public static function obtenerIdJuego($nombre) {
@@ -293,6 +328,7 @@ public static function obtenerJuego($id) {
             $fila['Desarrollador'],
             $fila['Genero'],
             $fila['Nota'],
+            $fila['nResenias'],
             $fila['Descripcion']
         );
         $result->free();
@@ -317,6 +353,7 @@ public static function obtenerSugerencia($id) {
             $fila['Desarrollador'],
             $fila['Genero'],
             $fila['Nota'],
+            $fila['nResenias'],
             $fila['Descripcion']
         );
         $result->free();
@@ -347,6 +384,7 @@ public static function obtenerSugerencia($id) {
                     $fila['Desarrollador'],
                     $fila['Genero'],
                     $fila['Nota'],
+                    $fila['nResenias'],
                     $fila['Descripcion']
                 );
             }
@@ -397,6 +435,7 @@ public static function obtenerSugerencia($id) {
                     $fila['Desarrollador'],
                     $fila['Genero'],
                     $fila['Nota'],
+                    $fila['nResenias'],
                     $fila['Descripcion']
                 );
             }
@@ -429,6 +468,7 @@ public static function obtenerSugerencia($id) {
                     $fila['Desarrollador'],
                     $fila['Genero'],
                     $fila['Nota'],
+                    $fila['nResenias'],
                     $fila['Descripcion']
                 );
             }
@@ -465,6 +505,7 @@ public static function obtenerSugerencia($id) {
                     $fila['Desarrollador'],
                     $fila['Genero'],
                     $fila['Nota'],
+                    $fila['nResenias'],
                     $fila['Descripcion']
                 );
             }
@@ -496,6 +537,7 @@ public static function obtenerSugerencia($id) {
                     $fila['Desarrollador'],
                     $fila['Genero'],
                     null,
+                    0,
                     $fila['Descripcion']
                 );
             }

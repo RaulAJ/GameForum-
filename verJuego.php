@@ -5,6 +5,8 @@ echo '<link rel="stylesheet" href="css/estilos.css">';
 require_once 'config.php';
 require_once 'vistas/helpers/juegos.php';
 require_once 'src/juegos/bd/Juego.php';
+require_once 'vistas/helpers/valorarJuego.php';
+
 $tituloPagina='Detalles del juego';
 $mensaje = ''; 
 $contenidoPrincipal = '';
@@ -32,6 +34,10 @@ $contenidoPrincipal .=
         <p><strong>Nota:</strong> $nota </p>
         <p><strong>Descripción:</strong> $descripcion</p>
     </div>";
+
+    $contenidoPrincipal .= "<h2>Valora este juego!</h2> ";
+    $contenidoPrincipal .= buildFormularioValorarJuego($id);
+    
 
 
 require 'vistas/comun/layout.php';

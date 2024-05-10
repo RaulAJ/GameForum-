@@ -1,0 +1,27 @@
+<?php
+
+require_once 'config.php';
+require_once 'vistas/helpers/juegos.php';
+require_once 'vistas/helpers/valorarJuego.php';
+require_once 'src/juegos/bd/Juego.php';
+
+$tituloPagina = 'Valorar Juego';
+
+$nota = filter_input(INPUT_POST, 'nota', FILTER_VALIDATE_INT);
+
+// Verificar si la nota es válida
+if ($nota === false) {
+    // Si la nota no es válida, redirigir de vuelta al formulario de valoración
+    header("Location: formularioValorarJuego.php");
+    exit();
+}
+
+$idJuego = $_POST['id']; // Suponiendo que has almacenado el ID del juego en la sesión
+$exito = Juego::nuevaResenia($idJuego, $nota);
+
+
+$contenidoPrincipal=<<<EOS
+	<h3>Has valorado el juego con un $nota/10</h3>
+EOS;
+
+require 'vistas/comun/layout.php';
