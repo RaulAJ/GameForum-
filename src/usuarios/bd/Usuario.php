@@ -14,11 +14,45 @@ class Usuario
         return false;
     }
     
-    public static function crea($nombreUsuario, $nombreCompleto, $edad, $correo, $password, $experto, $moderador, $admin)
+    public static function crea($nombreUsuario, $nombreCompleto, $edad, $correo, $password, $experto, $moderador, $admin, $juegosValorados)
     {
-        $user = new Usuario($nombreUsuario, $nombreCompleto, $edad, $correo, $password, $experto, $moderador, $admin);
+        $user = new Usuario($nombreUsuario, $nombreCompleto, $edad, $correo, $password, $experto, $moderador, $admin, $juegosValorados);
         return $user->guarda();
     }
+
+    public static function compruebaValorado($idUsuario, $idJuego)
+    {
+        $conn = BD::getInstance()->getConexionBd();
+        $query = sprintf("SELECT JuegosValorados FROM usuarios  WHERE Usuario='%s'", $conn->real_escape_string($idUsuario));
+        $rs = $conn->query($query);
+        if ($rs) {
+            $fila = $rs->fetch_assoc();
+            if ($fila) {
+                $juegosValorados = $fila['JuegosValorados'];
+                $juegosValoradosArray = explode(", ", $juegosValorados);
+                return in_array($idJuego, $juegosValoradosArray);
+            } else {
+                return false; // Usuario no encontrado
+            }
+            $rs->free();
+        } else {
+            error_log("Error BD ({$conn->errno}): {$conn->error}");
+            return false;
+        }
+    }
+    
+    public static function aniadirValoracion($idUsuario, $idJuego)
+{
+    $conn = BD::getInstance()->getConexionBd();
+    $query = sprintf("UPDATE usuarios SET JuegosValorados = CONCAT(JuegosValorados, ', %d') WHERE Usuario='%s'", $idJuego, $conn->real_escape_string($idUsuario));
+    if ($conn->query($query)) {
+        return true; // Valoración añadida con éxito
+    } else {
+        error_log("Error al actualizar la base de datos: {$conn->errno} - {$conn->error}");
+        return false; // Error al actualizar la base de datos
+    }
+}
+
 
     public static function buscaUsuario($nombreUsuario)
     {
@@ -29,7 +63,7 @@ class Usuario
         if ($rs) {
             $fila = $rs->fetch_assoc();
             if ($fila) {
-                $result = new Usuario($fila['Usuario'], $fila['Contraseña'], $fila['Nombre Completo'], $fila['Edad'], $fila['Correo'], $fila['Experto'], $fila['Moderador'], $fila['Admin']);
+                $result = new Usuario($fila['Usuario'], $fila['Contraseña'], $fila['Nombre Completo'], $fila['Edad'], $fila['Correo'], $fila['Experto'], $fila['Moderador'], $fila['Admin'], $fila['JuegosValorados']);
             }
             $rs->free();
         } else {
@@ -47,8 +81,8 @@ class Usuario
     {
         $result = false;
         $conn = BD::getInstance()->getConexionBd();
-        $query=sprintf("INSERT INTO Usuarios (Usuario, `Nombre Completo`, Edad, Correo, Contraseña, Experto, Moderador, Admin) 
-        VALUES ('%s', '%s', %d, '%s', '%s', %d, %d, %d)"
+        $query=sprintf("INSERT INTO Usuarios (Usuario, `Nombre Completo`, Edad, Correo, Contraseña, Experto, Moderador, Admin, JuegosValorados) 
+        VALUES ('%s', '%s', %d, '%s', '%s', %d, %d, %d, '%s')"
             , $conn->real_escape_string($usuario->nombreUsuario)
             , $conn->real_escape_string($usuario->nombreCompleto)
             , $conn->real_escape_string($usuario->edad)
@@ -57,6 +91,7 @@ class Usuario
             , $conn->real_escape_string($usuario->experto)
             , $conn->real_escape_string($usuario->moderador)
             , $conn->real_escape_string($usuario->admin)
+            , $conn->real_escape_string($usuario->juegosValorados)
         );
         if ( $conn->query($query) ) {
             $result = true;
@@ -123,8 +158,10 @@ class Usuario
 
     private $password;
 
+    private $juegosValorados;
 
-    private function __construct($nombreUsuario, $password, $nombreCompleto, $edad, $correo, $experto, $moderador, $admin)
+
+    private function __construct($nombreUsuario, $password, $nombreCompleto, $edad, $correo, $experto, $moderador, $admin, $juegosValorados)
     {
         $this->nombreUsuario = $nombreUsuario;
         $this->password = $password;
@@ -134,6 +171,7 @@ class Usuario
         $this->experto = $experto;
         $this->admin = $admin;
         $this->moderador = $moderador;
+        $this->juegosValorados =  $juegosValorados;
     }
 
 
@@ -169,6 +207,10 @@ class Usuario
     public function getModerador()
     {
         return $this->moderador;
+    }
+    public function getJuegosValorados()
+    {
+        return $this->juegosValorados;
     }
 
     public function compruebaPassword($password)

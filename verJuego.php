@@ -5,7 +5,9 @@ echo '<link rel="stylesheet" href="css/estilos.css">';
 require_once 'config.php';
 require_once 'vistas/helpers/juegos.php';
 require_once 'src/juegos/bd/Juego.php';
+require_once 'src/usuarios/bd/Usuario.php';
 require_once 'vistas/helpers/valorarJuego.php';
+require_once 'vistas/helpers/usuarios.php';
 
 $tituloPagina='Detalles del juego';
 $mensaje = ''; 
@@ -34,10 +36,15 @@ $contenidoPrincipal .=
         <p><strong>Nota:</strong> $nota </p>
         <p><strong>Descripción:</strong> $descripcion</p>
     </div>";
-
-    $contenidoPrincipal .= "<h2>Valora este juego!</h2> ";
-    $contenidoPrincipal .= buildFormularioValorarJuego($id);
-    
-
+    if (estaLogado()) {
+        if (!Usuario::compruebaValorado($_SESSION['usuario'], $id)){
+            $contenidoPrincipal .= "<h2>Valora este juego!</h2> ";
+            Usuario::aniadirValoracion($_SESSION['usuario'], $id);
+            $contenidoPrincipal .= buildFormularioValorarJuego($id);
+        }
+        else {
+            $contenidoPrincipal .= "<h2>Ya has valorado este juego, ¡gracias!</h1> ";
+        }
+    }
 
 require 'vistas/comun/layout.php';
