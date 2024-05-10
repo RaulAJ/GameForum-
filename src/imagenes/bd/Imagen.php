@@ -10,7 +10,9 @@ class Imagen
     private $noticia_id;
     private $foro_id;
 
-    public function __construct($id, $ruta, $descripcion, $videojuego_id = null, $noticia_id = null, $foro_id = null)
+    private $sugerencia_juego_id;
+
+    public function __construct($id, $ruta, $descripcion, $videojuego_id = null, $noticia_id = null, $foro_id = null, $sugerencia_juego_id = null)
     {
         $this->id = $id;
         $this->ruta = $ruta;
@@ -18,6 +20,7 @@ class Imagen
         $this->videojuego_id = $videojuego_id;
         $this->noticia_id = $noticia_id;
         $this->foro_id = $foro_id;
+        $this->sugerencia_juego_id = $sugerencia_juego_id;
     }
 
     public function getId()
@@ -35,12 +38,12 @@ class Imagen
         return $this->descripcion;
     }
 
-    public static function crea($file, $descripcion, $videojuego_id = null, $noticia_id = null, $foro_id = null)
+    public static function crea($file, $descripcion, $videojuego_id = null, $noticia_id = null, $foro_id = null, $sugerencia_juego_id = null)
     {
-        $imagen = new Imagen(null, $file['name'], $descripcion, $videojuego_id, $noticia_id, $foro_id);
+        $imagen = new Imagen(null, $file['name'], $descripcion, $videojuego_id, $noticia_id, $foro_id, $sugerencia_juego_id);
         return $imagen->guarda($file);
     }
-     /**
+    /**
      * Guarda la info de la imagen en la base de datos. Determina si debe insertar una imagen o actualizar una existente.
      * 
      * @return mixed imagen->id si se creó con exito, True si la imagen se actualizó con éxito, false si hubo un error.
@@ -50,31 +53,30 @@ class Imagen
         error_log("imagen::guarda");
         if ($this->id === null) {
             error_log("imagen::subir");
-            return self::subir($file, $this->videojuego_id, $this->noticia_id, $this->foro_id);
+            return self::subir($file, $this->videojuego_id, $this->noticia_id, $this->foro_id, $this->sugerencia_juego_id);
         } else {
-            return self::actualiza($this->id, $this->ruta, $this->descripcion, $this->videojuego_id, $this->noticia_id, $this->foro_id);
+            return self::actualiza($this->id, $this->ruta, $this->descripcion, $this->videojuego_id, $this->noticia_id, $this->foro_id, $this->sugerencia_juego_id);
         }
     }
 
-    private static function actualiza($id, $ruta, $descripcion, $videojuego_id = null, $noticia_id = null, $foro_id = null)
+    private static function actualiza($id, $ruta, $descripcion, $videojuego_id = null, $noticia_id = null, $foro_id = null, $sugerencia_juego_id = null)
     {
         $conn = BD::getInstance()->getConexionBd();
         if (!$conn) {
             return false;
         }
 
-        // Prepare the query to update the image details in the database
         $query = sprintf(
-            "UPDATE imagenes SET ruta='%s', descripcion='%s', videojuego_id=%s, noticia_id=%s, foro_id=%s WHERE id=%d",
+            "UPDATE imagenes SET ruta='%s', descripcion='%s', videojuego_id=%s, noticia_id=%s, foro_id=%s, sugerencia_juego_id=%s WHERE id=%d",
             $conn->real_escape_string($ruta),
             $conn->real_escape_string($descripcion),
             $videojuego_id ? $conn->real_escape_string($videojuego_id) : 'NULL',
             $noticia_id ? $conn->real_escape_string($noticia_id) : 'NULL',
             $foro_id ? $conn->real_escape_string($foro_id) : 'NULL',
+            $sugerencia_juego_id ? $conn->real_escape_string($sugerencia_juego_id) : 'NULL',
             $id
         );
 
-        // Execute the query
         if ($conn->query($query)) {
             return true;
         } else {
@@ -89,7 +91,7 @@ class Imagen
      * @param array $file Array de $_FILES['nombre_input'].
      * @return mixed Retorna el ID de la imagen en la base de datos o false si ocurre un error.
      */
-    public static function subir($file, $videojuego_id = null, $noticia_id = null, $foro_id = null)
+    public static function subir($file, $videojuego_id = null, $noticia_id = null, $foro_id = null, $sugerencia_juego_id = null)
     {
         $target_dir = RUTA_UPLOADS . '/';
         $imageFileType = strtolower(pathinfo($file["name"], PATHINFO_EXTENSION));
@@ -104,7 +106,7 @@ class Imagen
         $relative_path = 'uploads/' . $uniqueFileName; // Ruta relativa para guardar en la BD
 
         // nombre original del archivo como descripción
-        $descripcion = $file['name']; 
+        $descripcion = $file['name'];
 
         // Intentar mover la imagen al directorio de destino
         if (!move_uploaded_file($file["tmp_name"], $target_file)) {
@@ -115,18 +117,19 @@ class Imagen
         // Insertar la información de la imagen en la base de datos
         $conn = BD::getInstance()->getConexionBd();
         $query = sprintf(
-            "INSERT INTO imagenes (ruta, descripcion, videojuego_id, noticia_id, foro_id) VALUES ('%s', '%s', %s, %s, %s)",
+            "INSERT INTO imagenes (ruta, descripcion, videojuego_id, noticia_id, foro_id, sugerencia_juego_id) VALUES ('%s', '%s', %s, %s, %s, %s)",
             $conn->real_escape_string($relative_path),
             $conn->real_escape_string($descripcion),
             $videojuego_id ? $conn->real_escape_string($videojuego_id) : 'NULL',
             $noticia_id ? $conn->real_escape_string($noticia_id) : 'NULL',
-            $foro_id ? $conn->real_escape_string($foro_id) : 'NULL'
+            $foro_id ? $conn->real_escape_string($foro_id) : 'NULL',
+            $sugerencia_juego_id ? $conn->real_escape_string($sugerencia_juego_id) : 'NULL'
         );
 
         if ($conn->query($query)) {
             return $conn->insert_id;
         } else {
-            error_log("Error saving the image in the BD: " . $conn->error);
+            error_log("Error guardando la imagen en la BD: " . $conn->error);
             // Si falla la inserción, eliminar el archivo subido
             unlink($target_file);
             return false;
@@ -198,7 +201,8 @@ class Imagen
                     $fila['descripcion'],
                     $fila['videojuego_id'],
                     $fila['noticia_id'],
-                    $fila['foro_id']
+                    $fila['foro_id'],
+                    $fila['sugerencia_juego_id']
                 );
             }
             $resultado->free();
@@ -231,7 +235,8 @@ class Imagen
                     $fila['descripcion'],
                     $fila['videojuego_id'],
                     $fila['noticia_id'],
-                    $fila['foro_id']
+                    $fila['foro_id'],
+                    $fila['sugerencia_juego_id']
                 );
             }
             $resultado->free();
@@ -264,7 +269,8 @@ class Imagen
                     $fila['descripcion'],
                     $fila['videojuego_id'],
                     $fila['noticia_id'],
-                    $fila['foro_id']
+                    $fila['foro_id'],
+                    $fila['sugerencia_juego_id']
                 );
             }
             $resultado->free();
@@ -274,5 +280,37 @@ class Imagen
             return false;
         }
     }
+    public static function obtenerPorSugerenciaJuegoId($sugerencia_juego_id)
+    {
+        $conn = BD::getInstance()->getConexionBd();
+        if (!$conn) {
+            return false;
+        }
 
+        $query = sprintf(
+            "SELECT * FROM imagenes WHERE sugerencia_juego_id = %d",
+            $conn->real_escape_string($sugerencia_juego_id)
+        );
+
+        $resultado = $conn->query($query);
+        if ($resultado) {
+            $imagenes = [];
+            while ($fila = $resultado->fetch_assoc()) {
+                $imagenes[] = new Imagen(
+                    $fila['id'],
+                    $fila['ruta'],
+                    $fila['descripcion'],
+                    $fila['videojuego_id'],
+                    $fila['noticia_id'],
+                    $fila['foro_id'],
+                    $fila['sugerencia_juego_id']
+                );
+            }
+            $resultado->free();
+            return $imagenes; // Returns an array of Imagen objects
+        } else {
+            error_log("Error al obtener imágenes por sugerencia_juego_id ({$conn->errno}): {$conn->error}");
+            return false;
+        }
+    }
 }

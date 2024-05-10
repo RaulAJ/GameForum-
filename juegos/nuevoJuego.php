@@ -41,7 +41,7 @@ if ($titulo && $anioDeSalida && $desarrollador && $genero && $nota !== false && 
                     'size' => $_FILES['imagen']['size'][$key]
                 ];
                 $descripcionImagen = 'Descripción por defecto de la imagen'; // O usar el nombre del archivo como descripción
-                $imagenId = Imagen::crea($file, $descripcionImagen, $juegoId, null, null);
+                $imagenId = Imagen::crea($file, $descripcionImagen, $juegoId, null, null, null);
 
                 if (!$imagenId) {
                     error_log("Error al subir la imagen para el juego ID: " . $juegoId);

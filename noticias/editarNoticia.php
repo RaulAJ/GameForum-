@@ -34,7 +34,7 @@ if($titulo && idUsuarioLogado() && $fecha && $contenido) {
                     'size' => $_FILES['imagen']['size'][$key]
                 ];
                 $descripcion = 'Descripción de la imagen editada';
-                $imagenId = Imagen::crea($file, $descripcion, null, $id, null);
+                $imagenId = Imagen::crea($file, $descripcion, null, $id, null, null);
 
                 if (!$imagenend) {
                     error_log("Error al subir la imagen editada para la noticia ID: " . $id);

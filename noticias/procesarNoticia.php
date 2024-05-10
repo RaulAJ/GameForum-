@@ -34,7 +34,7 @@ if ($titulo && idUsuarioLogado() && $fecha && $contenido) {
                     'size' => $_FILES['imagen']['size'][$key]
                 ];
                 $descripcion = 'Descripción por defecto de la imagen';
-                $imagenId = Imagen::crea($file, $descripcion, null, $noticiaId, null);
+                $imagenId = Imagen::crea($file, $descripcion, null, $noticiaId, null, null);
 
                 if (!$imagenId) {
                     error_log("Error al subir la imagen para la noticia ID: " . $noticiaId);
