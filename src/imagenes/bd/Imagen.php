@@ -86,55 +86,63 @@ class Imagen
      * @return mixed Retorna el ID de la imagen en la base de datos o false si ocurre un error.
      */
     public static function subir($file, $videojuego_id = null, $noticia_id = null, $foro_id = null)
-{
-    $target_dir = RUTA_UPLOADS . '/';
-    $target_file = $target_dir . basename($file["name"]);
-    $imageFileType = strtolower(pathinfo($target_file, PATHINFO_EXTENSION));
-
-    // Verify the image
-    if (!self::verificarImagen($file, $target_file)) {
-        return false;
-    }
-
-    // Try to move the image to the destination directory
-    if (!move_uploaded_file($file["tmp_name"], $target_file)) {
-        error_log("Failed to move file from {$file['tmp_name']} to {$target_file}");
-        return false;
-    }
-
-    // Insert the image information into the database
-    $conn = BD::getInstance()->getConexionBd();
-    $query = sprintf(
-        "INSERT INTO imagenes (ruta, descripcion, videojuego_id, noticia_id, foro_id) VALUES ('%s', '%s', %s, %s, %s)",
-        $conn->real_escape_string($target_file),
-        $conn->real_escape_string('Descripción de ejemplo'),
-        $videojuego_id ? $conn->real_escape_string($videojuego_id) : 'NULL',
-        $noticia_id ? $conn->real_escape_string($noticia_id) : 'NULL',
-        $foro_id ? $conn->real_escape_string($foro_id) : 'NULL'
-    );
-
-    if ($conn->query($query)) {
-        $newId = $conn->insert_id;
-        $newFileName = $target_dir . $newId . '.' . $imageFileType;
-        rename($target_file, $newFileName);
-
-        // Update the database with the new file path
-        $updateQuery = sprintf(
-            "UPDATE imagenes SET ruta='%s' WHERE id=%d",
-            $conn->real_escape_string('uploads/' . $newId . '.' . $imageFileType),
-            $newId
-        );
-        $conn->query($updateQuery);
-        return $newId;
-    } else {
-        error_log("Error saving the image in the BD: {$conn->error}");
-        return false;
-    }
-}
-    //TODO
-    private static function verificarImagen($file, $target_file)
     {
-        // Implementación de las verificaciones
+        $target_dir = RUTA_UPLOADS . '/';
+        $imageFileType = strtolower(pathinfo($file["name"], PATHINFO_EXTENSION));
+
+        if (!self::verificarImagen($file, $file["tmp_name"])) {
+            return false;
+        }
+
+        // Generar nombre de archivo único
+        $uniqueFileName = uniqid("img_", true) . '.' . $imageFileType;
+        $target_file = $target_dir . $uniqueFileName; // Ruta absoluta para mover el archivo
+        $relative_path = 'uploads/' . $uniqueFileName; // Ruta relativa para guardar en la BD
+
+        // Intentar mover la imagen al directorio de destino
+        if (!move_uploaded_file($file["tmp_name"], $target_file)) {
+            error_log("Failed to move file to $target_file");
+            return false;
+        }
+
+        // Insertar la información de la imagen en la base de datos
+        $conn = BD::getInstance()->getConexionBd();
+        $query = sprintf(
+            "INSERT INTO imagenes (ruta, descripcion, videojuego_id, noticia_id, foro_id) VALUES ('%s', '%s', %s, %s, %s)",
+            $conn->real_escape_string($relative_path),
+            $conn->real_escape_string('Descripcion de ejemplo'),
+            $videojuego_id ? $conn->real_escape_string($videojuego_id) : 'NULL',
+            $noticia_id ? $conn->real_escape_string($noticia_id) : 'NULL',
+            $foro_id ? $conn->real_escape_string($foro_id) : 'NULL'
+        );
+
+        if ($conn->query($query)) {
+            return $conn->insert_id;
+        } else {
+            error_log("Error saving the image in the BD: " . $conn->error);
+            // Si falla la inserción, eliminar el archivo subido
+            unlink($target_file);
+            return false;
+        }
+    }
+    private static function verificarImagen($file, $filePath)
+    {
+        // Verificar si el archivo es realmente una imagen mediante getimagesize
+        $check = getimagesize($filePath);
+        if ($check === false) {
+            error_log("El archivo no es una imagen.");
+            return false;
+        }
+
+        // Obtener la extensión del archivo de una manera más fiable
+        $imageFileType = strtolower(pathinfo($file['name'], PATHINFO_EXTENSION));
+        $valid_types = ['jpg', 'jpeg', 'png', 'gif'];
+
+        if (!in_array($imageFileType, $valid_types)) {
+            error_log("Extensión de archivo no permitida: " . $imageFileType);
+            return false;
+        }
+
         return true;
     }
 
