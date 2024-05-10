@@ -3,8 +3,10 @@
 echo '<link rel="stylesheet" href="css/estilos.css">';
 
 require_once 'autorizacion.php';
+require_once 'src/imagenes/bd/Imagen.php';
 
-function mostrarBotonAgregarJuego() {
+function mostrarBotonAgregarJuego()
+{
     if (estaLogado()) {
         if ($_SESSION['admin'] || $_SESSION['moderador'] || $_SESSION['experto']) {
             return '<a href="topJuegos.php?accion=agregarJuego" class="juego-button">Añadir Juego</a> <a href="verSugerirJuegos.php" class="juego-button">Juegos sugeridos</a>';
@@ -15,9 +17,10 @@ function mostrarBotonAgregarJuego() {
     return '';
 }
 
-function buildFormularioAgregarJuego() {
+function buildFormularioAgregarJuego()
+{
     return <<<HTML
-    <form class="formulario-agregar" action="juegos/nuevoJuego.php" method="post">
+    <form class="formulario-agregar" action="juegos/nuevoJuego.php" method="post" enctype="multipart/form-data">
         <label for="titulo">Título del juego:</label>
         <input type="text" id="titulo" name="titulo" required>
         
@@ -36,14 +39,18 @@ function buildFormularioAgregarJuego() {
         <label for="descripcion">Descripción del juego:</label>
         <textarea id="descripcion" name="descripcion" required></textarea>
         
+        <label for="imagen">Imagen:</label>
+        <input type="file" id="imagen" name="imagen[]" multiple><br><br> 
+
         <input type="submit" value="Añadir videojuego">
     </form>
     HTML;
 }
 
-function buildFormularioSugerirJuego() {
+function buildFormularioSugerirJuego()
+{
     return <<<HTML
-    <form class="formulario-sugerir" action="juegos/procesarSugerirJuego.php" method="post">
+    <form class="formulario-sugerir" action="juegos/procesarSugerirJuego.php" method="post" enctype="multipart/form-data">
         <label for="titulo">Título del juego:</label>
         <input type="text" id="titulo" name="titulo" required>
         
@@ -58,12 +65,16 @@ function buildFormularioSugerirJuego() {
         
         <label for="descripcion">Descripción del juego:</label>
         <textarea id="descripcion" name="descripcion" required></textarea>
+
+        <label for="imagen">Imagen:</label>
+        <input type="file" id="imagen" name="imagen[]" multiple><br><br> 
         
         <input type="submit" value="Sugerir videojuego">
     </form>
     HTML;
 }
-function listaSugerencias(){
+function listaSugerencias()
+{
     $sugerencias = Juego::obtenerSugerenciasJuegos();
     $listaHtml = '<div class="lista-juegos">';
     foreach ($sugerencias as $sugerencia) {
@@ -87,7 +98,8 @@ function listaSugerencias(){
     $listaHtml .= '</div>';
     return $listaHtml;
 }
-function listaJuegos($orden = 'notaDesc') {
+function listaJuegos($orden = 'notaDesc')
+{
     switch ($orden) {
         case 'notaAsc':
             $juegos = Juego::obtenerJuegosPorNotaAscendente();
@@ -108,13 +120,23 @@ function listaJuegos($orden = 'notaDesc') {
     foreach ($juegos as $juego) {
         $id = $juego->getId();
         $nombre = htmlspecialchars($juego->getNombreJuego());
+        $imagenes = Imagen::obtenerPorVideojuegoId($id); // Fetch images for this game
+        
+        $imagenesHtml = '<div class="imagenes-juego">';
+        foreach ($imagenes as $imagen) {
+            // Construct HTML for each image
+            $imagenesHtml .= "<img src='{$imagen->getRuta()}' alt='{$imagen->getDescripcion()}' style='width: 100px; height: auto;'>";
+        }
+        $imagenesHtml .= '</div>';
+
         $listaHtml .= "<div class=\"juego\">
                        <div class=\"posicion-juego\">Top $posicion</div>
                        <form action='verJuego.php' method='post'>
                             <input type='hidden' name='id' value='$id'>
-                            <button type='submit' class='borrar-button'>$nombre</button>
+                            <button type='submit' class='juego-button'>$nombre</button>
                          </form>
-                         <div class=\"nota-juego\">{$juego->getNota()}</div>
+                         $imagenesHtml
+                         <div class=\"nota-juego\">Nota: {$juego->getNota()}</div>
                        </div>";
         $posicion++;
     }

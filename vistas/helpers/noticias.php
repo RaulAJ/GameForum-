@@ -5,7 +5,7 @@ echo '<link rel="stylesheet" href="css/estilos.css">';
 require_once 'autorizacion.php';
 require_once 'src/imagenes/bd/Imagen.php';
 
-//TODO quitar brs
+//TODO quitar brs -> CSS
 
 function buildFormularioNoticia()
 {
@@ -97,7 +97,7 @@ function listaNoticias()
         if (estaLogado()) {
             if (esMismoUsuario($usuario) || $_SESSION['admin'] || $_SESSION['moderador']) {
                 $listaHtml .= "<div class=\"form-container\">";
-    
+
                 // Botón de borrar noticia
                 $listaHtml .= "<form action='noticias/borrarNoticia.php' method='post'>
                                     <input type='hidden' name='id' value='$id'>

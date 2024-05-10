@@ -22,9 +22,10 @@ if ($titulo && idUsuarioLogado() && $fecha && $contenido) {
     $noticiaId = Noticia::crea($titulo, idUsuarioLogado(), $fecha, $contenido);
     $errorEnImagen = false;
 
-    if ($noticiaId && isset($_FILES['imagen'])) {
+    // Verificar si se intentaron subir archivos
+    if ($noticiaId && isset($_FILES['imagen']) && $_FILES['imagen']['name'][0] != '') {
         foreach ($_FILES['imagen']['name'] as $key => $value) {
-            if ($_FILES['imagen']['error'][$key] == 0) {
+            if ($_FILES['imagen']['error'][$key] == 0 && $_FILES['imagen']['size'][$key] > 0) {  // Comprobar que no hay error y que el tamaño del archivo es mayor a cero
                 $file = [
                     'name' => $_FILES['imagen']['name'][$key],
                     'type' => $_FILES['imagen']['type'][$key],
@@ -43,13 +44,13 @@ if ($titulo && idUsuarioLogado() && $fecha && $contenido) {
                 $errorEnImagen = true;
             }
         }
+    }
 
-        if ($errorEnImagen) {
-            Noticia::borraNoticia($noticiaId); // Borrar noticia si la imagen falla
-            Utils::redirige(Utils::buildUrl('/noticias.php', ['error' => 'errorSubida']));
-        } else {
-            Utils::redirige(Utils::buildUrl('/noticias.php', ['exito' => '1']));
-        }
+    if ($errorEnImagen) {
+        Noticia::borraNoticia($noticiaId);
+        Utils::redirige(Utils::buildUrl('/noticias.php', ['error' => 'errorSubida']));
+    } else {
+        Utils::redirige(Utils::buildUrl('/noticias.php', ['exito' => '1']));
     }
 } else {
     Utils::redirige(Utils::buildUrl('/noticias.php', ['error' => 'datosInvalidos']));

@@ -40,7 +40,11 @@ class Imagen
         $imagen = new Imagen(null, $file['name'], $descripcion, $videojuego_id, $noticia_id, $foro_id);
         return $imagen->guarda($file);
     }
-
+     /**
+     * Guarda la info de la imagen en la base de datos. Determina si debe insertar una imagen o actualizar una existente.
+     * 
+     * @return mixed imagen->id si se creó con exito, True si la imagen se actualizó con éxito, false si hubo un error.
+     */
     public function guarda($file)
     {
         error_log("imagen::guarda");
@@ -99,6 +103,9 @@ class Imagen
         $target_file = $target_dir . $uniqueFileName; // Ruta absoluta para mover el archivo
         $relative_path = 'uploads/' . $uniqueFileName; // Ruta relativa para guardar en la BD
 
+        // nombre original del archivo como descripción
+        $descripcion = $file['name']; 
+
         // Intentar mover la imagen al directorio de destino
         if (!move_uploaded_file($file["tmp_name"], $target_file)) {
             error_log("Failed to move file to $target_file");
@@ -110,7 +117,7 @@ class Imagen
         $query = sprintf(
             "INSERT INTO imagenes (ruta, descripcion, videojuego_id, noticia_id, foro_id) VALUES ('%s', '%s', %s, %s, %s)",
             $conn->real_escape_string($relative_path),
-            $conn->real_escape_string('Descripcion de ejemplo'),
+            $conn->real_escape_string($descripcion),
             $videojuego_id ? $conn->real_escape_string($videojuego_id) : 'NULL',
             $noticia_id ? $conn->real_escape_string($noticia_id) : 'NULL',
             $foro_id ? $conn->real_escape_string($foro_id) : 'NULL'
