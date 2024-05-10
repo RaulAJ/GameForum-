@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 10-03-2024 a las 15:54:56
+-- Tiempo de generación: 10-05-2024 a las 19:21:24
 -- Versión del servidor: 10.4.32-MariaDB
 -- Versión de PHP: 8.2.12
 
@@ -18,7 +18,7 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Base de datos: `bd_sw`
+-- Base de datos: `gameforum`
 --
 
 -- --------------------------------------------------------
@@ -29,12 +29,29 @@ SET time_zone = "+00:00";
 
 CREATE TABLE `foro` (
   `ID` int(5) UNSIGNED NOT NULL,
-  `Titulo` varchar(50) NOT NULL,
+  `Titulo` varchar(20) NOT NULL,
   `Usuario` varchar(15) NOT NULL,
   `Juego` varchar(20) NOT NULL,
   `Tipo` varchar(10) NOT NULL,
   `Fecha` date NOT NULL,
   `Contenido` varchar(1000) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `imagenes`
+--
+
+CREATE TABLE `imagenes` (
+  `id` int(32) UNSIGNED NOT NULL,
+  `ruta` varchar(512) NOT NULL,
+  `descripcion` varchar(512) NOT NULL,
+  `noticia_id` int(5) UNSIGNED DEFAULT NULL,
+  `foro_id` int(5) UNSIGNED DEFAULT NULL,
+  `respuestas_id` int(5) UNSIGNED DEFAULT NULL,
+  `videojuego_id` int(5) UNSIGNED DEFAULT NULL,
+  `sugerencia_juego_id` int(5) UNSIGNED DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
@@ -72,7 +89,7 @@ CREATE TABLE `respuestas` (
 --
 
 CREATE TABLE `sugerenciasjuegos` (
-  `ID` int(5) NOT NULL,
+  `ID` int(5) UNSIGNED NOT NULL,
   `Juego` varchar(20) NOT NULL,
   `Año de salida` int(4) NOT NULL,
   `Desarrollador` varchar(10) NOT NULL,
@@ -127,6 +144,17 @@ ALTER TABLE `foro`
   ADD KEY `Juego` (`Juego`);
 
 --
+-- Indices de la tabla `imagenes`
+--
+ALTER TABLE `imagenes`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `fk_foro_id` (`foro_id`),
+  ADD KEY `fk_noticia_id` (`noticia_id`),
+  ADD KEY `fk_respuestas_id` (`respuestas_id`),
+  ADD KEY `fk_videojuego_id` (`videojuego_id`),
+  ADD KEY `fk_sugerencia_juego_id` (`sugerencia_juego_id`);
+
+--
 -- Indices de la tabla `noticias`
 --
 ALTER TABLE `noticias`
@@ -169,31 +197,37 @@ ALTER TABLE `videojuegos`
 -- AUTO_INCREMENT de la tabla `foro`
 --
 ALTER TABLE `foro`
-  MODIFY `ID` int(5) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `ID` int(5) UNSIGNED NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT de la tabla `imagenes`
+--
+ALTER TABLE `imagenes`
+  MODIFY `id` int(32) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT de la tabla `noticias`
 --
 ALTER TABLE `noticias`
-  MODIFY `ID` int(5) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `ID` int(5) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT de la tabla `respuestas`
 --
 ALTER TABLE `respuestas`
-  MODIFY `ID` int(5) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `ID` int(5) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT de la tabla `sugerenciasjuegos`
 --
 ALTER TABLE `sugerenciasjuegos`
-  MODIFY `ID` int(5) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `ID` int(5) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT de la tabla `videojuegos`
 --
 ALTER TABLE `videojuegos`
-  MODIFY `ID` int(5) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `ID` int(5) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
 -- Restricciones para tablas volcadas
@@ -207,6 +241,16 @@ ALTER TABLE `foro`
   ADD CONSTRAINT `foro_ibfk_2` FOREIGN KEY (`Juego`) REFERENCES `videojuegos` (`Juego`) ON UPDATE CASCADE;
 
 --
+-- Filtros para la tabla `imagenes`
+--
+ALTER TABLE `imagenes`
+  ADD CONSTRAINT `fk_foro_id` FOREIGN KEY (`foro_id`) REFERENCES `foro` (`ID`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `fk_noticia_id` FOREIGN KEY (`noticia_id`) REFERENCES `noticias` (`ID`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `fk_respuestas_id` FOREIGN KEY (`respuestas_id`) REFERENCES `respuestas` (`ID`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `fk_sugerencia_juego_id` FOREIGN KEY (`sugerencia_juego_id`) REFERENCES `sugerenciasjuegos` (`ID`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `fk_videojuego_id` FOREIGN KEY (`videojuego_id`) REFERENCES `videojuegos` (`ID`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
 -- Filtros para la tabla `noticias`
 --
 ALTER TABLE `noticias`
@@ -218,12 +262,6 @@ ALTER TABLE `noticias`
 ALTER TABLE `respuestas`
   ADD CONSTRAINT `respuestas_ibfk_1` FOREIGN KEY (`Usuario`) REFERENCES `usuarios` (`Usuario`) ON UPDATE CASCADE,
   ADD CONSTRAINT `respuestas_ibfk_2` FOREIGN KEY (`ID foro`) REFERENCES `foro` (`ID`) ON UPDATE CASCADE;
-
---
--- Filtros para la tabla `videojuegos`
---
-ALTER TABLE `videojuegos`
-  ADD CONSTRAINT `videojuegos_ibfk_1` FOREIGN KEY (`Juego`) REFERENCES `sugerenciasjuegos` (`Juego`) ON UPDATE CASCADE;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
