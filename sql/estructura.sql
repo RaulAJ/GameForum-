@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 10-05-2024 a las 19:21:24
+-- Tiempo de generación: 10-05-2024 a las 20:05:57
 -- Versión del servidor: 10.4.32-MariaDB
 -- Versión de PHP: 8.2.12
 
@@ -111,7 +111,8 @@ CREATE TABLE `usuarios` (
   `Contraseña` varchar(20) NOT NULL,
   `Experto` tinyint(1) NOT NULL,
   `Moderador` tinyint(1) NOT NULL,
-  `Admin` tinyint(1) NOT NULL
+  `Admin` tinyint(1) NOT NULL,
+  `JuegosValorados` varchar(200) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
