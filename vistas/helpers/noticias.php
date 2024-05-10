@@ -5,6 +5,8 @@ echo '<link rel="stylesheet" href="css/estilos.css">';
 require_once 'autorizacion.php';
 require_once 'src/imagenes/bd/Imagen.php';
 
+//TODO quitar brs -> CSS
+
 function buildFormularioNoticia()
 {
     return <<<HTML
@@ -19,7 +21,7 @@ function buildFormularioNoticia()
             <textarea id="contenido" name="contenido" rows="4" cols="50" required></textarea><br><br>
             
             <label for="imagen">Imagen:</label>
-            <input type="file" id="imagen" name="imagen"><br><br>
+            <input type="file" id="imagen" name="imagen[]" multiple><br><br> 
             
             <input type="submit" value="Enviar">
         </form>
@@ -35,7 +37,7 @@ function editarformularioNoticia($id)
     $contenido = htmlspecialchars($noticia->getContenido());
     //$contenidoActual = htmlspecialchars($noticia->getContenido());
     return <<<HTML
-        <form class="formulario-noticia" action="noticias/editarNoticia.php" method="post">
+        <form class="formulario-noticia" action="noticias/editarNoticia.php" method="post" enctype="multipart/form-data">
             <input type='hidden' name='id' value= '$id'>
 
             <label for="titulo">Título:</label>
@@ -47,6 +49,9 @@ function editarformularioNoticia($id)
             <label for="contenido">Contenido:</label>
             <textarea id="contenido" name="contenido"  rows="4" cols="50" required>$contenido</textarea><br><br>
             
+            <label for="imagen">Añadir imágenes:</label>
+            <input type="file" id="imagen" name="imagen[]" multiple><br><br> 
+
             <input type="submit" value="Enviar">
         </form>
         HTML;
@@ -92,7 +97,7 @@ function listaNoticias()
         if (estaLogado()) {
             if (esMismoUsuario($usuario) || $_SESSION['admin'] || $_SESSION['moderador']) {
                 $listaHtml .= "<div class=\"form-container\">";
-    
+
                 // Botón de borrar noticia
                 $listaHtml .= "<form action='noticias/borrarNoticia.php' method='post'>
                                     <input type='hidden' name='id' value='$id'>

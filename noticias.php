@@ -11,23 +11,24 @@ $contenidoPrincipal = '';
 
 //Verificar mensajesde éxito al añadir juegos
 if (isset($_GET['exito'])) {
-    $mensaje = '<div class="alerta exito">La noticia ha sido añadida con éxito.</div>';
+    $mensaje = '<div class="alerta exito">Acción realizada con éxito.</div>';
 }
 
 
 // Verificar si hay mensaje de error
 if (isset($_GET['error'])) {
     switch ($_GET['error']) {
-        case '1': // al añadir juegos
-            $mensaje = '<div class="alerta error">Hubo un error al añadir la noticia.</div>';
+        case 'noAutorizado':
+            $mensaje = '<div class="alerta error">No tienes autorización para realizar esta acción.</div>';
+            break;
+        case 'errorSubida':
+            $mensaje = '<div class="alerta error">Error al subir la(s) imagen(es). Intentalo de nuevo.</div>';
             break;
         case 'datosInvalidos':
             $mensaje = '<div class="alerta error">Los datos proporcionados son inválidos.</div>';
             break;
-        case 'noAutorizado':
-            $mensaje = '<div class="alerta error">No tienes autorización para realizar esta acción.</div>';
-            break;
         default:
+            $mensaje = '<div class="alerta error">Error desconocido. Por favor, intentalo de nuevo.</div>';
             break;
     }
 }
@@ -40,7 +41,7 @@ if (empty($mensaje) && !isset($_GET['accion'])) {
 
 if (isset($_GET['accion']) && $_GET['accion'] === 'agregarNoticia') {
     $contenidoPrincipal .= buildFormularioNoticia();
-} elseif (isset($_GET['id']) && isset($_GET['accion']) && $_GET['accion'] === 'editarNoticia'){
+} elseif (isset($_GET['id']) && isset($_GET['accion']) && $_GET['accion'] === 'editarNoticia') {
     $contenidoPrincipal .= editarFormularioNoticia($_GET['id']);
 }
 

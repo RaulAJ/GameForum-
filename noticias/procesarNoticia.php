@@ -20,23 +20,38 @@ $contenido = filter_input(INPUT_POST, 'contenido', FILTER_SANITIZE_SPECIAL_CHARS
 
 if ($titulo && idUsuarioLogado() && $fecha && $contenido) {
     $noticiaId = Noticia::crea($titulo, idUsuarioLogado(), $fecha, $contenido);
+    $errorEnImagen = false;
 
-    if ($noticiaId) {
-        if (isset($_FILES['imagen']) && $_FILES['imagen']['error'] == 0) {
-            $file = $_FILES['imagen'];
-            $descripcion = 'Descripción por defecto de la imagen';
-            $imagenId = Imagen::crea($file, $descripcion, null, $noticiaId, null);
+    // Verificar si se intentaron subir archivos
+    if ($noticiaId && isset($_FILES['imagen']) && $_FILES['imagen']['name'][0] != '') {
+        foreach ($_FILES['imagen']['name'] as $key => $value) {
+            if ($_FILES['imagen']['error'][$key] == 0 && $_FILES['imagen']['size'][$key] > 0) {  // Comprobar que no hay error y que el tamaño del archivo es mayor a cero
+                $file = [
+                    'name' => $_FILES['imagen']['name'][$key],
+                    'type' => $_FILES['imagen']['type'][$key],
+                    'tmp_name' => $_FILES['imagen']['tmp_name'][$key],
+                    'error' => $_FILES['imagen']['error'][$key],
+                    'size' => $_FILES['imagen']['size'][$key]
+                ];
+                $descripcion = 'Descripción por defecto de la imagen';
+                $imagenId = Imagen::crea($file, $descripcion, null, $noticiaId, null, null);
 
-            if (!$imagenId) {
-                // Opcional: Manejar el error de carga de imagen
-                error_log("Error al subir la imagen para la noticia ID: " . $noticiaId);
+                if (!$imagenId) {
+                    error_log("Error al subir la imagen para la noticia ID: " . $noticiaId);
+                    $errorEnImagen = true;
+                }
+            } else {
+                $errorEnImagen = true;
             }
         }
-        Utils::redirige(Utils::buildUrl('/noticias.php', ['exito' => '1']));
+    }
+
+    if ($errorEnImagen) {
+        Noticia::borraNoticia($noticiaId);
+        Utils::redirige(Utils::buildUrl('/noticias.php', ['error' => 'errorSubida']));
     } else {
-        Utils::redirige(Utils::buildUrl('/noticias.php', ['error' => '1']));
+        Utils::redirige(Utils::buildUrl('/noticias.php', ['exito' => '1']));
     }
 } else {
-    // Redirigir de nuevo al formulario con un mensaje de error
-    Utils::redirige(Utils::buildUrl('/noticias.php?accion=agregarNoticia', ['error' => 'datosInvalidos']));
+    Utils::redirige(Utils::buildUrl('/noticias.php', ['error' => 'datosInvalidos']));
 }

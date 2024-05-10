@@ -1,6 +1,6 @@
 <?php
 
-class Juego 
+class Juego
 {
     use MagicProperties;
 
@@ -33,7 +33,8 @@ class Juego
      * @param int $nota La nota o calificación del juego.
      * @param string $descripcion Una breve descripción del juego.
      */
-    private function __construct($id, $nombreJuego, $anioDeSalida, $desarrollador, $genero, $nota, $nResenias, $descripcion) {
+    private function __construct($id, $nombreJuego, $anioDeSalida, $desarrollador, $genero, $nota, $descripcion, $nResenias)
+    {
         $this->id = $id;
         $this->nombreJuego = $nombreJuego;
         $this->anioDeSalida = $anioDeSalida;
@@ -44,14 +45,38 @@ class Juego
         $this->descripcion = $descripcion;
     }
 
-    public function getId() { return $this->id; }
-    public function getNombreJuego() { return $this->nombreJuego; }
-    public function getAnioDeSalida() { return $this->anioDeSalida; }
-    public function getDesarrollador() { return $this->desarrollador; }
-    public function getGenero() { return $this->genero; }
-    public function getNota() { return $this->nota; }
-    public function getnResenias() { return $this->nResenias; }
-    public function getDescripcion() { return $this->descripcion; }
+    public function getId()
+    {
+        return $this->id;
+    }
+    public function getNombreJuego()
+    {
+        return $this->nombreJuego;
+    }
+    public function getAnioDeSalida()
+    {
+        return $this->anioDeSalida;
+    }
+    public function getDesarrollador()
+    {
+        return $this->desarrollador;
+    }
+    public function getGenero()
+    {
+        return $this->genero;
+    }
+    public function getNota()
+    {
+        return $this->nota;
+    }
+    public function getnResenias() 
+    {
+         return $this->nResenias; 
+    }
+    public function getDescripcion()
+    {
+        return $this->descripcion;
+    }
 
     /**
      * Crea una nueva instancia de Juego y la guarda en la base de datos.
@@ -77,9 +102,9 @@ class Juego
     /**
      * Guarda el juego en la base de datos. Determina si debe insertar un nuevo juego o actualizar uno existente.
      * 
-     * @return bool True si el juego se guardó con éxito, false en caso contrario.
+     * @return mixed juego->id si se creó con exito, True si el juego se actualizó con éxito, false si hubo un error.
      */
-    public function guarda() 
+    public function guarda()
     {
         if ($this->id !== null) {
             return self::actualiza($this);
@@ -96,11 +121,11 @@ class Juego
     }
 
     /**
-     * Inserta un nuevo juego en la base de datos. Verifica primero si el juego ya existe en la tabla de sugerencias
+     * Inserta un nuevo juego en la base de datos. Verifica primero si el juego ya existe
      * y lo inserta si no existe. Luego inserta el juego en la tabla de videojuegos.
      * 
      * @param Juego $juego La instancia del juego a insertar.
-     * @return bool True si el juego se insertó con éxito, false en caso contrario.
+     * @return mixed Retorna el id si el juego se insertó con éxito, false en caso contrario.
      */
     private static function inserta(Juego $juego)
     {
@@ -108,20 +133,7 @@ class Juego
         if (!$conn) {
             return false;
         }
-        //Comprobar si el juego ya existe en sugerencias
-        $querySugerencia = sprintf(
-            "SELECT COUNT(*) AS existe FROM sugerenciasjuegos WHERE Juego = '%s'",
-            $conn->real_escape_string($juego->getNombreJuego())
-        );
-        $resultadoSugerencia = $conn->query($querySugerencia);
-        $fila = $resultadoSugerencia->fetch_assoc();
-        $resultadoSugerencia->free();
-
-        if ($fila['existe'] == 0) {
-            // El juego no existe en sugerencias, insertar primero allí
-            self::sugiere($juego->getNombreJuego(), $juego->getAnioDeSalida(), $juego->getDesarrollador(), $juego->getGenero(), $juego->getDescripcion());
-        }
-
+        //Todo: evitar insertar juegos con el mismo nombre
         // Insertar en Videojuegos
         $query = sprintf(
             "INSERT INTO videojuegos (Juego, `Año de salida`, Desarrollador, Genero, Nota, Descripcion) VALUES ('%s', '%s', '%s', '%s', '%f', '%s')",
@@ -135,8 +147,8 @@ class Juego
         );
 
         if ($conn->query($query)) {
-            $juego->id = $conn->insert_id; //actualizar juego con el id generado automaticamente por la ultima insercion
-            return true;
+            $juego->id = $conn->insert_id; // Actualizar juego con el id generado automáticamente por la última inserción
+            return $juego->id;
         } else {
             error_log("Error BD ({$conn->errno}): {$conn->error}");
             return false;
@@ -167,11 +179,11 @@ class Juego
         );
         $resultadoVerificacion = $conn->query($queryVerificacion);
         $fila = $resultadoVerificacion->fetch_assoc();
-        $resultadoVerificacion->free(); 
-        
+        $resultadoVerificacion->free();
+
         if ($fila['cantidad'] > 0) {
             // Ya existe una sugerencia con este nombre, no insertar duplicados
-            return false; 
+            return false;
         }
 
         $query = sprintf(
@@ -184,7 +196,7 @@ class Juego
         );
 
         if ($conn->query($query)) {
-            return true;
+            return $conn->insert_id; //Devolver id
         } else {
             error_log("Error BD ({$conn->errno}): {$conn->error}");
             return false;
@@ -217,7 +229,7 @@ class Juego
         );
 
         if ($conn->query($query)) {
-            return true; 
+            return true;
         } else {
             error_log("Error al actualizar el juego en la BD ({$conn->errno}): {$conn->error}");
             return false;
@@ -260,8 +272,8 @@ class Juego
      * @param int $id El ID del juego a borrar.
      * @return bool True si el juego se borró con éxito, false en caso contrario.
      */
-     
-    private static function borraDeVideojuegos($id)
+
+    public static function borraDeVideojuegos($id)
     {
         $conn = BD::getInstance()->getConexionBd();
         if (!$conn) {
@@ -278,7 +290,8 @@ class Juego
         }
     }
 
-    public static function borraDeSugerenciasJuegos($id){
+    public static function borraDeSugerenciasJuegos($id)
+    {
         $conn = BD::getInstance()->getConexionBd();
         if (!$conn) {
             return false;
@@ -295,13 +308,14 @@ class Juego
     }
 
 
-    public static function obtenerIdJuego($nombre) {
+    public static function obtenerIdJuego($nombre)
+    {
         $conn = BD::getInstance()->getConexionBd();
         // Se usa la función mysqli_real_escape_string para evitar inyección SQL
         $nombre = $conn->real_escape_string($nombre);
         $query = sprintf("SELECT ID FROM videojuegos WHERE Juego = '%s'", $nombre);
         $result = $conn->query($query);
-    
+
         if ($result && $result->num_rows > 0) {
             $fila = $result->fetch_assoc();
             $idJuego = $fila['ID'];
@@ -312,68 +326,72 @@ class Juego
             return null;
         }
     }
-    
-    
-public static function obtenerJuego($id) {
-    $conn = BD::getInstance()->getConexionBd();
-    $query = sprintf("SELECT * FROM videojuegos WHERE ID = %d", $id);
-    $result = $conn->query($query);
-    
-    if ($result && $result->num_rows > 0) {
-        $fila = $result->fetch_assoc();
-        $juego = new Juego(
-            $fila['ID'],
-            $fila['Juego'],
-            $fila['Año de salida'],
-            $fila['Desarrollador'],
-            $fila['Genero'],
-            $fila['Nota'],
-            $fila['nResenias'],
-            $fila['Descripcion']
-        );
-        $result->free();
-        return $juego;
-    } else {
-        error_log("Error BD ({$conn->errno}): {$conn->error}");
-        return null;
-    }
-}
 
-public static function obtenerSugerencia($id) {
-    $conn = BD::getInstance()->getConexionBd();
-    $query = sprintf("SELECT * FROM sugerenciasjuegos WHERE ID = %d", $id);
-    $result = $conn->query($query);
-    
-    if ($result && $result->num_rows > 0) {
-        $fila = $result->fetch_assoc();
-        $juego = new Juego(
-            $fila['ID'],
-            $fila['Juego'],
-            $fila['Año de salida'],
-            $fila['Desarrollador'],
-            $fila['Genero'],
-            $fila['Nota'],
-            $fila['nResenias'],
-            $fila['Descripcion']
-        );
-        $result->free();
-        return $juego;
-    } else {
-        error_log("Error BD ({$conn->errno}): {$conn->error}");
-        return null;
+
+    public static function obtenerJuego($id)
+    {
+        $conn = BD::getInstance()->getConexionBd();
+        $query = sprintf("SELECT * FROM videojuegos WHERE ID = %d", $id);
+        $result = $conn->query($query);
+
+        if ($result && $result->num_rows > 0) {
+            $fila = $result->fetch_assoc();
+            $juego = new Juego(
+                $fila['ID'],
+                $fila['Juego'],
+                $fila['Año de salida'],
+                $fila['Desarrollador'],
+                $fila['Genero'],
+                $fila['Nota'],
+                $fila['nResenias'],
+                $fila['Descripcion']
+            );
+            $result->free();
+            return $juego;
+        } else {
+            error_log("Error BD ({$conn->errno}): {$conn->error}");
+            return null;
+        }
     }
-}
+
+    public static function obtenerSugerencia($id)
+    {
+        $conn = BD::getInstance()->getConexionBd();
+        $query = sprintf("SELECT * FROM sugerenciasjuegos WHERE ID = %d", $id);
+        $result = $conn->query($query);
+
+        if ($result && $result->num_rows > 0) {
+            $nota = 0;
+            $fila = $result->fetch_assoc();
+            $juego = new Juego(
+                $fila['ID'],
+                $fila['Juego'],
+                $fila['Año de salida'],
+                $fila['Desarrollador'],
+                $fila['Genero'],
+                $nota,
+                $fila['nResenias'], //TODO: Investigar si esto es correcto
+                $fila['Descripcion']
+            );
+            $result->free();
+            return $juego;
+        } else {
+            error_log("Error BD ({$conn->errno}): {$conn->error}");
+            return null;
+        }
+    }
 
     /**
      * Obtiene una lista de juegos de la base de datos ordenados por su nota de mayor a menor.
      *
      * @return Juego[] Array de objetos Juego ordenados por nota.
      */
-    public static function obtenerTopJuegos() {
+    public static function obtenerTopJuegos()
+    {
         $conn = BD::getInstance()->getConexionBd();
         $query = "SELECT * FROM videojuegos ORDER BY Nota DESC";
         $result = $conn->query($query);
-        
+
         $juegos = [];
         if ($result) {
             while ($fila = $result->fetch_assoc()) {
@@ -392,15 +410,16 @@ public static function obtenerSugerencia($id) {
         } else {
             error_log("Error BD ({$conn->errno}): {$conn->error}");
         }
-        
+
         return $juegos;
     }
 
-    public static function obtenerNombresJuegos() {
+    public static function obtenerNombresJuegos()
+    {
         $conn = BD::getInstance()->getConexionBd();
         $query = "SELECT Juego FROM videojuegos ORDER BY Nota DESC";
         $result = $conn->query($query);
-        
+
         $juegos = [];
         if ($result) {
             while ($fila = $result->fetch_assoc()) {
@@ -410,7 +429,7 @@ public static function obtenerSugerencia($id) {
         } else {
             error_log("Error BD ({$conn->errno}): {$conn->error}");
         }
-        
+
         return $juegos;
     }
 
@@ -486,7 +505,7 @@ public static function obtenerSugerencia($id) {
      */
     public static function obtenerJuegosPorNotaAscendente()
     {
-        $conn = BD::getInstance()->getConexionBd(); 
+        $conn = BD::getInstance()->getConexionBd();
         if (!$conn) {
             error_log("Error al conectar a la base de datos");
             return [];
@@ -517,8 +536,9 @@ public static function obtenerSugerencia($id) {
         return $juegos;
     }
 
-    public static function obtenerSugerenciasJuegos(){
-        $conn = BD::getInstance()->getConexionBd(); 
+    public static function obtenerSugerenciasJuegos()
+    {
+        $conn = BD::getInstance()->getConexionBd();
         if (!$conn) {
             error_log("Error al conectar a la base de datos");
             return [];
@@ -537,7 +557,7 @@ public static function obtenerSugerencia($id) {
                     $fila['Desarrollador'],
                     $fila['Genero'],
                     null,
-                    0,
+                    null,
                     $fila['Descripcion']
                 );
             }

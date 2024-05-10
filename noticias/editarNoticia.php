@@ -3,6 +3,7 @@
 require_once '../config.php';
 require_once '../vistas/helpers/autorizacion.php';
 require_once '../src/noticias/bd/Noticia.php';
+require_once '../src/imagenes/bd/Imagen.php';
 
 verificaLogado(Utils::buildUrl('/noticias.php'));
 
@@ -13,25 +14,36 @@ if (!($_SESSION['admin'] || $_SESSION['moderador'] || $_SESSION['experto'])) {
 }
 
 // Sanitizar y obtener valores de cada campo del formulario
+$id = filter_input(INPUT_POST, 'id', FILTER_SANITIZE_NUMBER_INT);
 $titulo = filter_input(INPUT_POST, 'titulo', FILTER_SANITIZE_SPECIAL_CHARS);
-//$usuario = filter_input(INPUT_POST, 'usuario', FILTER_SANITIZE_SPECIAL_CHARS);
 $fecha = filter_input(INPUT_POST, 'fecha', FILTER_SANITIZE_SPECIAL_CHARS);
 $contenido = filter_input(INPUT_POST, 'contenido', FILTER_SANITIZE_SPECIAL_CHARS);
 
-
-if($titulo && idUsuarioLogado() && $fecha && $contenido){
-    $id = intval($_POST['id']);
+if($titulo && idUsuarioLogado() && $fecha && $contenido) {
     $noticia = new Noticia($titulo, $_SESSION['usuario'], $fecha, $contenido, $id);
     Noticia::actualiza($noticia);
 
-    if($noticia){
-        Utils::redirige(Utils::buildUrl('/noticias.php', ['exito' => '1']));
-        
-    } else{
-        Utils::redirige(Utils::buildUrl('/noticias.php', ['error' => '1']));
+    if (isset($_FILES['imagen'])) {
+        foreach ($_FILES['imagen']['name'] as $key => $value) {
+            if ($_FILES['imagen']['error'][$key] == 0) {
+                $file = [
+                    'name' => $_FILES['imagen']['name'][$key],
+                    'type' => $_FILES['imagen']['type'][$key],
+                    'tmp_name' => $_FILES['imagen']['tmp_name'][$key],
+                    'error' => $_FILES['imagen']['error'][$key],
+                    'size' => $_FILES['imagen']['size'][$key]
+                ];
+                $descripcion = 'Descripción de la imagen editada';
+                $imagenId = Imagen::crea($file, $descripcion, null, $id, null, null);
+
+                if (!$imagenend) {
+                    error_log("Error al subir la imagen editada para la noticia ID: " . $id);
+                }
+            }
+        }
     }
-}
-else {
-    // Redirigir de nuevo al formulario con un mensaje de error
-    Utils::redirige(Utils::buildUrl('/noticias.php?accion=editarNoticia', ['error' => 'datosInvalidos']));
+
+    Utils::redirige(Utils::buildUrl('/noticias.php', ['exito' => '1']));
+} else {
+    Utils::redirige(Utils::buildUrl('/noticias.php', ['error' => 'datosInvalidos']));
 }
