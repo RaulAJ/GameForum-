@@ -73,6 +73,7 @@ function buildFormularioSugerirJuego()
     </form>
     HTML;
 }
+
 function listaSugerencias()
 {
     $sugerencias = Juego::obtenerSugerenciasJuegos();
@@ -112,6 +113,7 @@ function listaSugerencias()
     $listaHtml .= '</div>';
     return $listaHtml;
 }
+
 function listaJuegos($orden = 'notaDesc')
 {
     switch ($orden) {
@@ -156,4 +158,46 @@ function listaJuegos($orden = 'notaDesc')
     }
     $listaHtml .= '</div>';
     return $listaHtml;
+}
+
+function buildFormularioValorarJuego($id)
+{
+    $carruselNotas = '<fieldset class="carrusel-notas"><legend>Nota</legend>';
+    // Generar opciones del carrusel con las notas del 0 al 10
+    for ($i = 0; $i <= 10; $i++) {
+        // Crea los inputs de cada nota
+        $carruselNotas .= "<input type='radio' id='nota_$i' class='input-nota' name='nota' value='$i'>";
+        // Crea las etiquetas de cada nota
+        $carruselNotas .= "<label for='nota_$i' class='label-nota'>$i</label>";
+    }
+    $carruselNotas .= "</fieldset>";
+
+    return <<<EOS
+    <form id="formValorarJuego" class="form-valorar-juego" action="procesarValorarJuego.php" method="POST">
+        $carruselNotas
+        <input type="hidden" id="id" name="id" value="$id">
+        <input type="hidden" id="notaSeleccionada" name="notaSeleccionada" value="">
+        <button type="submit" class="boton-enviar">Enviar</button>
+    </form>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            var inputsNota = document.querySelectorAll('.input-nota');
+            var notaSeleccionada = document.getElementById('notaSeleccionada');
+
+            inputsNota.forEach(function(input) {
+                input.addEventListener('change', function() {
+                    notaSeleccionada.value = this.value;
+                });
+
+                input.addEventListener('mouseenter', function() {
+                    this.classList.add('animacion-numero');
+                });
+
+                input.addEventListener('mouseleave', function() {
+                    this.classList.remove('animacion-numero');
+                });
+            });
+        });
+    </script>
+    EOS;
 }

@@ -28,11 +28,12 @@ function mostrarBotonAgregarRespuesta($id)
     if (estaLogado()) {
         if ($_SESSION['admin'] || $_SESSION['moderador'] || $_SESSION['experto']) {
             return <<<HTML
-                <form action="verPublicacion.php" method="POST">
+                <form action="verPublicacion.php" method="POST" class="form-agregar-respuesta">
                     <input type="hidden" name="accion" value="agregarRespuesta">
-                    <input type="hidden" name="id" value="$id">
-                    <button type="submit" class="borrar-button">Responder</button>
+                    <input type="hidden" name="id" value="<?php echo $id; ?>">
+                    <button type="submit" class="boton-agregar-respuesta">Responder</button>
                 </form>
+
             HTML;
         }
     }

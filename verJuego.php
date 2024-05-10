@@ -1,13 +1,9 @@
 <?php
 
-echo '<link rel="stylesheet" href="css/estilos.css">';
-
 require_once 'config.php';
 require_once 'vistas/helpers/juegos.php';
 require_once 'src/juegos/bd/Juego.php';
-require_once 'src/usuarios/bd/Usuario.php';
-require_once 'vistas/helpers/valorarJuego.php';
-require_once 'vistas/helpers/usuarios.php';
+require_once 'vistas/helpers/juegos.php';
 
 $tituloPagina='Detalles del juego';
 $mensaje = ''; 
@@ -28,23 +24,18 @@ $nota = $juego->getNota();
 $descripcion = htmlspecialchars($juego->getDescripcion()); 
     
 $contenidoPrincipal .= 
-    "<div class='juego-detalle'>
-        <h2>$nombre</h2>
-        <p><strong>Año de salida:</strong> $anio</p>
-        <p><strong>Desarrollador:</strong> $desarrollador</p>
-        <p><strong>Género:</strong> $genero</p>
-        <p><strong>Nota:</strong> $nota </p>
-        <p><strong>Descripción:</strong> $descripcion</p>
-    </div>";
-    if (estaLogado()) {
-        if (!Usuario::compruebaValorado($_SESSION['usuario'], $id)){
-            $contenidoPrincipal .= "<h2>Valora este juego!</h2> ";
-            Usuario::aniadirValoracion($_SESSION['usuario'], $id);
-            $contenidoPrincipal .= buildFormularioValorarJuego($id);
-        }
-        else {
-            $contenidoPrincipal .= "<h2>Ya has valorado este juego, ¡gracias!</h1> ";
-        }
-    }
+    '<div class="juego-detalle">
+        <h2>'.$nombre.'</h2>
+        <p>Año de salida: '.$anio.'</p>
+        <p>Desarrollador: '.$desarrollador.'</p>
+        <p>Género: '.$genero.'</p>
+        <p>Nota: '.$nota.' </p>
+        <p>Descripción: '.$descripcion.'</p>
+    </div>';
+
+    $contenidoPrincipal .= "<h2>Valora este juego!</h2> ";
+    $contenidoPrincipal .= buildFormularioValorarJuego($id);
+    
+
 
 require 'vistas/comun/layout.php';

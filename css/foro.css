@@ -18,7 +18,7 @@
     grid-template-areas:
     'titulo titulo titulo titulo titulo fecha'
     'contenido contenido contenido contenido contenido contenido'
-    ' . . . juego tipo usuario'; /* Áreas del grid: título, contenido, fecha y usuario */
+    ' . . . jueg tipo usuario'; /* Áreas del grid: título, contenido, fecha y usuario */
 }
 
 /* Estilo para el botón del título */
@@ -235,7 +235,195 @@
 }
 
 
+
+/* Estilo para el detalle de la publicación */
+.seccion-info {
+    border: 2px solid #ccc;
+    border-radius: 10px;
+    margin-bottom: 40px; /* Aumento del margen inferior */
+    padding: 30px 20px; /* Aumento del margen superior e inferior */
+    background-color: #f9f9f9;
+    transition: transform 0.3s ease-in-out, border-color 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+    margin-left: 20px; /* Aumento del margen izquierdo */
+    margin-right: 20px; /* Aumento del margen derecho */
+    margin-top: 20px; /* Nuevo margen superior */
+}
+
+.seccion-info:hover {
+    border-color: #ff6f61;
+    transform: scale(0.98); /* Reducción adicional de la escala al pasar el cursor */
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.seccion-info h2 {
+    font-size: 32px;
+    margin-top: 0;
+    margin-bottom: 15px;
+    color: #ff6f61;
+}
+
+.info-detalle {
+    margin-bottom: 15px;
+}
+
+.info-label {
+    font-size: 20px;
+    font-weight: bold;
+    color: #333;
+}
+
+.info-valor {
+    margin-left: 10px;
+    font-size: 18px;
+    color: #666;
+}
+
+/* Estilo para el botón de ver publicación */
+.verPublicacion-button {
+    background-color: #ff6f61;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    cursor: pointer;
+    border-radius: 5px;
+    font-size: 18px;
+    transition: background-color 0.3s ease-in-out, transform 0.2s ease-in-out;
+}
+
+.verPublicacion-button:hover {
+    background-color: #e04131;
+    transform: scale(0.96); /* Reducción adicional de la escala al pasar el cursor */
+}
+
+/* Estilo para el separador */
 .separador {
-    border-top: 2px solid #555; /* Establece una línea superior de 1 píxel de ancho y color gris */
-    margin: 30px 0; /* Espacio de margen arriba y abajo */
+    margin-top: 30px;
+    margin-bottom: 30px;
+    height: 3px;
+    background: linear-gradient(to right, transparent 50%, #ff6f61 50%);
+    background-size: 200% 100%;
+    background-position: right bottom;
+    transition: background-position 0.5s ease;
+}
+
+.separador:hover {
+    background-position: left bottom;
+    transition: background-position 0.5s ease;
+}
+/* Estilo para el contenedor de respuestas */
+.publicacion-respuestas {
+    margin-top: 30px;
+    text-align: center; /* Centrar el texto */
+}
+/* Estilo para el título de las respuestas */
+.publicacion-respuestas h2 {
+    font-size: 28px; /* Aumento del tamaño de la fuente */
+    margin-top: 0;
+    margin-bottom: 20px; /* Aumento del margen inferior */
+    color: #42b648;
+    position: relative;
+    display: inline-block; /* Convertir en bloque en línea para ajustar el tamaño del marco */
+    padding: 0 10px; /* Aumento del espacio alrededor del título */
+}
+
+/* Estilo del marco */
+.publicacion-respuestas h2::before {
+    content: '';
+    position: absolute;
+    top: 0; /* Ajuste para abrir un poco más arriba */
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border-top: 3px solid #ff6f61;
+    border-bottom: 3px solid #ff6f61;
+    z-index: -1;
+    box-sizing: border-box; /* Incluir el ancho del borde en la dimensión total */
+    transition: transform 0.3s ease;
+    transform: scaleY(0);
+    transform-origin: top center; /* Cambio del punto de origen */
+}
+
+.publicacion-respuestas h2:hover::before {
+    transform: scaleY(1);
+}
+
+
+
+/* Estilo para la lista de respuestas */
+.lista-respuestas {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+
+/* Estilo para la fecha de la respuesta */
+.fecha-respuesta {
+    font-size: 14px;
+    margin: 0;
+    text-align: right;
+    color: #666;
+}
+
+/* Estilo para el nombre del usuario de la respuesta */
+.usuario-respuesta {
+    font-size: 16px;
+    margin: 0;
+    text-align: right;
+    color: #333;
+}
+
+/* Estilo para el contenido de la respuesta */
+.contenido-respuesta {
+    font-size: 18px;
+    color: #222;
+    margin-left: 10px;
+}
+/* Estilo para cada respuesta */
+.Respuesta {
+    border: 2px solid #ccc;
+    border-radius: 10px;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin: 20px; /* Márgenes en todas las direcciones */
+}
+/* Estilo para el botón de agregar respuesta */
+.boton-agregar-respuesta {
+    background-color: #42b648; /* Cambio de color del fondo */
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    cursor: pointer;
+    border-radius: 5px;
+    font-size: 18px;
+    transition: background-color 0.3s ease-in-out, transform 0.2s ease-in-out;
+    margin-left: 10px; /* Margen a la izquierda */
+}
+
+.boton-agregar-respuesta:hover {
+    background-color: #338032; /* Cambio de color al pasar el ratón */
+    transform: scale(1.05); /* Aumento de tamaño */
+}
+
+.boton-agregar-respuesta:active {
+    transform: scale(0.95); /* Reducción de tamaño al hacer clic */
+}
+
+/* Animación continua */
+@keyframes pulse {
+    0% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.05);
+    }
+    100% {
+        transform: scale(1);
+    }
+}
+
+.boton-agregar-respuesta {
+    animation: pulse 2s infinite alternate; /* Aplicar la animación continua */
 }

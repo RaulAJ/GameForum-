@@ -239,3 +239,160 @@
 .formulario-sugerir input[type="submit"]:active {
     transform: scale(0.95);
 }
+
+/* Estilo para el contenedor del detalle del juego */
+.juego-detalle {
+    border: 2px solid #ffc107;
+    padding: 20px;
+    margin-top: 20px;
+    background-color: #f9f9f9;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+    transition: transform 0.1s ease-in-out;
+}
+
+.juego-detalle:hover {
+    transform: scale(1.005);
+}
+
+/* Estilo para el título del juego */
+.juego-detalle h2 {
+    margin: 0;
+    font-size: 32px;
+    color: #333;
+    border-bottom: 2px solid #ffc107;
+    padding-bottom: 10px;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    transition: color 0.3s ease-in-out;
+}
+
+.juego-detalle h2:hover {
+    color: #e0a800; /* Cambia de color al pasar el ratón sobre el título */
+}
+
+/* Estilo para los párrafos dentro del detalle del juego */
+.juego-detalle p {
+    margin: 20px 0;
+    color: #666;
+    border-bottom: 1px solid #ccc;
+    padding-bottom: 10px;
+    line-height: 1.5;
+    font-size: 20px; /* Aumentar el tamaño de letra */
+}
+
+/* Estilo para el último párrafo dentro del detalle del juego */
+.juego-detalle p:last-child {
+    border-bottom: none;
+}
+
+/* Estilo para la información relevante */
+.informacion-relevante {
+    font-weight: bold;
+    color: #e0a800;
+    font-size: 24px; /* Tamaño de fuente aumentado */
+}
+
+/* Estilo para el formulario de valoración del juego */
+.formulario-valoracion {
+    margin-top: 20px;
+}
+
+/* Estilo para el botón de valorar */
+.valorar-button {
+    background-color: #ffc107;
+    color: #000;
+    border: none;
+    padding: 15px 30px;
+    cursor: pointer;
+    font-size: 20px;
+    border-radius: 5px;
+    transition: background-color 0.3s ease-in-out, transform 0.2s ease-in-out;
+    text-transform: uppercase;
+}
+
+.valorar-button:hover {
+    background-color: #e0a800;
+    transform: scale(1.1); /* Aumenta ligeramente el tamaño al pasar el ratón sobre el botón */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Agrega una sombra al botón */
+    animation: pulse 1s infinite; /* Agrega una animación de pulso infinita */
+}
+
+/* Estilo para el formulario de valoración del juego */
+.form-valorar-juego {
+    margin-top: 20px;
+    padding: 20px;
+    background-color: #f9f9f9;
+    border: 2px solid #ffc107;
+    border-radius: 10px;
+}
+
+/* Estilo para el carrusel de notas */
+.carrusel-notas {
+    border: none;
+}
+
+.carrusel-notas legend {
+    font-weight: bold;
+    color: #333;
+    font-size: 20px;
+    margin-bottom: 10px;
+}
+
+.input-nota {
+    display: none;
+}
+/* Estilo para los números del carrusel */
+.label-nota {
+    display: inline-block;
+    margin-right: 10px;
+    font-size: 24px; /* Aumentar el tamaño de los números */
+    cursor: pointer;
+    color: #666;
+    transition: transform 0.2s ease-in-out;
+}
+
+.label-nota:hover {
+    color: #e0a800;
+    transform: scale(1.1); /* Aumentar ligeramente el tamaño al pasar el ratón */
+}
+
+.input-nota:checked + .label-nota {
+    font-weight: bold; /* Hacer la nota seleccionada en negrita */
+    color: #e0a800; /* Cambiar el color de la nota seleccionada */
+    transform: scale(1.1); /* Aumentar ligeramente el tamaño de la nota seleccionada */
+}
+
+.animacion-numero {
+    animation: pulsar 0.3s ease-in-out infinite alternate; /* Agregar animación al pinchar */
+}
+
+@keyframes pulsar {
+    from {
+        transform: scale(1);
+    }
+    to {
+        transform: scale(1.1);
+    }
+}
+
+
+/* Estilo para el botón de enviar */
+.boton-enviar {
+    background-color: #ffc107;
+    color: #000;
+    border: none;
+    padding: 15px 30px;
+    cursor: pointer;
+    font-size: 18px;
+    border-radius: 5px;
+    transition: background-color 0.3s ease-in-out, transform 0.2s ease-in-out;
+    text-transform: uppercase;
+    margin-top: 20px;
+}
+
+.boton-enviar:hover {
+    background-color: #e0a800;
+    transform: scale(1.1); /* Aumentar ligeramente el tamaño al pasar el ratón */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Agregar una sombra al botón */
+}

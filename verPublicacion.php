@@ -1,7 +1,5 @@
 <?php
 
-echo '<link rel="stylesheet" href="css/estilos.css">';
-
 require_once 'config.php';
 require_once 'vistas/helpers/publicaciones.php';
 require_once 'vistas/helpers/respuestas.php';
@@ -26,25 +24,42 @@ if (!isset($_POST['accion'])){
     $contenido = htmlspecialchars($publicacion->getContenido()); 
         
     $contenidoPrincipal .= 
-        "<div class='publicacion-detalle'>
-            <h2>$titulo</h2>
-            <p><strong>Usuario:</strong> $usuario</p>
-            <p class=\"juego-publicacion\">Juego: 
-                            <form action='verJuego.php' method='post'>
-                                <input type='hidden' name='juego' value='$juego'>
-                                <button type='submit' class='verPublicacion-button'>$juego</button>
-                            </form></p>
-            <p><strong>Tipo:</strong> $tipo</p>
-            <p><strong>Fecha:</strong> $fecha </p>
-            <p><strong>Descripción:</strong> $contenido</p>
-        </div>";
+    "<div class='seccion-info'>
+        <h2>$titulo</h2>
+        <div class='info-detalle'>
+            <p class='info-label'>Usuario:</p>
+            <p class='info-valor'>$usuario</p>
+        </div>
+        <div class='info-detalle'>
+            <p class='info-label'>Juego:</p>
+            <p class='info-valor'>
+                <form action='verJuego.php' method='post'>
+                    <input type='hidden' name='juego' value='$juego'>
+                    <button type='submit' class='verPublicacion-button'>$juego</button>
+                </form>
+            </p>
+        </div>
+        <div class='info-detalle'>
+            <p class='info-label'>Tipo:</p>
+            <p class='info-valor'>$tipo</p>
+        </div>
+        <div class='info-detalle'>
+            <p class='info-label'>Fecha:</p>
+            <p class='info-valor'>$fecha</p>
+        </div>
+        <div class='info-detalle'>
+            <p class='info-label'>Descripción:</p>
+            <p class='info-valor'>$contenido</p>
+        </div>
+    </div>";
+
     
-    $contenidoPrincipal .= "<div class separador></div>";  //esto no va
+    $contenidoPrincipal .= "<div class ='separador'></div>";  //esto no va
     
     $contenidoPrincipal .= mostrarBotonAgregarRespuesta($id);
     
     $contenidoPrincipal .= 
-    "<div class publicacion-respuestas>
+    "<div class='publicacion-respuestas'>
         <h2>Respuestas:</h2>
     </div>";
 
