@@ -7,7 +7,7 @@ require_once 'autorizacion.php';
 function mostrarBotonAgregarJuego() {
     if (estaLogado()) {
         if ($_SESSION['admin'] || $_SESSION['moderador'] || $_SESSION['experto']) {
-            return '<a href="topJuegos.php?accion=agregarJuego" class="juego-button">Añadir Juego</a>';
+            return '<a href="topJuegos.php?accion=agregarJuego" class="juego-button">Añadir Juego</a> <a href="verSugerirJuegos.php" class="juego-button">Juegos sugeridos</a>';
         } else {
             return '<a href="topJuegos.php?accion=sugerirJuego" class="juego-button">Sugerir Juego</a>';
         }
@@ -63,7 +63,30 @@ function buildFormularioSugerirJuego() {
     </form>
     HTML;
 }
-
+function listaSugerencias(){
+    $sugerencias = Juego::obtenerSugerenciasJuegos();
+    $listaHtml = '<div class="lista-juegos">';
+    foreach ($sugerencias as $sugerencia) {
+        $id = $sugerencia->getId();
+        $nombre = htmlspecialchars($sugerencia->getNombreJuego());
+        $listaHtml .= "<div class=\"juego\">
+                       <form action='verJuego.php' method='post'>
+                            <input type='hidden' name='id' value='$id'>
+                            <button type='submit' class='borrar-button'>$nombre</button>
+                        </form>
+                        <form action='juegos/aceptarSugerirJuego.php' method='post'>
+                            <input type='hidden' name='id' value='$id'>
+                            <button>Aceptar juego</button>
+                        </form>
+                        <form action='juegos/borrarSugerenciaJuego.php' method='post'>
+                            <input type='hidden' name='id' value='$id'>
+                            <button>Rechazar juego</button>
+                        </form>                       
+                        </div>";
+    }
+    $listaHtml .= '</div>';
+    return $listaHtml;
+}
 function listaJuegos($orden = 'notaDesc') {
     switch ($orden) {
         case 'notaAsc':
@@ -98,4 +121,3 @@ function listaJuegos($orden = 'notaDesc') {
     $listaHtml .= '</div>';
     return $listaHtml;
 }
-?>

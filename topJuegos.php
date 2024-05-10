@@ -61,7 +61,7 @@ if (isset($_GET['accion']) && $_GET['accion'] === 'agregarJuego') {
     $contenidoPrincipal .= buildFormularioAgregarJuego();
 } elseif (isset($_GET['accion']) && $_GET['accion'] === 'sugerirJuego') {
     $contenidoPrincipal .= buildFormularioSugerirJuego();
-} 
+}
 
 // Agregar mensaje a contenido principal
 $contenidoPrincipal .= $mensaje;

@@ -3,7 +3,6 @@
 echo '<link rel="stylesheet" href="css/estilos.css">';
 
 require_once 'autorizacion.php';
-require_once 'src/juegos/bd/Juego.php';
 require_once 'src/respuestas/bd/Respuesta.php';
 
 function buildFormularioRespuesta($id)

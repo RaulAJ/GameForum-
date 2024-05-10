@@ -243,6 +243,23 @@ class Juego
         }
     }
 
+    public static function borraDeSugerenciasJuegos($id){
+        $conn = BD::getInstance()->getConexionBd();
+        if (!$conn) {
+            return false;
+        }
+
+        $query = sprintf("DELETE FROM sugerenciasjuegos WHERE ID = %d", $id);
+
+        if ($conn->query($query)) {
+            return true;
+        } else {
+            error_log("Error al borrar la sugerencia de juego ({$conn->errno}): {$conn->error}");
+            return false;
+        }
+}
+
+
     public static function obtenerIdJuego($nombre) {
         $conn = BD::getInstance()->getConexionBd();
         // Se usa la función mysqli_real_escape_string para evitar inyección SQL
@@ -265,6 +282,30 @@ class Juego
 public static function obtenerJuego($id) {
     $conn = BD::getInstance()->getConexionBd();
     $query = sprintf("SELECT * FROM videojuegos WHERE ID = %d", $id);
+    $result = $conn->query($query);
+    
+    if ($result && $result->num_rows > 0) {
+        $fila = $result->fetch_assoc();
+        $juego = new Juego(
+            $fila['ID'],
+            $fila['Juego'],
+            $fila['Año de salida'],
+            $fila['Desarrollador'],
+            $fila['Genero'],
+            $fila['Nota'],
+            $fila['Descripcion']
+        );
+        $result->free();
+        return $juego;
+    } else {
+        error_log("Error BD ({$conn->errno}): {$conn->error}");
+        return null;
+    }
+}
+
+public static function obtenerSugerencia($id) {
+    $conn = BD::getInstance()->getConexionBd();
+    $query = sprintf("SELECT * FROM sugerenciasjuegos WHERE ID = %d", $id);
     $result = $conn->query($query);
     
     if ($result && $result->num_rows > 0) {
@@ -434,4 +475,36 @@ public static function obtenerJuego($id) {
 
         return $juegos;
     }
+
+    public static function obtenerSugerenciasJuegos(){
+        $conn = BD::getInstance()->getConexionBd(); 
+        if (!$conn) {
+            error_log("Error al conectar a la base de datos");
+            return [];
+        }
+
+        $query = "SELECT * FROM sugerenciasjuegos";
+        $result = $conn->query($query);
+
+        $sugerenciasJuegos = [];
+        if ($result) {
+            while ($fila = $result->fetch_assoc()) {
+                $sugerenciasJuegos[] = new Juego(
+                    $fila['ID'],
+                    $fila['Juego'],
+                    $fila['Año de salida'],
+                    $fila['Desarrollador'],
+                    $fila['Genero'],
+                    null,
+                    $fila['Descripcion']
+                );
+            }
+            $result->free();
+        } else {
+            error_log("Error al obtener sugerencias de juegos: ({$conn->errno}): {$conn->error}");
+        }
+
+        return $sugerenciasJuegos;
+    }
+
 }
