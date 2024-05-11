@@ -102,11 +102,11 @@ function listaSugerencias()
                         $imagenesHtml
                         <form action='juegos/aceptarSugerirJuego.php' method='post'>
                             <input type='hidden' name='id' value='$id'>
-                            <button>Aceptar juego</button>
+                            <button type='submit' class='aceptar-button'>Aceptar juego</button>
                         </form>
                         <form action='juegos/borrarSugerenciaJuego.php' method='post'>
                             <input type='hidden' name='id' value='$id'>
-                            <button>Rechazar juego</button>
+                            <button type='submit' class='rechazar-button'>Rechazar juego</button>
                         </form>                       
                        </div>";
     }

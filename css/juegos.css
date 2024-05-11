@@ -396,3 +396,34 @@
     transform: scale(1.1); /* Aumentar ligeramente el tamaño al pasar el ratón */
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Agregar una sombra al botón */
 }
+
+.borrar-button {
+    display: inline-block;
+    padding: 6px 12px; /* Reducir el padding para hacer el botón muy pequeño */
+    font-size: 15px; /* Reducir el tamaño del texto del botón */
+    background-color: #ff6347; /* Color de fondo */
+    color: #fff; /* Color del texto */
+    border: 1px solid #ff6347; /* Borde */
+    border-radius: 2px; /* Bordes redondeados */
+    text-decoration: none; /* Quitar subrayado del enlace */
+}
+.aceptar-button {
+    display: inline-block;
+    padding: 6px 12px; /* Reducir el padding para hacer el botón muy pequeño */
+    font-size: 15px; /* Reducir el tamaño del texto del botón */
+    background-color: #1ed810; /* Color de fondo */
+    color: #fff; /* Color del texto */
+    border: 1px solid #1ed810; /* Borde */
+    border-radius: 2px; /* Bordes redondeados */
+    text-decoration: none; /* Quitar subrayado del enlace */
+}
+.rechazar-button {
+    display: inline-block;
+    padding: 6px 12px; /* Reducir el padding para hacer el botón muy pequeño */
+    font-size: 15px; /* Reducir el tamaño del texto del botón */
+    background-color: #db0303; /* Color de fondo */
+    color: #fff; /* Color del texto */
+    border: 1px solid #db0303; /* Borde */
+    border-radius: 2px; /* Bordes redondeados */
+    text-decoration: none; /* Quitar subrayado del enlace */
+}
