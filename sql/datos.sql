@@ -35,7 +35,6 @@ INSERT INTO `foro` (`ID`, `Titulo`, `Usuario`, `Juego`, `Tipo`, `Fecha`, `Conten
 --
 
 INSERT INTO `imagenes` (`id`, `ruta`, `descripcion`, `noticia_id`, `foro_id`, `respuestas_id`, `videojuego_id`, `sugerencia_juego_id`) VALUES
-(38, 'uploads/img_663e1282748662.52245071.jpg', 'gta.jpg', NULL, NULL, NULL, 14, NULL),
 (49, 'uploads/img_663e4886ad3016.28828959.jpg', 'bron.jpg', NULL, NULL, NULL, 24, NULL),
 (50, 'uploads/img_663e4886ad9997.38720480.jpg', 'bron432.jpg', NULL, NULL, NULL, 24, NULL),
 (51, 'uploads/img_663e48d8789354.89430420.jpg', 'gta.jpg', NULL, NULL, NULL, 25, NULL),

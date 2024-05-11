@@ -137,28 +137,31 @@ function listaJuegos($orden = 'notaDesc')
         $id = $juego->getId();
         $nombre = htmlspecialchars($juego->getNombreJuego());
         $imagenes = Imagen::obtenerPorVideojuegoId($id); // Fetch images for this game
-        
-        $imagenesHtml = '<div class="imagenes-juego">';
-        foreach ($imagenes as $imagen) {
-            // Construct HTML for each image
-            $imagenesHtml .= "<img src='{$imagen->getRuta()}' alt='{$imagen->getDescripcion()}' style='width: 100px; height: auto;'>";
-        }
-        $imagenesHtml .= '</div>';
 
         $listaHtml .= "<div class=\"juego\">
-                       <div class=\"posicion-juego\">Top $posicion</div>
-                       <form action='verJuego.php' method='post'>
-                            <input type='hidden' name='id' value='$id'>
-                            <button type='submit' class='juego-button'>$nombre</button>
-                         </form>
-                         $imagenesHtml
-                         <div class=\"nota-juego\">Nota: {$juego->getNota()}</div>
+                           <div class=\"posicion-juego animacion-top\">Top $posicion</div>
+                           <form action='verJuego.php' method='post'>
+                                <input type='hidden' name='id' value='$id'>
+                                <button type='submit' class='juego-button'>$nombre</button>
+                             </form>";
+        $imagen = reset($imagenes); // Obtener la primera imagen del juego
+        if ($imagen) {
+            // Construir HTML para la imagen con animación al pasar el ratón
+            $listaHtml .= "<div class=\"imagen-juego\">
+                                <img src='{$imagen->getRuta()}' alt='{$imagen->getDescripcion()}' class='imagen-juego-hover' style='width: 100px; height: auto;'>;
+                           </div>";
+        }
+        $listaHtml .= "<div class=\"nota-juego\">Nota: {$juego->getNota()}</div>
                        </div>";
         $posicion++;
     }
     $listaHtml .= '</div>';
     return $listaHtml;
 }
+
+
+
+
 function buildFormularioValorarJuego($id)
 {
     $carruselNotas = '<fieldset class="carrusel-notas"><legend>Nota</legend>';
