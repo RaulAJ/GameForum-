@@ -18,8 +18,8 @@ function buildFormularioNoticia()
             <input type="date" id="fecha" name="fecha" required>
             
             <label for="contenido">Contenido:</label>
-            <textarea id="contenido" name="contenido" rows="4" cols="50" required></textarea><br><br>
-            
+            <textarea id="contenido" name="contenido" rows="4" cols="50" maxlength="997" required></textarea><br><br>
+
             <label for="imagen">Imagen:</label>
             <input type="file" id="imagen" name="imagen[]" multiple><br><br> 
             
@@ -47,7 +47,7 @@ function editarformularioNoticia($id)
             <input type="date" id="fecha" name="fecha" value='$fecha' required>
             
             <label for="contenido">Contenido:</label>
-            <textarea id="contenido" name="contenido"  rows="4" cols="50" required>$contenido</textarea><br><br>
+            <textarea id="contenido" name="contenido"  rows="4" cols="50" maxlength="997" required>$contenido</textarea><br><br>
             
             <label for="imagen">Añadir imágenes:</label>
             <input type="file" id="imagen" name="imagen[]" multiple><br><br> 

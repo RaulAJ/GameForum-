@@ -454,7 +454,7 @@
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Agregar una sombra al botón */
 }
 
-.borrar-button {
+.boton-juego {
     display: inline-block;
     padding: 6px 12px; /* Reducir el padding para hacer el botón muy pequeño */
     font-size: 15px; /* Reducir el tamaño del texto del botón */
@@ -483,4 +483,23 @@
     border: 1px solid #db0303; /* Borde */
     border-radius: 2px; /* Bordes redondeados */
     text-decoration: none; /* Quitar subrayado del enlace */
+}
+
+.boton-juego:hover {
+    background-color: #ff4422; /* Intensificar el color de fondo al pasar el ratón */
+}
+
+.boton-juego:active,
+.aceptar-button:active,
+.rechazar-button:active {
+    transform: scale(1.05); /* Aumentar un poco el tamaño al hacer clic */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Sombra al hacer clic */
+}
+
+.aceptar-button:hover {
+    background-color: #1ecf10; /* Intensificar el color de fondo al pasar el ratón */
+}
+
+.rechazar-button:hover {
+    background-color: #d70303; /* Intensificar el color de fondo al pasar el ratón */
 }

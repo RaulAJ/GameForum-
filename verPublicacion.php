@@ -36,7 +36,7 @@ if (!isset($_POST['accion'])){
             <p class='info-valor'>
                 <form action='verJuego.php' method='post'>
                     <input type='hidden' name='juego' value='$juego'>
-                    <button type='submit' class='verPublicacion-button'>$juego</button>
+                    <button type='submit' class='game-button'>$juego</button>
                 </form>
             </p>
         </div>

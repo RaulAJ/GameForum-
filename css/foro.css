@@ -110,7 +110,7 @@
 
 .juego-publicacion {
     grid-area: juegoLabel;
-    font-size: 12px; /* Tamaño de la fuente más pequeño */
+    font-size: 16px; /* Tamaño de la fuente más pequeño */
     /*padding: 5px 10px; /* Menos espacio alrededor del texto */
 }
 
@@ -293,23 +293,6 @@
     color: #666;
 }
 
-/* Estilo para el botón de ver publicación */
-.verPublicacion-button {
-    background-color: #ff6f61;
-    color: #fff;
-    border: none;
-    padding: 10px 20px;
-    cursor: pointer;
-    border-radius: 5px;
-    font-size: 18px;
-    transition: background-color 0.3s ease-in-out, transform 0.2s ease-in-out;
-}
-
-.verPublicacion-button:hover {
-    background-color: #e04131;
-    transform: scale(0.96); /* Reducción adicional de la escala al pasar el cursor */
-}
-
 /* Estilo para el separador */
 .separador {
     margin-top: 30px;
@@ -441,4 +424,42 @@
 
 .boton-agregar-respuesta {
     animation: pulse 2s infinite alternate; /* Aplicar la animación continua */
+}
+
+/* Animación de pulsación */
+@keyframes pulse {
+    0% {
+        transform: scale(1); /* Escala normal */
+    }
+    50% {
+        transform: scale(1.05); /* Escala aumentada al 50% de la animación */
+    }
+    100% {
+        transform: scale(1); /* Vuelve a la escala normal */
+    }
+}
+
+.verJuego-button {
+    margin-top: 17px; /* Agrega un margen superior de 19px */
+    margin-left: -220px; /* Mueve el botón 5px a la izquierda */
+    background-color: transparent; /* Sin fondo */
+    border: 2px solid #4b58af; /* Borde sólido de color */
+    font-size: 16px; /* Tamaño de fuente */
+    color: #4b58af; /* Color del texto */
+    cursor: pointer; /* Cursor de puntero al pasar sobre él */
+    transition: color 0.3s, border-color 0.3s; /* Transición suave para el color del texto y el color del borde */
+    position: relative; /* Posición relativa para los pseudo-elementos */
+    animation: pulse 2s infinite; /* Animación de pulsación constante */
+}
+
+
+/* Efecto de color al pasar el mouse sobre el botón */
+.verJuego-button:hover {
+    color: #734242; /* Cambia el color del texto al pasar el ratón */
+    border-color: #734242; /* Cambia el color del borde al pasar el ratón */
+}
+
+/* Animación del rayo al pasar el mouse */
+.verJuego-button:hover::after {
+    width: 110%; /* Ancho aumentado para crear el efecto de rayo */
 }

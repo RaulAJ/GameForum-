@@ -1,49 +1,97 @@
 /* Estilos para la lista de noticias */
 .lista-noticias {
-    display: grid; /* Utiliza CSS Grid para organizar las noticias */
-    gap: 20px; /* Espacio entre las noticias */
+    display: grid;
+    gap: 20px;
 }
 
 /* Estilos para cada noticia individual */
 .noticia {
-    display: grid; /* Utiliza CSS Grid para organizar el contenido de la noticia */
-    border: 3px solid #560187; /* Borde de 1px sólido con color #828282 */
-    padding: 20px; /* Espaciado interno de 20px */
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Sombra suave */
-    margin-left: 20px; /* Margen izquierdo de 20px */
-    margin-right: 20px; /* Margen derecho de 20px */
-    margin-bottom: 20px; /* Márgenes entre las noticias */
-    border-radius: 10px; /* Bordes redondeados */
-    /* Definición del diseño del grid para la noticia */
+    display: grid;
+    border: 3px solid #560187;
+    padding: 20px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    margin-left: 20px;
+    margin-right: 20px;
+    margin-bottom: 20px;
+    border-radius: 10px;
     grid-template-areas:
-    'titulo titulo titulo titulo titulo fecha'
-    'contenido contenido contenido contenido contenido contenido'
-    ' . . . . . usuario'; /* Áreas del grid: título, contenido, fecha y usuario */
+        'imagen titulo titulo titulo titulo fecha'
+        'imagen contenido contenido contenido contenido contenido'
+        ' . . . . . usuario';
+    grid-template-columns: 100px 1fr; /* Columna para la imagen y el contenido */
+    grid-template-rows: auto auto auto; /* Filas para cada sección */
+    gap: 10px; /* Espacio entre elementos */
+}
+
+/* Estilos para la imagen de la noticia */
+.imagen-noticia {
+    grid-area: imagen;
+    width: 100px;
+    height: auto;
+    margin-right: 10px; /* Espacio entre la imagen y el contenido */
 }
 
 /* Estilos para el título de la noticia */
 .titulo-noticia {
-    grid-area: titulo; /* Asigna el área del grid para el título */
-    font-size: 3ex; /* Tamaño de fuente del título */
+    grid-area: titulo;
+    font-size: 3ex;
 }
 
 /* Estilos para la fecha de la noticia */
-.fecha-noticia{
-    grid-area: fecha; /* Asigna el área del grid para la fecha */
-    text-align: right; /* Alineación de texto a la derecha */
+.fecha-noticia {
+    grid-area: fecha;
+    text-align: right;
 }
 
 /* Estilos para el usuario de la noticia */
 .usuario-noticia {
-    grid-area: usuario; /* Asigna el área del grid para el usuario */
-    text-align: right; /* Alineación de texto a la derecha */
+    grid-area: usuario;
+    text-align: right;
 }
 
 /* Estilos para el contenido de la noticia */
 .contenido-noticia {
-    grid-area: contenido; /* Asigna el área del grid para el contenido */
-    text-align: left; /* Alineación de texto a la izquierda */
+    grid-area: contenido;
+    text-align: left;
+    font-size: 18px; /* Tamaño de fuente más grande */
+    line-height: 1.6; /* Espaciado entre líneas */
 }
+
+/* Estilos para los botones de acción */
+.form-container {
+    grid-area: acciones;
+    display: flex;
+    justify-content: flex-end;
+}
+
+/* Estilos para los botones */
+.borrar_button,
+.editar-button {
+    background-color: #c69084;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    padding: 10px 20px;
+    margin-top: 10px;
+    cursor: pointer;
+    flex: 1; /* Para que ambos botones ocupen el mismo espacio */
+}
+
+/* Efecto hover para los botones */
+.borrar_button:hover,
+.editar-button:hover {
+    background-color: #e0c6c6;
+}
+
+/* Efecto al hacer clic en los botones */
+.borrar_button:active,
+.editar-button:active {
+    transform: scale(0.95);
+}
+
+
+
+
 
 .noticia-button {
     display: inline-block; /* Muestra el botón como un bloque en línea */

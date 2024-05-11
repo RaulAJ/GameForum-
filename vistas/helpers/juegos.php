@@ -97,7 +97,7 @@ function listaSugerencias()
         $listaHtml .= "<div class=\"juego\">
                        <form action='verJuego.php' method='post'>
                             <input type='hidden' name='id' value='$id'>
-                            <button type='submit' class='borrar-button'>$nombre</button>
+                            <button type='submit' class='boton-juego'>$nombre</button>
                         </form>
                         $imagenesHtml
                         <form action='juegos/aceptarSugerirJuego.php' method='post'>
