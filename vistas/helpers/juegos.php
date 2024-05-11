@@ -159,7 +159,6 @@ function listaJuegos($orden = 'notaDesc')
     $listaHtml .= '</div>';
     return $listaHtml;
 }
-
 function buildFormularioValorarJuego($id)
 {
     $carruselNotas = '<fieldset class="carrusel-notas"><legend>Nota</legend>';
@@ -177,27 +176,9 @@ function buildFormularioValorarJuego($id)
         $carruselNotas
         <input type="hidden" id="id" name="id" value="$id">
         <input type="hidden" id="notaSeleccionada" name="notaSeleccionada" value="">
-        <button type="submit" class="boton-enviar">Enviar</button>
+        <button type="button" class="boton-enviar" onclick="enviarFormulario()">Enviar</button>
+        <p id="mensaje-advertencia" class="mensaje-advertencia" style="color: red; display: none;">Por favor, seleccione una nota antes de enviar el formulario.</p>
     </form>
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            var inputsNota = document.querySelectorAll('.input-nota');
-            var notaSeleccionada = document.getElementById('notaSeleccionada');
-
-            inputsNota.forEach(function(input) {
-                input.addEventListener('change', function() {
-                    notaSeleccionada.value = this.value;
-                });
-
-                input.addEventListener('mouseenter', function() {
-                    this.classList.add('animacion-numero');
-                });
-
-                input.addEventListener('mouseleave', function() {
-                    this.classList.remove('animacion-numero');
-                });
-            });
-        });
-    </script>
+    <script src="js/validaValorarNota.js"></script>
     EOS;
 }

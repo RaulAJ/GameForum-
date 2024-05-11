@@ -4,6 +4,7 @@ require_once 'config.php';
 require_once 'vistas/helpers/juegos.php';
 require_once 'src/juegos/bd/Juego.php';
 require_once 'vistas/helpers/juegos.php';
+require_once 'vistas/helpers/autorizacion.php';
 
 $tituloPagina='Detalles del juego';
 $mensaje = ''; 
@@ -33,8 +34,14 @@ $contenidoPrincipal .=
         <p>Descripción: '.$descripcion.'</p>
     </div>';
 
-    $contenidoPrincipal .= "<h2>Valora este juego!</h2> ";
-    $contenidoPrincipal .= buildFormularioValorarJuego($id);
+    if(estaLogado()){
+        $contenidoPrincipal .= "<h2>Valora este juego!</h2> ";
+        $contenidoPrincipal .= buildFormularioValorarJuego($id);
+    }
+    else{
+        $contenidoPrincipal .= "<h2>Registrate para poder valorar este juego!</h2> ";
+
+    }
     
 
 

@@ -2,7 +2,6 @@
 
 require_once 'config.php';
 require_once 'vistas/helpers/juegos.php';
-require_once 'vistas/helpers/valorarJuego.php';
 require_once 'src/juegos/bd/Juego.php';
 
 $tituloPagina = 'Valorar Juego';

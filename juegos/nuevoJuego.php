@@ -27,7 +27,7 @@ $descripcion = filter_input(INPUT_POST, 'descripcion', FILTER_SANITIZE_SPECIAL_C
 
 // Crear y guardar el juego si todos los datos son válidos
 if ($titulo && $anioDeSalida && $desarrollador && $genero && $nota !== false && $descripcion) {
-    $juegoId = Juego::crea($titulo, $anioDeSalida, $desarrollador, $genero, $nota, $descripcion);
+    $juegoId = Juego::crea($titulo, $anioDeSalida, $desarrollador, $genero, $nota, 0, $descripcion);
     $errorEnImagen = false;
 
     if ($juegoId && isset($_FILES['imagen']) && $_FILES['imagen']['name'][0] != '') {

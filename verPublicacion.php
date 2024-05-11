@@ -7,6 +7,7 @@ require_once 'src/foro/bd/Publicacion.php';
 
 $mensaje = ''; 
 $contenidoPrincipal = '';
+$tituloPagina = 'Detalles de la publicación';
 
 if (!isset($_POST['accion'])){
     if (isset($_POST['id'])){        
