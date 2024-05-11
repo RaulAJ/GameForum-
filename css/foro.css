@@ -18,7 +18,7 @@
     grid-template-areas:
     'titulo titulo titulo titulo titulo fecha'
     'contenido contenido contenido contenido contenido contenido'
-    ' . . . jueg tipo usuario'; /* Áreas del grid: título, contenido, fecha y usuario */
+    'borrar editar juegoLabel juego tipo usuario'; /* Áreas del grid: título, contenido, fecha y usuario */
 }
 
 /* Estilo para el botón del título */
@@ -37,15 +37,28 @@
     color: #4CAF50; /* Cambia el color del texto al pasar el ratón */
 }
 
+
 /* Estilo para los botones de borrar y editar */
-.borrar_button, .editar-button {
+.borrar_button {
     background-color: transparent; /* Sin fondo */
     border: none; /* Sin borde */
     font-size: 1em; /* Tamaño de fuente */
     color: #4b58af; /* Color del texto menos llamativo */
     cursor: pointer; /* Cursor de puntero al pasar sobre él */
     transition: color 0.3s; /* Transición suave para el color del texto */
-    padding: 5px 10px; /* Ajuste del relleno */
+    /*padding: 5px 10px; /* Ajuste del relleno */
+    border: 1px solid #4b58af; /* Borde fino */
+    border-radius: 3px; /* Bordes redondeados */
+}
+
+ .editar-button {
+    background-color: transparent; /* Sin fondo */
+    border: none; /* Sin borde */
+    font-size: 1em; /* Tamaño de fuente */
+    color: #4b58af; /* Color del texto menos llamativo */
+    cursor: pointer; /* Cursor de puntero al pasar sobre él */
+    transition: color 0.3s; /* Transición suave para el color del texto */
+    /*padding: 5px 10px; /* Ajuste del relleno */
     border: 1px solid #4b58af; /* Borde fino */
     border-radius: 3px; /* Bordes redondeados */
 }
@@ -94,9 +107,11 @@
     grid-area: tipo; /* Asigna el área del grid para el contenido */
     /*text-align: left;  Alineación de texto a la izquierda */
 }
-.juego-publicacion{
-    grid-area: juego; /* Asigna el área del grid para el contenido */
-    /*text-align: left;  Alineación de texto a la izquierda */
+
+.juego-publicacion {
+    grid-area: juegoLabel;
+    font-size: 12px; /* Tamaño de la fuente más pequeño */
+    /*padding: 5px 10px; /* Menos espacio alrededor del texto */
 }
 
 .foro-button {

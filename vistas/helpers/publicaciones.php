@@ -144,7 +144,7 @@ function listaPublicaciones()
                         <p class=\"fecha-publicacion\">$fecha</p>
                         <p class=\"tipo-publicacion\">Tipo: $tipo</p>
                         <p class=\"juego-publicacion\">Juego: 
-                        <form action='verJuego.php' method='post'>
+                        <form action='verJuego.php' method='post' style='grid-area: juego;'>
                             <input type='hidden' name='juego' value='$juego'>
                             <button type='submit' class='verJuego-button'>$juego</button>
                         </form></p>
@@ -153,18 +153,18 @@ function listaPublicaciones()
 
         if (estaLogado()) {
             if (esMismoUsuario($usuario) || $_SESSION['admin'] || $_SESSION['moderador']) {
-                $listaHtml .= "<div class=\"form-container\">";
+                //$listaHtml .= "<div class=\"form-container\">";
 
-                $listaHtml .= "<form action='foro/borrarPublicacion.php' method='post'>
+                $listaHtml .= "<form action='foro/borrarPublicacion.php' method='post' style='grid-area: borrar;'>
                 <input type='hidden' name='id' value='$id'>
                 <button type='submit' class='borrar_button'>Borrar</button>
                     </form>";
-                $listaHtml .= "<form action='foro.php'>
+                $listaHtml .= "<form action='foro.php' style='grid-area: editar;'>
                  <input type='hidden' name='accion' value='editarPublicacion'>
                  <input type='hidden' name='id' value='$id'>
                  <button type='submit' class='editar-button'>Editar</button>
                     </form>";
-                $listaHtml .= "</div>"; // Cierre del div de botones de acciones
+                //$listaHtml .= "</div>"; // Cierre del div de botones de acciones
              }
         }
 
