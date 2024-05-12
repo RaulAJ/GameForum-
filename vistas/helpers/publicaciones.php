@@ -5,6 +5,8 @@ echo '<link rel="stylesheet" href="css/estilos.css">';
 require_once 'autorizacion.php';
 require_once 'src/juegos/bd/Juego.php';
 require_once 'src/respuestas/bd/Respuesta.php';
+require_once 'src/imagenes/bd/Imagen.php';
+
 
 function buildFormularioPublicacion()
 {
@@ -23,7 +25,7 @@ function buildFormularioPublicacion()
     ';
 
     return <<<HTML
-        <form class="formulario-foro" action="foro/procesarPublicacion.php" method="post">
+        <form class="formulario-foro" action="foro/procesarPublicacion.php" method="post" enctype="multipart/form-data">
             <label for="titulo">Título:</label>
             <input type="text" id="titulo" name="titulo" required>
             
@@ -43,6 +45,8 @@ function buildFormularioPublicacion()
             <label for="contenido">Contenido:</label>
             <textarea id="contenido" name="contenido" rows="4" cols="50" required></textarea><br><br>
             
+            <label for="imagen">Imagenes:</label>
+            <input type="file" id="imagen" name="imagen[]" multiple><br><br> 
             <input type="submit" value="Enviar">
         </form>
     HTML;
@@ -85,7 +89,7 @@ function editarformularioPublicacion($id)
     }
     
     return <<<HTML
-        <form class="formulario-foro" action="foro/editarPublicacion.php" method="post">
+        <form class="formulario-foro" action="foro/editarPublicacion.php" method="post" enctype="multipart/form-data">
             <input type='hidden' name='id' value= '$id'>
 
             <label for="titulo">Título:</label>
@@ -107,6 +111,8 @@ function editarformularioPublicacion($id)
             <label for="contenido">Contenido:</label>
             <textarea id="contenido" name="contenido"  rows="4" cols="50" required>$contenido</textarea><br><br>
             
+            <label for="imagen">Añadir imágenes:</label>
+            <input type="file" id="imagen" name="imagen[]" multiple><br><br> 
             <input type="submit" value="Enviar">
         </form>
 HTML;
@@ -131,11 +137,19 @@ function listaPublicaciones()
         $nombre = htmlspecialchars($publicacion->getTitulo());
         $fecha = htmlspecialchars($publicacion->getFecha());
         $usuario = htmlspecialchars($publicacion->getUsuario());
-        $tipo =  htmlspecialchars($publicacion->getTipo());
-        $juego =  htmlspecialchars($publicacion->getJuego());
+        $tipo = htmlspecialchars($publicacion->getTipo());
+        $juego = htmlspecialchars($publicacion->getJuego());
         $id = $publicacion->getId();
+        $imagenes = Imagen::obtenerPorForoId($id); 
 
-        $listaHtml .= "<div class=\"Publicacion\">
+        $imagenesHtml = ''; 
+        foreach ($imagenes as $imagen) {
+            $rutaImagen = htmlspecialchars($imagen->getRuta());
+            $descripcionImagen = htmlspecialchars($imagen->getDescripcion());
+            $imagenesHtml .= "<img src='{$rutaImagen}' alt='{$descripcionImagen}' style='width: 100px; height: auto;'>";
+        }
+
+        $listaHtml .= "<div class=\"publicacion\">
                         <h3 class=\"titulo-publicacion\">
                         <form action='verPublicacion.php' method='post'>
                             <input type='hidden' name='id' value='$id'>
@@ -149,23 +163,21 @@ function listaPublicaciones()
                             <button type='submit' class='verJuego-button'>$juego</button>
                         </form></p>
                         <p class=\"usuario-publicacion\">Escrita por: $usuario </p>
-                        <div class=\"contenido-publicacion\">{$publicacion->getContenido()}</div>";
+                        <div class=\"contenido-publicacion\">{$publicacion->getContenido()}</div>
+                        <div class=\"imagenes-publicacion\">$imagenesHtml</div>";
 
         if (estaLogado()) {
             if (esMismoUsuario($usuario) || $_SESSION['admin'] || $_SESSION['moderador']) {
-                //$listaHtml .= "<div class=\"form-container\">";
-
                 $listaHtml .= "<form action='foro/borrarPublicacion.php' method='post' style='grid-area: borrar;'>
-                <input type='hidden' name='id' value='$id'>
-                <button type='submit' class='borrar_button'>Borrar</button>
-                    </form>";
+                    <input type='hidden' name='id' value='$id'>
+                    <button type='submit' class='borrar_button'>Borrar</button>
+                </form>";
                 $listaHtml .= "<form action='foro.php' style='grid-area: editar;'>
-                 <input type='hidden' name='accion' value='editarPublicacion'>
-                 <input type='hidden' name='id' value='$id'>
-                 <button type='submit' class='editar-button'>Editar</button>
-                    </form>";
-                //$listaHtml .= "</div>"; // Cierre del div de botones de acciones
-             }
+                    <input type='hidden' name='accion' value='editarPublicacion'>
+                    <input type='hidden' name='id' value='$id'>
+                    <button type='submit' class='editar-button'>Editar</button>
+                </form>";
+            }
         }
 
         $listaHtml .= "<br><br></div>";
@@ -173,5 +185,6 @@ function listaPublicaciones()
     $listaHtml .= '</div>';
     return $listaHtml;
 }
+
      
 

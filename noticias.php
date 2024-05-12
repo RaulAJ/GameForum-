@@ -9,11 +9,10 @@ $mensaje = '';
 
 $contenidoPrincipal = '';
 
-//Verificar mensajesde éxito al añadir juegos
+//Verificar mensajes de éxito
 if (isset($_GET['exito'])) {
     $mensaje = '<div class="alerta exito">Acción realizada con éxito.</div>';
 }
-
 
 // Verificar si hay mensaje de error
 if (isset($_GET['error'])) {
@@ -22,10 +21,10 @@ if (isset($_GET['error'])) {
             $mensaje = '<div class="alerta error">No tienes autorización para realizar esta acción.</div>';
             break;
         case 'errorSubida':
-            $mensaje = '<div class="alerta error">Error al subir la(s) imagen(es). Intentalo de nuevo.</div>';
+            $mensaje = '<div class="alerta error">Error al subir la(s) imagen(es). Comprueba los archivos e intentalo de nuevo.</div>';
             break;
         case 'datosInvalidos':
-            $mensaje = '<div class="alerta error">Los datos proporcionados son inválidos.</div>';
+            $mensaje = '<div class="alerta error">Los datos proporcionados son inválidos. Intentalo de nuevo</div>';
             break;
         default:
             $mensaje = '<div class="alerta error">Error desconocido. Por favor, intentalo de nuevo.</div>';

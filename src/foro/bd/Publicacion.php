@@ -27,7 +27,11 @@ class Publicacion {
     public static function crea($titulo, $usuario, $juego, $tipo, $fecha, $contenido)
     {
         $publicacion = new Publicacion($titulo, $usuario, $juego, $tipo, $fecha, $contenido, null);
-        return  $publicacion->guarda();
+        if ($publicacion->guarda()) {
+            return $publicacion->getId(); // Devuelve el ID en lugar de true
+        } else {
+            return false;
+        }    
     }
 
     public function guarda() 
@@ -45,7 +49,7 @@ class Publicacion {
             return false;
         }       
 
-        // Insertar en Noticias
+        // Insertar en foro
         $query = sprintf(
             "INSERT INTO foro (Titulo, Usuario, Juego, Tipo, Fecha, Contenido) VALUES ('%s', '%s', '%s', '%s', '%s', '%s')",
             $conn->real_escape_string( $publicacion->getTitulo()),
