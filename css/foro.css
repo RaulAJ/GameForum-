@@ -441,7 +441,7 @@
 
 .verJuego-button {
     margin-top: 17px; /* Agrega un margen superior de 19px */
-    margin-left: -220px; /* Mueve el botón 5px a la izquierda */
+    margin-left: -150px; /* Mueve el botón 5px a la izquierda */
     background-color: transparent; /* Sin fondo */
     border: 2px solid #4b58af; /* Borde sólido de color */
     font-size: 16px; /* Tamaño de fuente */

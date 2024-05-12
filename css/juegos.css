@@ -503,3 +503,12 @@
 .rechazar-button:hover {
     background-color: #d70303; /* Intensificar el color de fondo al pasar el ratón */
 }
+
+.mensaje-registro {
+        font-size: 30px;
+        padding: 20px;
+        margin-top: 20px;
+        background-color: #f9f9f9;
+        border: 2px solid #ccc;
+        border-radius: 10px;
+}

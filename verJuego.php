@@ -16,6 +16,9 @@ if (isset($_GET['id'])) {
             if (estaLogado()) {
                 $contenidoPrincipal .= buildFormularioValorarJuego($id);
             }
+            else{
+                $contenidoPrincipal .= "<div class='mensaje-registro'><br>Regístrate para poder valorar este juego!</div>";
+            }
         } else {
             $mensaje = "El juego solicitado no fue encontrado.";
         }

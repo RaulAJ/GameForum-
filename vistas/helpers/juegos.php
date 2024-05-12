@@ -147,7 +147,7 @@ function listaJuegos($orden = 'notaDesc')
         if ($imagen) {
             // Construir HTML para la imagen con animación al pasar el ratón
             $listaHtml .= "<div class=\"imagen-juego\">
-                                <img src='{$imagen->getRuta()}' alt='{$imagen->getDescripcion()}' class='imagen-juego-hover' style='width: 100px; height: auto;'>;
+                                <img src='{$imagen->getRuta()}' alt='{$imagen->getDescripcion()}' class='imagen-juego-hover' style='width: 100px; height: auto;'>
                            </div>";
         }
         $listaHtml .= "<div class=\"nota-juego\">Nota: {$juego->getNota()}</div>
@@ -209,12 +209,13 @@ function mostrarDetallesJuego($id) {
 
     // Retrieve and display images
     $imagenes = Imagen::obtenerPorVideojuegoId($id);
-    $imagenesHtml = '';
+
     foreach ($imagenes as $imagen) {
-        $rutaImagen = htmlspecialchars($imagen->getRuta());
-        $descripcionImagen = htmlspecialchars($imagen->getDescripcion());
-        $imagenesHtml .= "<img src='{$rutaImagen}' alt='{$descripcionImagen}' style='width: auto; height: auto;'>";
+        // Construir HTML para cada imagen
+        $contenidoHtml .= "<div class=\"imagen-juego\">
+                            <img src='{$imagen->getRuta()}' alt='{$imagen->getDescripcion()}' class='imagen-juego-hover' style='width: 200px; height: auto;'>
+                          </div>";
     }
 
-    return $contenidoHtml . $imagenesHtml;  // Combinar
+    return $contenidoHtml; 
 }
