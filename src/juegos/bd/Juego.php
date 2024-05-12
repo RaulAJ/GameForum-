@@ -88,6 +88,7 @@ class Juego
      * @param string $desarrollador El desarrollador del juego.
      * @param string $genero El género del juego.
      * @param int $nota La nota o calificación del juego.
+     * @param int $nResenias El numero de reseñas del juego
      * @param string $descripcion Una breve descripción del juego.
      * @return bool True si el juego se guardó con éxito, false en caso contrario.
      */
@@ -361,7 +362,6 @@ class Juego
         $result = $conn->query($query);
 
         if ($result && $result->num_rows > 0) {
-            $nota = 0;
             $fila = $result->fetch_assoc();
             $juego = new Juego(
                 $fila['ID'],
@@ -369,8 +369,8 @@ class Juego
                 $fila['Año de salida'],
                 $fila['Desarrollador'],
                 $fila['Genero'],
-                $nota,
-                $fila['nResenias'], //TODO: Investigar si esto es correcto
+                0,
+                0,
                 $fila['Descripcion']
             );
             $result->free();
@@ -556,8 +556,8 @@ class Juego
                     $fila['Año de salida'],
                     $fila['Desarrollador'],
                     $fila['Genero'],
-                    null,
-                    null,
+                    0,
+                    0,
                     $fila['Descripcion']
                 );
             }

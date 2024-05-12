@@ -14,7 +14,7 @@ if (estaLogado() && isset($_POST['id'])) {
     
     if ($sugerencia && ($_SESSION['admin'] || $_SESSION['moderador'])) {
         // Crear un nuevo juego a partir de la sugerencia
-        $nuevoJuegoId = Juego::crea($sugerencia->getNombreJuego(), $sugerencia->getAnioDeSalida(), $sugerencia->getDesarrollador(), $sugerencia->getGenero(), 0, $sugerencia->getDescripcion());
+        $nuevoJuegoId = Juego::crea($sugerencia->getNombreJuego(), $sugerencia->getAnioDeSalida(), $sugerencia->getDesarrollador(), $sugerencia->getGenero(), 0, 0, $sugerencia->getDescripcion());
 
         // Obtener todas las imágenes asociadas con la sugerencia
 
