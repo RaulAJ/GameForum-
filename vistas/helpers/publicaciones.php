@@ -140,6 +140,7 @@ function listaPublicaciones()
         $tipo = htmlspecialchars($publicacion->getTipo());
         $juego = htmlspecialchars($publicacion->getJuego());
         $id = $publicacion->getId();
+        $idJuego = Juego::obtenerIdJuego($juego);
         $imagenes = Imagen::obtenerPorForoId($id);
 
         $imagenesHtml = '';
@@ -159,8 +160,8 @@ function listaPublicaciones()
                 <p class=\"fecha-publicacion\">$fecha</p>
                 <p class=\"tipo-publicacion\">Tipo: $tipo</p>
                 <p class=\"juego-publicacion\">Juego: 
-                    <form action='verJuego.php' method='post' style='grid-area: juego;'>
-                        <input type='hidden' name='juego' value='$juego'>
+                    <form action='verJuego.php' method='get' style='grid-area: juego;'>
+                        <input type='hidden' name='id' value='$idJuego'>
                         <button type='submit' class='verJuego-button'>$juego</button>
                     </form>
                 </p>
@@ -195,7 +196,7 @@ function mostrarDetallesPublicacion($id)
 
     $publicacion = Publicacion::obtenerPublicacionPorId($id);
     if (!$publicacion) {
-        return "Publicación no encontrada.";
+        return false;
     }
 
     // Extraer detalles

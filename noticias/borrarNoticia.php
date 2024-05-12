@@ -7,7 +7,7 @@ require_once '../src/imagenes/bd/Imagen.php';
 
 // Verifica si el usuario está logueado y si se ha enviado un ID de noticia
 if (estaLogado() && isset($_POST['id'])) {
-    $id_noticia = $_POST['id'];
+    $id_noticia = filter_input(INPUT_POST, 'id', FILTER_SANITIZE_NUMBER_INT);
 
     // Obtener la noticia específica
     $noticia = Noticia::obtenerNoticiaPorId($id_noticia);

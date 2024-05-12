@@ -93,9 +93,8 @@ function listaSugerencias()
             $imagenesHtml .= "<p>No images available.</p>";
         }
         $imagenesHtml .= '</div>';
-
         $listaHtml .= "<div class=\"juego\">
-                       <form action='verJuego.php' method='post'>
+                       <form action='verJuego.php' method='get'>
                             <input type='hidden' name='id' value='$id'>
                             <button type='submit' class='boton-juego'>$nombre</button>
                         </form>
@@ -140,7 +139,7 @@ function listaJuegos($orden = 'notaDesc')
 
         $listaHtml .= "<div class=\"juego\">
                            <div class=\"posicion-juego animacion-top\">Top $posicion</div>
-                           <form action='verJuego.php' method='post'>
+                           <form action='verJuego.php' method='get'>
                                 <input type='hidden' name='id' value='$id'>
                                 <button type='submit' class='juego-button'>$nombre</button>
                              </form>";
@@ -158,9 +157,6 @@ function listaJuegos($orden = 'notaDesc')
     $listaHtml .= '</div>';
     return $listaHtml;
 }
-
-
-
 
 function buildFormularioValorarJuego($id)
 {
@@ -184,4 +180,41 @@ function buildFormularioValorarJuego($id)
     </form>
     <script src="js/validaValorarNota.js"></script>
     EOS;
+}
+
+function mostrarDetallesJuego($id) {
+    require_once 'src/juegos/bd/Juego.php';
+
+    $juego = Juego::obtenerJuego($id);
+    if (!$juego) {
+        return false;
+    }
+
+    $nombre = htmlspecialchars($juego->getNombreJuego());
+    $anio = htmlspecialchars($juego->getAnioDeSalida());
+    $desarrollador = htmlspecialchars($juego->getDesarrollador());
+    $genero = htmlspecialchars($juego->getGenero());
+    $nota = htmlspecialchars($juego->getNota());
+    $descripcion = htmlspecialchars($juego->getDescripcion());
+
+    $contenidoHtml = 
+    "<div class='juego-detalle'>
+        <h2>$nombre</h2>
+        <p>Año de salida: $anio</p>
+        <p>Desarrollador: $desarrollador</p>
+        <p>Género: $genero</p>
+        <p>Nota: $nota</p>
+        <p>Descripción: $descripcion</p>
+    </div>";
+
+    // Retrieve and display images
+    $imagenes = Imagen::obtenerPorVideojuegoId($id);
+    $imagenesHtml = '';
+    foreach ($imagenes as $imagen) {
+        $rutaImagen = htmlspecialchars($imagen->getRuta());
+        $descripcionImagen = htmlspecialchars($imagen->getDescripcion());
+        $imagenesHtml .= "<img src='{$rutaImagen}' alt='{$descripcionImagen}' style='width: auto; height: auto;'>";
+    }
+
+    return $contenidoHtml . $imagenesHtml;  // Combinar
 }
