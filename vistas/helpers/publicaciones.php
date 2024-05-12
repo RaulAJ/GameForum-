@@ -87,7 +87,7 @@ function editarformularioPublicacion($id)
         }
         $opcionesTipo .= "<option value=\"$tipoo\" $selected>$tipoo</option>";
     }
-    
+
     return <<<HTML
         <form class="formulario-foro" action="foro/editarPublicacion.php" method="post" enctype="multipart/form-data">
             <input type='hidden' name='id' value= '$id'>
@@ -127,7 +127,7 @@ function mostrarBotonAgregarPublicacion()
     }
     return '';
 }
- 
+
 function listaPublicaciones()
 {
     $publicaciones = Publicacion::obtenerPublicaciones();
@@ -140,9 +140,9 @@ function listaPublicaciones()
         $tipo = htmlspecialchars($publicacion->getTipo());
         $juego = htmlspecialchars($publicacion->getJuego());
         $id = $publicacion->getId();
-        $imagenes = Imagen::obtenerPorForoId($id); 
+        $imagenes = Imagen::obtenerPorForoId($id);
 
-        $imagenesHtml = ''; 
+        $imagenesHtml = '';
         foreach ($imagenes as $imagen) {
             $rutaImagen = htmlspecialchars($imagen->getRuta());
             $descripcionImagen = htmlspecialchars($imagen->getDescripcion());
@@ -150,33 +150,36 @@ function listaPublicaciones()
         }
 
         $listaHtml .= "<div class=\"publicacion\">
-                        <h3 class=\"titulo-publicacion\">
-                        <form action='verPublicacion.php' method='post'>
-                            <input type='hidden' name='id' value='$id'>
-                            <button type='submit' class='titulo-button'>$nombre</button>
-                        </form></h3>
-                        <p class=\"fecha-publicacion\">$fecha</p>
-                        <p class=\"tipo-publicacion\">Tipo: $tipo</p>
-                        <p class=\"juego-publicacion\">Juego: 
-                        <form action='verJuego.php' method='post' style='grid-area: juego;'>
-                            <input type='hidden' name='juego' value='$juego'>
-                            <button type='submit' class='verJuego-button'>$juego</button>
-                        </form></p>
-                        <p class=\"usuario-publicacion\">Escrita por: $usuario </p>
-                        <div class=\"contenido-publicacion\">{$publicacion->getContenido()}</div>
-                        <div class=\"imagenes-publicacion\">$imagenesHtml</div>";
+                <h3 class=\"titulo-publicacion\">
+                    <form action='verPublicacion.php' method='get'>
+                        <input type='hidden' name='id' value='$id'>
+                        <button type='submit' class='titulo-button'>$nombre</button>
+                    </form>
+                </h3>
+                <p class=\"fecha-publicacion\">$fecha</p>
+                <p class=\"tipo-publicacion\">Tipo: $tipo</p>
+                <p class=\"juego-publicacion\">Juego: 
+                    <form action='verJuego.php' method='post' style='grid-area: juego;'>
+                        <input type='hidden' name='juego' value='$juego'>
+                        <button type='submit' class='verJuego-button'>$juego</button>
+                    </form>
+                </p>
+                <p class=\"usuario-publicacion\">Escrita por: $usuario </p>
+                <div class=\"contenido-publicacion\">{$publicacion->getContenido()}</div>
+                <div class=\"imagenes-publicacion\">$imagenesHtml</div>";
+
 
         if (estaLogado()) {
             if (esMismoUsuario($usuario) || $_SESSION['admin'] || $_SESSION['moderador']) {
                 $listaHtml .= "<form action='foro/borrarPublicacion.php' method='post' style='grid-area: borrar;'>
-                    <input type='hidden' name='id' value='$id'>
-                    <button type='submit' class='borrar_button'>Borrar</button>
-                </form>";
+                                        <input type='hidden' name='id' value='$id'>
+                                        <button type='submit' class='borrar_button'>Borrar</button>
+                                    </form>";
                 $listaHtml .= "<form action='foro.php' style='grid-area: editar;'>
-                    <input type='hidden' name='accion' value='editarPublicacion'>
-                    <input type='hidden' name='id' value='$id'>
-                    <button type='submit' class='editar-button'>Editar</button>
-                </form>";
+                                        <input type='hidden' name='accion' value='editarPublicacion'>
+                                        <input type='hidden' name='id' value='$id'>
+                                        <button type='submit' class='editar-button'>Editar</button>
+                                    </form>";
             }
         }
 
@@ -186,5 +189,42 @@ function listaPublicaciones()
     return $listaHtml;
 }
 
-     
+function mostrarDetallesPublicacion($id)
+{
+    require_once 'src/foro/bd/Publicacion.php';
+
+    $publicacion = Publicacion::obtenerPublicacionPorId($id);
+    if (!$publicacion) {
+        return "Publicación no encontrada.";
+    }
+
+    // Extraer detalles
+    $titulo = htmlspecialchars($publicacion->getTitulo());
+    $usuario = htmlspecialchars($publicacion->getUsuario());
+    $juego = htmlspecialchars($publicacion->getJuego());
+    $tipo = htmlspecialchars($publicacion->getTipo());
+    $fecha = htmlspecialchars($publicacion->getFecha());
+    $contenido = htmlspecialchars($publicacion->getContenido());
+
+    // Generar HTML
+    $contenidoHtml = "<div class='seccion-info'>
+        <h2>$titulo</h2>
+        <div class='info-detalle'><p class='info-label'>Usuario:</p><p class='info-valor'>$usuario</p></div>
+        <div class='info-detalle'><p class='info-label'>Juego:</p><p class='info-valor'>$juego</p></div>
+        <div class='info-detalle'><p class='info-label'>Tipo:</p><p class='info-valor'>$tipo</p></div>
+        <div class='info-detalle'><p class='info-label'>Fecha:</p><p class='info-valor'>$fecha</p></div>
+        <div class='info-detalle'><p class='info-label'>Descripción:</p><p class='info-valor'>$contenido</p></div>
+    </div>";
+
+    // Recuperar y mostrar imagenes
+    $imagenes = Imagen::obtenerPorForoId($id);
+    $imagenesHtml = '';
+    foreach ($imagenes as $imagen) {
+        $rutaImagen = htmlspecialchars($imagen->getRuta());
+        $descripcionImagen = htmlspecialchars($imagen->getDescripcion());
+        $imagenesHtml .= "<img src='{$rutaImagen}' alt='{$descripcionImagen}' style='width: auto; height: auto;'>";
+    }
+
+    return $contenidoHtml . $imagenesHtml;  // Combinar
+}
 

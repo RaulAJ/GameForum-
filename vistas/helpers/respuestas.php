@@ -23,17 +23,15 @@ function buildFormularioRespuesta($id)
 }
 
 
-function mostrarBotonAgregarRespuesta($id)
-{
+function mostrarBotonAgregarRespuesta($id) {
     if (estaLogado()) {
         if ($_SESSION['admin'] || $_SESSION['moderador'] || $_SESSION['experto']) {
             return <<<HTML
-                <form action="verPublicacion.php" method="POST" class="form-agregar-respuesta">
+                <form action="verPublicacion.php" method="get">
                     <input type="hidden" name="accion" value="agregarRespuesta">
-                    <input type="hidden" name="id" value="<?php echo $id; ?>">
+                    <input type="hidden" name="id" value="$id">
                     <button type="submit" class="boton-agregar-respuesta">Responder</button>
                 </form>
-
             HTML;
         }
     }

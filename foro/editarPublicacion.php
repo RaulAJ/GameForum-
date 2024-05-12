@@ -24,7 +24,7 @@ if ($titulo && idUsuarioLogado() && $fecha && $contenido && $tipo && $juego && $
     $updateSuccessful = Publicacion::actualiza($publicacion);
 
     $errorEnImagen = false;
-    if (isset($_FILES['imagen'])) {
+    if (isset($_FILES['imagen']) && $_FILES['imagen']['name'][0] != '') {
         foreach ($_FILES['imagen']['name'] as $key => $value) {
             if ($_FILES['imagen']['error'][$key] == 0 && $_FILES['imagen']['size'][$key] > 0) {
                 $file = [
