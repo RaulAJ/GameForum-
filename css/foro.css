@@ -16,9 +16,16 @@
     border-radius: 10px; /* Bordes redondeados */
     /* Definición del diseño del grid para la noticia */
     grid-template-areas:
-    'titulo titulo titulo titulo titulo fecha'
-    'contenido contenido contenido contenido contenido contenido'
+    'imagen imagen titulo titulo titulo fecha'
+    'imagen imagen contenido contenido contenido contenido'
     'borrar editar juegoLabel juego tipo usuario'; /* Áreas del grid: título, contenido, fecha y usuario */
+}
+
+.imagen-publicacion {
+    grid-area: imagen;
+    max-width: 150px; /* Establece el ancho máximo al 100% del contenedor */
+    height: auto; 
+    margin-right: 10px; /* Espacio entre la imagen y el contenido */
 }
 
 /* Estilo para el botón del título */

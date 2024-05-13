@@ -145,7 +145,7 @@ function listaPublicaciones()
         foreach ($imagenes as $imagen) {
             $rutaImagen = htmlspecialchars($imagen->getRuta());
             $descripcionImagen = htmlspecialchars($imagen->getDescripcion());
-            $imagenesHtml .= "<img src='{$rutaImagen}' alt='{$descripcionImagen}' style='width: 100px; height: auto;'>";
+            $imagenesHtml .= "<img src='{$rutaImagen}' alt='{$descripcionImagen}' class='imagen-publicacion'>";
         }
 
         $listaHtml .= "<div class=\"publicacion\">
