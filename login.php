@@ -10,7 +10,9 @@ $htmlFormLogin = buildFormularioLogin();
 $contenidoPrincipal=<<<EOS
 <h1>Acceso al sistema</h1>
 $htmlFormLogin
-<legend>No tienes cuenta? <a href="registrarse.php">Regístrate</a></legend>
+<div class="register-message-container">
+    <p class="register-message">¿No tienes cuenta? <a href="registrarse.php" class="register-link">Regístrate</a></p>
+</div>
 EOS;
 
 require_once 'vistas/comun/layout.php';

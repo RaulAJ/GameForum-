@@ -1,0 +1,128 @@
+/* Inicio de sesión */
+.login-form {
+    max-width: 300px; /* Ancho máximo del formulario */
+    margin: 0 auto; /* Centra el formulario horizontalmente */
+    padding: 20px; /* Espaciado interno del formulario */
+    border: 1px solid #ccc; /* Borde del formulario */
+    border-radius: 5px; /* Borde redondeado */
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Sombra */
+    background-color: #f9f9f9; /* Color de fondo */
+    animation: fadeIn 0.5s ease-in-out; /* Animación de entrada */
+}
+
+.login-form fieldset {
+    border: none; /* Elimina el borde del fieldset */
+}
+
+.login-form legend {
+    font-size: 1.2em; /* Tamaño de fuente del título */
+    font-weight: bold; /* Peso de la fuente del título */
+    margin-bottom: 10px; /* Margen inferior del título */
+}
+
+.login-form div {
+    margin-bottom: 10px; /* Margen inferior para los elementos div dentro del formulario */
+}
+
+.login-form .form-label {
+    display: block; /* Hace que las etiquetas de los campos de formulario se muestren como bloques */
+    margin-bottom: 5px; /* Margen inferior para las etiquetas de los campos de formulario */
+}
+
+.login-form .form-input {
+    width: calc(100% - 10px); /* Ancho del campo de entrada */
+    padding: 5px; /* Espaciado interno del campo de entrada */
+    border: 1px solid #ccc; /* Borde del campo de entrada */
+    border-radius: 3px; /* Borde redondeado del campo de entrada */
+}
+
+.login-form .form-button {
+    width: 100%; /* Ancho del botón */
+    padding: 8px 15px; /* Espaciado dentro del botón */
+    border: none; /* Elimina el borde del botón */
+    border-radius: 3px; /* Borde redondeado del botón */
+    background-color: #4CAF50; /* Color de fondo del botón */
+    color: white; /* Color del texto del botón */
+    cursor: pointer; /* Cambia el cursor al pasar sobre el botón */
+    transition: background-color 0.3s, transform 0.2s; /* Transiciones para el cambio de color de fondo y escala al pasar el ratón sobre el botón */
+}
+
+.login-form .form-button:hover {
+    background-color: #45a049; /* Color de fondo del botón al pasar el ratón sobre él */
+    transform: scale(1.05); /* Escala del botón al pasar el ratón sobre él */
+}
+
+/* Contenedor del mensaje de registro */
+.register-message-container {
+    text-align: center; /* Centra horizontalmente el contenido del contenedor */
+    margin-top: 20px; /* Margen superior del contenedor */
+}
+
+.register-link {
+    color: blue; /* Color del enlace de registro */
+    text-decoration: underline; /* Subraya el enlace de registro */
+    cursor: pointer; /* Cambia el cursor al pasar sobre el enlace de registro */
+}
+
+
+
+
+/* Registro */
+/* Estilos para el formulario de registro */
+.registro-form {
+    max-width: 300px; /* Ancho máximo del formulario */
+    margin: 0 auto; /* Centra el formulario horizontalmente */
+    padding: 20px; /* Espaciado interno del formulario */
+    border: 1px solid #ccc; /* Borde del formulario */
+    border-radius: 5px; /* Borde redondeado del formulario */
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Sombra del formulario */
+    background-color: #f9f9f9; /* Color de fondo del formulario */
+}
+
+.registro-form fieldset {
+    border: none; /* Elimina el borde del fieldset */
+}
+
+.registro-form legend {
+    font-size: 1.2em; /* Tamaño de fuente del título del formulario */
+    font-weight: bold; /* Peso de la fuente del título del formulario */
+    margin-bottom: 10px; /* Margen inferior del título del formulario */
+}
+
+.registro-form div {
+    margin-bottom: 10px; /* Margen inferior para los elementos div dentro del formulario */
+}
+
+.registro-form .form-label {
+    display: block; /* Hace que las etiquetas de los campos de formulario se muestren como bloques */
+    margin-bottom: 5px; /* Margen inferior para las etiquetas de los campos de formulario */
+}
+
+.registro-form .form-input {
+    width: calc(100% - 10px); /* Ancho del campo de entrada */
+    padding: 5px; /* Espaciado interno del campo de entrada */
+    border: 1px solid #ccc; /* Borde del campo de entrada */
+    border-radius: 3px; /* Borde redondeado del campo de entrada */
+}
+
+.registro-form .form-button {
+    width: 100%; /* Ancho del botón */
+    padding: 8px 15px; /* Espaciado dentro del botón */
+    border: none; /* Elimina el borde del botón */
+    border-radius: 3px; /* Borde redondeado del botón */
+    background-color: #008CBA; /* Color de fondo del botón */
+    color: white; /* Color del texto del botón */
+    cursor: pointer; /* Cambia el cursor al pasar sobre el botón */
+    transition: background-color 0.3s, transform 0.2s; /* Transiciones para el cambio de color de fondo y escala al pasar el ratón sobre el botón */
+}
+
+.registro-form .form-button:hover {
+    background-color: #0078A8; /* Color de fondo del botón al pasar el ratón sobre él */
+    transform: scale(1.05); /* Escala del botón al pasar el ratón sobre él */
+}
+
+.validation-message {
+    color: red; /* Color del mensaje de validación */
+    font-size: 14px; /* Tamaño de fuente del mensaje de validación */
+}
+

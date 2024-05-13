@@ -56,3 +56,27 @@ img {
     transform: translateY(1px); /* Desplazar ligeramente hacia abajo al hacer clic */
     box-shadow: none; /* Quitar la sombra al hacer clic */
 }
+
+.logo h1 {
+    animation: pulse 1s infinite alternate, colorChange 2s infinite alternate; /* Aplica ambas animaciones */
+}
+
+/* Define la animación 'pulse' */
+@keyframes pulse {
+    from {
+        transform: scale(1); /* Escala inicial */
+    }
+    to {
+        transform: scale(1.1); /* Escala final */
+    }
+}
+
+/* Define la animación 'colorChange' */
+@keyframes colorChange {
+    from {
+        color: #fff; /* Color inicial (blanco) */
+    }
+    to {
+        color: #ffcc00; /* Color final (amarillo) */
+    }
+}
