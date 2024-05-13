@@ -27,6 +27,7 @@ class Usuario
         $rs = $conn->query($query);
         if ($rs) {
             $fila = $rs->fetch_assoc();
+            $rs->free();
             if ($fila) {
                 $juegosValorados = $fila['JuegosValorados'];
                 $juegosValoradosArray = explode(", ", $juegosValorados);
@@ -34,7 +35,6 @@ class Usuario
             } else {
                 return false; // Usuario no encontrado
             }
-            $rs->free();
         } else {
             error_log("Error BD ({$conn->errno}): {$conn->error}");
             return false;
