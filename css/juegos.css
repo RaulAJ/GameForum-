@@ -147,6 +147,7 @@
 /* Estilo para la imagen del juego */
 .imagen-juego {
     position: relative; /* Posición relativa */
+    align-items: center;
 }
 
 /* Estilo para la imagen del juego al pasar el ratón */

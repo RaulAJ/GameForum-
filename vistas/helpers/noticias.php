@@ -84,7 +84,8 @@ function listaNoticias()
             // Añadir cada imagen al HTML
             $rutaImagen = htmlspecialchars($imagen->getRuta());
             $descripcionImagen = htmlspecialchars($imagen->getDescripcion());
-            $imagenesHtml .= "<img src='{$rutaImagen}' alt='{$descripcionImagen}' style='width: 100px; height: auto;'>";
+            $imagenesHtml .= "<img src='{$rutaImagen}' alt='{$descripcionImagen}' class='imagen-noticia'>";
+
         }
 
         $listaHtml .= "<div class=\"noticia\">

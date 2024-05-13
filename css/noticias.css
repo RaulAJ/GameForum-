@@ -18,23 +18,24 @@
         'titulo titulo titulo titulo titulo fecha'
         'imagen imagen . contenido contenido contenido'
         'imagen imagen . borrar editar usuario';
-    grid-template-columns: 100px 1fr; /* Columna para la imagen y el contenido */
-    grid-template-rows: auto auto auto; /* Filas para cada sección */
+    /*grid-template-columns: 100px 1fr; /* Columna para la imagen y el contenido */
+    /*grid-template-rows: auto auto auto; /* Filas para cada sección */
     gap: 10px; /* Espacio entre elementos */
 }
 
 /* Estilos para la imagen de la noticia */
 .imagen-noticia {
     grid-area: imagen;
-    width: 100px;
-    height: auto;
+    max-width: 300px; /* Establece el ancho máximo al 100% del contenedor */
+    height: auto; 
     margin-right: 10px; /* Espacio entre la imagen y el contenido */
 }
 
 /* Estilos para el título de la noticia */
 .titulo-noticia {
+    margin-left: 10px; /* Espacio entre la imagen y el contenido */
     grid-area: titulo;
-    font-size: 3ex;
+    font-size: 3.5ex;
 }
 
 /* Estilos para la fecha de la noticia */
