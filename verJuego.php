@@ -14,10 +14,17 @@ if (isset($_GET['id'])) {
         if ($detallesJuego) {
             $contenidoPrincipal .= $detallesJuego;
             if (estaLogado()) {
-                $contenidoPrincipal .= buildFormularioValorarJuego($id);
+                if (!Usuario::compruebaValorado($_SESSION['usuario'], $id)){
+                    $contenidoPrincipal .= "<h2>Valora este juego!</h2> ";
+                    Usuario::aniadirValoracion($_SESSION['usuario'], $id);
+                    $contenidoPrincipal .= buildFormularioValorarJuego($id);
+                }
+                else {
+                    $contenidoPrincipal .= "<h2>Ya has valorado este juego, ¡gracias!</h2> ";
+                }
             }
             else{
-                $contenidoPrincipal .= "<div class='mensaje-registro'><br>Regístrate para poder valorar este juego!</div>";
+                $contenidoPrincipal .= "<h2>Regístrate para poder valorar este juego!</h2>";
             }
         } else {
             $mensaje = "El juego solicitado no fue encontrado.";

@@ -58,7 +58,7 @@ HTML;
 //}
 $contenidoPrincipal=<<<EOS
 	<h1>Bienvenido {$_SESSION['usuario']}</h1>
-	<h2>Datos:</h2>
+	<h2 style="margin-left: 20px;">Datos:</h2>
 	$datosUsuario
 EOS;
 

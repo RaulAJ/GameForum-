@@ -152,7 +152,7 @@ function listaPublicaciones()
                 <h3 class=\"titulo-publicacion\">
                     <form action='verPublicacion.php' method='get'>
                         <input type='hidden' name='id' value='$id'>
-                        <button type='submit' class='titulo-button'>$nombre</button>
+                        <button type='submit' class='titulo-button'><b>$nombre</b></button>
                     </form>
                 </h3>
                 <p class=\"fecha-publicacion\">$fecha</p>

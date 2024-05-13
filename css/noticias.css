@@ -15,9 +15,9 @@
     margin-bottom: 20px;
     border-radius: 10px;
     grid-template-areas:
-        'imagen titulo titulo titulo titulo fecha'
-        'imagen contenido contenido contenido contenido contenido'
-        ' . . . . . usuario';
+        'titulo titulo titulo titulo titulo fecha'
+        'imagen imagen . contenido contenido contenido'
+        'imagen imagen . borrar editar usuario';
     grid-template-columns: 100px 1fr; /* Columna para la imagen y el contenido */
     grid-template-rows: auto auto auto; /* Filas para cada sección */
     gap: 10px; /* Espacio entre elementos */

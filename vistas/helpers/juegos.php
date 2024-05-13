@@ -141,7 +141,7 @@ function listaJuegos($orden = 'notaDesc')
                            <div class=\"posicion-juego animacion-top\">Top $posicion</div>
                            <form action='verJuego.php' method='get'>
                                 <input type='hidden' name='id' value='$id'>
-                                <button type='submit' class='juego-button'>$nombre</button>
+                                <button type='submit' class='juego-button'><b>$nombre</b></button>
                              </form>";
         $imagen = reset($imagenes); // Obtener la primera imagen del juego
         if ($imagen) {
@@ -150,7 +150,7 @@ function listaJuegos($orden = 'notaDesc')
                                 <img src='{$imagen->getRuta()}' alt='{$imagen->getDescripcion()}' class='imagen-juego-hover' style='width: 100px; height: auto;'>
                            </div>";
         }
-        $listaHtml .= "<div class=\"nota-juego\">Nota: {$juego->getNota()}</div>
+        $listaHtml .= "<div class=\"nota-juego\"> {$juego->getNota()}</div>
                        </div>";
         $posicion++;
     }

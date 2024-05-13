@@ -12,7 +12,7 @@
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Sombra suave */
     margin-left: 20px; /* Margen izquierdo de 20px */
     margin-right: 20px; /* Margen derecho de 20px */
-    margin-bottom: 20px; /* Márgenes entre las noticias */
+    margin-bottom: 10px; /* Márgenes entre las noticias */
     border-radius: 10px; /* Bordes redondeados */
     /* Definición del diseño del grid para la noticia */
     grid-template-areas:
@@ -100,6 +100,7 @@
 /* Estilos para el contenido de la noticia */
 .contenido-publicacion {
     grid-area: contenido; /* Asigna el área del grid para el contenido */
+    margin-bottom: 20px;
     text-align: left; /* Alineación de texto a la izquierda */
 }
 
@@ -111,6 +112,8 @@
 .juego-publicacion {
     grid-area: juegoLabel;
     font-size: 16px; /* Tamaño de la fuente más pequeño */
+    text-align: right; 
+    margin-right: 5px;
     /*padding: 5px 10px; /* Menos espacio alrededor del texto */
 }
 
@@ -145,6 +148,7 @@
     max-width: 600px;
     margin: 50px auto; /* Mayor margen superior e inferior para mayor espacio */
     padding: 40px; /* Mayor espacio alrededor del contenido */
+    margin-bottom: 10px;
     background-color: #f9f9f9; /* Color de fondo */
     border-radius: 15px; /* Bordes redondeados */
     box-shadow: 0 0 20px rgba(0, 0, 0, 0.2); /* Sombra */
@@ -440,8 +444,9 @@
 }
 
 .verJuego-button {
+    grid-area: juego;
     margin-top: 17px; /* Agrega un margen superior de 19px */
-    margin-left: -150px; /* Mueve el botón 5px a la izquierda */
+    /*margin-left: -150px; /* Mueve el botón 5px a la izquierda */
     background-color: transparent; /* Sin fondo */
     border: 2px solid #4b58af; /* Borde sólido de color */
     font-size: 16px; /* Tamaño de fuente */

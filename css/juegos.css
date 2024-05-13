@@ -55,9 +55,11 @@
 
 /* Estilos para la nota del juego */
 .nota-juego {
+    padding: 10px;
     grid-area: nota; /* Define el área de la cuadrícula */
     font-size: 34px; /* Tamaño de fuente */
-    margin-top: 3px; /* Margen superior */
+    margin-top: 10px;  /* Margen superior */
+    margin-left: 20px;  /* Margen superior */
     font-weight: bold; /* Grosor de la fuente */
     text-align: right; /* Alineación del texto a la derecha */
     margin-right: 20px; /* Margen derecho */
@@ -118,11 +120,11 @@
 .posicion-juego {
     grid-area: posicion; /* Define el área de la cuadrícula */
     font-size: 34px; /* Tamaño de fuente */
-    margin-left: 20px; /* Margen izquierdo */
-    margin-top: 10px; /* Margen superior */
+    padding: 10px;
+    margin-top: 10px;  /* Margen superior */
+    margin-right: 20px;  /* Margen superior */
     color: #333; /* Color del texto */
     font-weight: bold; /* Grosor de la fuente */
-    margin-right: 10px; /* Margen derecho */
     animation: topAnimation 2s infinite alternate; /* Animación del número de top */
 }
 
