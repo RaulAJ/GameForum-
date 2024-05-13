@@ -121,9 +121,7 @@ HTML;
 function mostrarBotonAgregarPublicacion()
 {
     if (estaLogado()) {
-        if ($_SESSION['admin'] || $_SESSION['moderador'] || $_SESSION['experto']) {
-            return '<a href="foro.php?accion=agregarPublicacion" class="foro-button">Redactar publicación</a>';
-        }
+        return '<a href="foro.php?accion=agregarPublicacion" class="foro-button">Redactar publicación</a>';
     }
     return '';
 }
