@@ -344,8 +344,8 @@ class Juego
                 $fila['Desarrollador'],
                 $fila['Genero'],
                 $fila['Nota'],
-                $fila['nResenias'],
-                $fila['Descripcion']
+                $fila['Descripcion'],
+                $fila['nResenias']
             );
             $result->free();
             return $juego;

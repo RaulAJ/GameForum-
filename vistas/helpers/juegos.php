@@ -196,7 +196,6 @@ function mostrarDetallesJuego($id) {
     $genero = htmlspecialchars($juego->getGenero());
     $nota = htmlspecialchars($juego->getNota());
     $descripcion = htmlspecialchars($juego->getDescripcion());
-
     $contenidoHtml = 
     "<div class='juego-detalle'>
         <h2>$nombre</h2>
