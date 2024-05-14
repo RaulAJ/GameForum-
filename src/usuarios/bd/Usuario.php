@@ -8,17 +8,23 @@ class Usuario
     public static function login($nombreUsuario, $password)
     {
         $usuario = self::buscaUsuario($nombreUsuario);
-        if ($usuario && $usuario->password == $password) { //$usuario->compruebaPassword($password)
+        if ($usuario && $usuario->compruebaPassword($password)) {
             return $usuario;
         }
+        if (!$usuario) {
+            error_log("Error al buscar usuario: login");
+        }
+        error_log("Error al comprobar password");
         return false;
     }
-    
+
     public static function crea($nombreUsuario, $nombreCompleto, $edad, $correo, $password, $experto, $moderador, $admin, $juegosValorados)
     {
-        $user = new Usuario($nombreUsuario, $nombreCompleto, $edad, $correo, $password, $experto, $moderador, $admin, $juegosValorados);
+        $passwordHash = self::hashPassword($password);
+        $user = new Usuario($nombreUsuario, $passwordHash, $nombreCompleto, $edad, $correo, $experto, $moderador, $admin, $juegosValorados);
         return $user->guarda();
     }
+
 
     public static function compruebaValorado($idUsuario, $idJuego)
     {
@@ -40,18 +46,18 @@ class Usuario
             return false;
         }
     }
-    
+
     public static function aniadirValoracion($idUsuario, $idJuego)
-{
-    $conn = BD::getInstance()->getConexionBd();
-    $query = sprintf("UPDATE usuarios SET JuegosValorados = CONCAT(JuegosValorados, ', %d') WHERE Usuario='%s'", $idJuego, $conn->real_escape_string($idUsuario));
-    if ($conn->query($query)) {
-        return true; // Valoración añadida con éxito
-    } else {
-        error_log("Error al actualizar la base de datos: {$conn->errno} - {$conn->error}");
-        return false; // Error al actualizar la base de datos
+    {
+        $conn = BD::getInstance()->getConexionBd();
+        $query = sprintf("UPDATE usuarios SET JuegosValorados = CONCAT(JuegosValorados, ', %d') WHERE Usuario='%s'", $idJuego, $conn->real_escape_string($idUsuario));
+        if ($conn->query($query)) {
+            return true; // Valoración añadida con éxito
+        } else {
+            error_log("Error al actualizar la base de datos: {$conn->errno} - {$conn->error}");
+            return false; // Error al actualizar la base de datos
+        }
     }
-}
 
 
     public static function buscaUsuario($nombreUsuario)
@@ -81,19 +87,28 @@ class Usuario
     {
         $result = false;
         $conn = BD::getInstance()->getConexionBd();
-        $query=sprintf("INSERT INTO Usuarios (Usuario, `Nombre Completo`, Edad, Correo, Contraseña, Experto, Moderador, Admin, JuegosValorados) 
+        $query = sprintf("INSERT INTO Usuarios (Usuario, `Nombre Completo`, Edad, Correo, Contraseña, Experto, Moderador, Admin, JuegosValorados) 
         VALUES ('%s', '%s', %d, '%s', '%s', %d, %d, %d, '%s')"
-            , $conn->real_escape_string($usuario->nombreUsuario)
-            , $conn->real_escape_string($usuario->nombreCompleto)
-            , $conn->real_escape_string($usuario->edad)
-            , $conn->real_escape_string($usuario->correo)
-            , $conn->real_escape_string($usuario->password)
-            , $conn->real_escape_string($usuario->experto)
-            , $conn->real_escape_string($usuario->moderador)
-            , $conn->real_escape_string($usuario->admin)
-            , $conn->real_escape_string($usuario->juegosValorados)
+            ,
+            $conn->real_escape_string($usuario->nombreUsuario)
+            ,
+            $conn->real_escape_string($usuario->nombreCompleto)
+            ,
+            $conn->real_escape_string($usuario->edad)
+            ,
+            $conn->real_escape_string($usuario->correo)
+            ,
+            $usuario->password
+            ,
+            $conn->real_escape_string($usuario->experto)
+            ,
+            $conn->real_escape_string($usuario->moderador)
+            ,
+            $conn->real_escape_string($usuario->admin)
+            ,
+            $conn->real_escape_string($usuario->juegosValorados)
         );
-        if ( $conn->query($query) ) {
+        if ($conn->query($query)) {
             $result = true;
         } else {
             error_log("Error BD ({$conn->errno}): {$conn->error}");
@@ -101,41 +116,47 @@ class Usuario
         return $result;
     }
 
-    
+
     private static function actualiza($usuario)
     {
         $result = false;
         $conn = BD::getInstance()->getConexionBd();
-        $query=sprintf("UPDATE Usuarios U SET nombreUsuario = '%s', nombre='%s', password='%s' WHERE U.id=%d"
-            , $conn->real_escape_string($usuario->nombreUsuario)
-            , $conn->real_escape_string($usuario->nombre)
-            , $conn->real_escape_string($usuario->password)
-            , $usuario->id
+        $query = sprintf(
+            "UPDATE Usuarios U SET nombreUsuario = '%s', nombre='%s', password='%s' WHERE U.id=%d"
+            ,
+            $conn->real_escape_string($usuario->nombreUsuario)
+            ,
+            $conn->real_escape_string($usuario->nombre)
+            ,
+            $conn->real_escape_string($usuario->password)
+            ,
+            $usuario->id
         );
-        if ( $conn->query($query) ) {
+        if ($conn->query($query)) {
         } else {
             error_log("Error BD ({$conn->errno}): {$conn->error}");
         }
-        
+
         return $result;
     }
-   
-    
+
+
     private static function borra($usuario)
     {
         return self::borraPorId($usuario->id);
     }
-    
+
     private static function borraPorId($nombreUsuario)
     {
         if (!$nombreUsuario) {
             return false;
-        } 
+        }
         $conn = BD::getInstance()->getConexionBd();
-        $query = sprintf("DELETE FROM Usuarios U WHERE U.Usuario = %d"
-            , $nombreUsuario
+        $query = sprintf(
+            "DELETE FROM Usuarios WHERE Usuario = '%s'",
+            $conn->real_escape_string($nombreUsuario)
         );
-        if ( ! $conn->query($query) ) {
+        if (!$conn->query($query)) {
             error_log("Error BD ({$conn->errno}): {$conn->error}");
             return false;
         }
@@ -171,7 +192,7 @@ class Usuario
         $this->experto = $experto;
         $this->admin = $admin;
         $this->moderador = $moderador;
-        $this->juegosValorados =  $juegosValorados;
+        $this->juegosValorados = $juegosValorados;
     }
 
 
@@ -222,12 +243,12 @@ class Usuario
     {
         $this->password = self::hashPassword($nuevoPassword);
     }
-    
+
     public function guarda()
     {
         return self::inserta($this);
     }
-    
+
     public function borrate()
     {
         if ($this->id !== null) {

@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 14-05-2024 a las 00:07:45
+-- Tiempo de generación: 14-05-2024 a las 18:07:31
 -- Versión del servidor: 10.4.32-MariaDB
 -- Versión de PHP: 8.2.12
 
@@ -90,10 +90,10 @@ INSERT INTO `sugerenciasjuegos` (`ID`, `Juego`, `Año de salida`, `Desarrollador
 --
 
 INSERT INTO `usuarios` (`Usuario`, `Nombre Completo`, `Edad`, `Correo`, `Contraseña`, `Experto`, `Moderador`, `Admin`, `JuegosValorados`) VALUES
-('dacendej', 'David Cendejas', 20, 'dacendej@ucm.es', 'David1234', 1, 1, 1, ', 34, 1, 35, 36, 37, 38, 39, 40'),
-('jorglo03', 'Jorge Lopez', 20, 'jorglo03@ucm.es', 'NodoFantasma', 1, 0, 0, ', 34, 40, 35, 39, 38'),
-('josev27', 'Jose Galvez', 20, 'josegalvezv27@gmail.com', 'HackerBOYxx', 0, 0, 0, ', 32'),
-('rauare01', 'Raul Arellano', 20, 'rauare01@ucm.es', 'AreRaul99', 1, 1, 0, '');
+('dacendej', 'David Cendejas', 20, 'dacendej@ucm.es', '$2y$10$VOS5lMXwf0kj3mDYgLKufe6rNYbJYlmSul/HBeuKHRqCHRB2W5U.y', 1, 1, 1, ', 34, 1, 35, 36, 37, 38, 39, 40'),
+('jorglo03', 'Jorge Lopez', 20, 'jorglo03@ucm.es', '$2y$10$6ZvNQjPSHq.B1Mp4/9F6FO9iPl4WemdCMJp/eJ8sb1Q76TcsXNjI6', 1, 0, 0, ', 34, 40, 35, 39, 38'),
+('josev27', 'Jose Galvez', 20, 'josegalvezv27@gmail.com', '$2y$10$NaaDlkkuJqPTCkONK.4xXOSi1FAhTuTysrd2ewN5oKJMejvdcOEGe', 0, 0, 0, ', 32'),
+('rauare01', 'Raul Arellano', 20, 'rauare01@ucm.es', '$2y$10$LBVCl5arRxaHZpmbZKmHU.Q7VWoAamZp2f8zWpfIKeWG95Bo/WZHC', 1, 1, 0, '');
 
 --
 -- Volcado de datos para la tabla `videojuegos`

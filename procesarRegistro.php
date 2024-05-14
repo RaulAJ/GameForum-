@@ -29,7 +29,7 @@ if (!$esValido) {
 }
 
 // Intentar realizar el registro
-$resultadoRegistro = Usuario::crea($username, $password, $nombreCompleto, $edad, $correo, 0, 0, 0, 0);
+$resultadoRegistro = Usuario::crea($username, $nombreCompleto, $edad, $correo, $password, 0, 0, 0, 0);
 
 if (!$resultadoRegistro) {
     $htmlFormRegistro = buildFormularioRegistro($username, $password, $nombreCompleto, $edad, $correo);
@@ -42,7 +42,7 @@ if (!$resultadoRegistro) {
     exit();
 }
 $usuario = Usuario::login($username, $password);
-$_SESSION['usuario'] = $usuario->nombreUsuario;
+$_SESSION['usuario'] = $usuario->nombreUsuario; 
 $_SESSION['usuarioNombre'] = $usuario->nombreCompleto;
 $_SESSION['edad'] = $usuario->edad;
 $_SESSION['experto'] = $usuario->experto;
@@ -50,7 +50,6 @@ $_SESSION['correo'] = $usuario->correo;
 $_SESSION['admin'] = $usuario->admin;
 $_SESSION['moderador'] = $usuario->moderador;
 
-//DEBUG {
 $rolesUsuario = '';
 if ($_SESSION['admin']) {
     $rolesUsuario .= 'Administrador, ';
@@ -73,7 +72,6 @@ $datosUsuario = <<<HTML
     <li>Rol: $rolesUsuario</li>
 </ul>
 HTML;	
-//}
 $contenidoPrincipal=<<<EOS
 	<h1>Bienvenido {$_SESSION['usuario']}</h1>
 	<p>Datos:</p>
