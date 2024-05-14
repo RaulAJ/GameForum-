@@ -29,7 +29,7 @@ if (!$esValido) {
 }
 
 // Intentar realizar el registro
-$resultadoRegistro = Usuario::crea($username, $password, $nombreCompleto, $edad, $correo, 0, 0, 0);
+$resultadoRegistro = Usuario::crea($username, $password, $nombreCompleto, $edad, $correo, 0, 0, 0, 0);
 
 if (!$resultadoRegistro) {
     $htmlFormRegistro = buildFormularioRegistro($username, $password, $nombreCompleto, $edad, $correo);

@@ -7,7 +7,7 @@ require_once '../src/imagenes/bd/Imagen.php';
 
 // Verifica si el usuario está logueado y si se ha enviado un ID de sugerirjuego
 if (estaLogado() && isset($_POST['id'])) {
-    $id_sugerencia = $_POST['id'];    
+    $id_sugerencia = filter_input(INPUT_POST, 'id', FILTER_SANITIZE_NUMBER_INT);
 
     // Obtener la sugerencia específica
     $sugerencia = Juego::obtenerSugerencia($id_sugerencia);

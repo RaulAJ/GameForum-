@@ -6,15 +6,8 @@ require_once '../src/respuestas/bd/Respuesta.php';
 
 verificaLogado(Utils::buildUrl('/foro.php'));
 
-if (!($_SESSION['admin'] || $_SESSION['moderador'] || $_SESSION['experto'])) {
-    // Si el usuario no tiene un rol permitido, redirige a topJuegos.php con un mensaje de error
-    Utils::redirige(Utils::buildUrl('/foro.php', ['error' => 'noAutorizado']));
-    exit();
-}
+$idforo = filter_input(INPUT_POST, 'idforo', FILTER_SANITIZE_NUMBER_INT);
 
-$idforo = $_POST['idforo'];
-
-//$usuario = filter_input(INPUT_POST, 'usuario', FILTER_SANITIZE_SPECIAL_CHARS);
 $fecha = filter_input(INPUT_POST, 'fecha', FILTER_SANITIZE_SPECIAL_CHARS);
 $contenido = filter_input(INPUT_POST, 'contenido', FILTER_SANITIZE_SPECIAL_CHARS);
 

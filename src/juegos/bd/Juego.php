@@ -90,7 +90,7 @@ class Juego
      * @param int $nota La nota o calificación del juego.
      * @param int $nResenias El numero de reseñas del juego
      * @param string $descripcion Una breve descripción del juego.
-     * @return bool True si el juego se guardó con éxito, false en caso contrario.
+     * @return mixed id del juego si se guardó con éxito, false en caso contrario.
      */
     public static function crea($nombreJuego, $anioDeSalida, $desarrollador, $genero, $nota, $nResenias, $descripcion)
     {

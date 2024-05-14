@@ -30,7 +30,6 @@ $_SESSION['correo'] = $usuario->correo;
 $_SESSION['admin'] = $usuario->admin;
 $_SESSION['moderador'] = $usuario->moderador;
 
-//DEBUG {
 $rolesUsuario = '';
 if ($_SESSION['admin']) {
     $rolesUsuario .= 'Administrador, ';
@@ -55,7 +54,7 @@ $datosUsuario = <<<HTML
     </ul>
 </div>
 HTML;		
-//}
+
 $contenidoPrincipal=<<<EOS
 	<h1>Bienvenido {$_SESSION['usuario']}</h1>
 	<h2 style="margin-left: 20px;">Datos:</h2>

@@ -7,11 +7,6 @@ require_once '../src/imagenes/bd/Imagen.php';
 
 verificaLogado(Utils::buildUrl('/foro.php'));
 
-if (!($_SESSION['admin'] || $_SESSION['moderador'] || $_SESSION['experto'])) {
-    Utils::redirige(Utils::buildUrl('/foro.php', ['error' => 'noAutorizado']));
-    exit();
-}
-
 $titulo = filter_input(INPUT_POST, 'titulo', FILTER_SANITIZE_SPECIAL_CHARS);
 $fecha = filter_input(INPUT_POST, 'fecha', FILTER_SANITIZE_SPECIAL_CHARS);
 $contenido = filter_input(INPUT_POST, 'contenido', FILTER_SANITIZE_SPECIAL_CHARS);
@@ -20,7 +15,7 @@ $juego = filter_input(INPUT_POST, 'juego', FILTER_SANITIZE_SPECIAL_CHARS);
 $id = filter_input(INPUT_POST, 'id', FILTER_SANITIZE_NUMBER_INT);
 
 if ($titulo && idUsuarioLogado() && $fecha && $contenido && $tipo && $juego && $id) {
-    $publicacion = new Publicacion($titulo, $_SESSION['usuario'], $juego, $tipo, $fecha, $contenido, $id);
+    $publicacion = new Publicacion($titulo, idUsuarioLogado(), $juego, $tipo, $fecha, $contenido, $id);
     $updateSuccessful = Publicacion::actualiza($publicacion);
 
     $errorEnImagen = false;

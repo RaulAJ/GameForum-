@@ -6,11 +6,6 @@ require_once '../src/imagenes/bd/Imagen.php';  // Assuming similar image handlin
 
 verificaLogado(Utils::buildUrl('/foro.php'));
 
-/*if (!($_SESSION['admin'] || $_SESSION['moderador'] || $_SESSION['experto'])) {
-    Utils::redirige(Utils::buildUrl('/foro.php', ['error' => 'noAutorizado']));
-    exit();
-}*/
-
 $titulo = filter_input(INPUT_POST, 'titulo', FILTER_SANITIZE_SPECIAL_CHARS);
 $fecha = filter_input(INPUT_POST, 'fecha', FILTER_SANITIZE_SPECIAL_CHARS);
 $contenido = filter_input(INPUT_POST, 'contenido', FILTER_SANITIZE_SPECIAL_CHARS);

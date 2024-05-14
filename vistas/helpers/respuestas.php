@@ -25,7 +25,7 @@ function buildFormularioRespuesta($id)
 
 function mostrarBotonAgregarRespuesta($id) {
     if (estaLogado()) {
-        if ($_SESSION['admin'] || $_SESSION['moderador'] || $_SESSION['experto']) {
+        if ($_SESSION['admin'] || $_SESSION['moderador'] || $_SESSION['experto'] || $_SESSION['usuario']) {
             return <<<HTML
                 <form action="verPublicacion.php" method="post">
                     <input type="hidden" name="accion" value="agregarRespuesta">

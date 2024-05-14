@@ -15,7 +15,8 @@ if ($nota === false) {
     exit();
 }
 
-$idJuego = $_POST['id']; // Suponiendo que has almacenado el ID del juego en la sesión
+$idJuego = filter_input(INPUT_POST, 'id', FILTER_SANITIZE_NUMBER_INT);
+
 $exito = Juego::nuevaResenia($idJuego, $nota);
 
 

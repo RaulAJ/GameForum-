@@ -8,7 +8,7 @@ require_once '../src/imagenes/bd/Imagen.php';
 verificaLogado(Utils::buildUrl('/noticias.php'));
 
 if (!($_SESSION['admin'] || $_SESSION['moderador'] || $_SESSION['experto'])) {
-    // Si el usuario no tiene un rol permitido, redirige a topJuegos.php con un mensaje de error
+    // Si el usuario no tiene un rol permitido, redirige a noticias.php con un mensaje de error
     Utils::redirige(Utils::buildUrl('/noticias.php', ['error' => 'noAutorizado']));
     exit();
 }
@@ -22,10 +22,16 @@ if ($titulo && idUsuarioLogado() && $fecha && $contenido) {
     $noticiaId = Noticia::crea($titulo, idUsuarioLogado(), $fecha, $contenido);
     $errorEnImagen = false;
 
+    if ($noticiaId === false) {
+        // Si la creación de la noticia falla, redirigir con error
+        Utils::redirige(Utils::buildUrl('/noticias.php', ['error' => 'errorCrearNoticia']));
+        exit();
+    }
+
     // Verificar si se intentaron subir archivos
     if ($noticiaId && isset($_FILES['imagen']) && $_FILES['imagen']['name'][0] != '') {
         foreach ($_FILES['imagen']['name'] as $key => $value) {
-            if ($_FILES['imagen']['error'][$key] == 0 && $_FILES['imagen']['size'][$key] > 0) {  // Comprobar que no hay error y que el tamaño del archivo es mayor a cero
+            if ($_FILES['imagen']['error'][$key] == 0 && $_FILES['imagen']['size'][$key] > 0) {
                 $file = [
                     'name' => $_FILES['imagen']['name'][$key],
                     'type' => $_FILES['imagen']['type'][$key],
@@ -54,4 +60,5 @@ if ($titulo && idUsuarioLogado() && $fecha && $contenido) {
     }
 } else {
     Utils::redirige(Utils::buildUrl('/noticias.php', ['error' => 'datosInvalidos']));
+    exit();
 }

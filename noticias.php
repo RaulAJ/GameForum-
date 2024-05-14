@@ -26,6 +26,9 @@ if (isset($_GET['error'])) {
         case 'datosInvalidos':
             $mensaje = '<div class="alerta error">Los datos proporcionados son inválidos. Intentalo de nuevo</div>';
             break;
+        case 'errorCrearNoticia':
+            $mensaje .= '<div class="alerta error">Hubo un problema al crear la noticia. Por favor, intenta nuevamente.</div>';
+            break;
         default:
             $mensaje = '<div class="alerta error">Error desconocido. Por favor, intentalo de nuevo.</div>';
             break;

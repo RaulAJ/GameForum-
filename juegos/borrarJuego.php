@@ -7,7 +7,7 @@ require_once '../src/imagenes/bd/Imagen.php';
 
 // Verifica si el usuario está logueado y si se ha enviado un ID de noticia
 if (estaLogado() && isset($_POST['id'])) {
-    $id_juego = $_POST['id'];
+    $id_juego = filter_input(INPUT_POST, 'id', FILTER_SANITIZE_NUMBER_INT);
 
     // Obtener la noticia específica
     $juego = Juego::obtenerJuego($id_juego);
