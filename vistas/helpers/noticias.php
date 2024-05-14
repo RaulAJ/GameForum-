@@ -5,8 +5,6 @@ echo '<link rel="stylesheet" href="css/estilos.css">';
 require_once 'autorizacion.php';
 require_once 'src/imagenes/bd/Imagen.php';
 
-//TODO quitar brs -> CSS
-
 function buildFormularioNoticia()
 {
     return <<<HTML

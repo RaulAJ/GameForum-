@@ -7,8 +7,8 @@ $tituloPagina = 'Detalles del juego';
 $mensaje = ''; 
 $contenidoPrincipal = '';
 
-if (isset($_GET['id'])) {
-    $id = filter_input(INPUT_GET, 'id', FILTER_SANITIZE_NUMBER_INT);
+if (isset($_POST['id'])) {
+    $id = filter_input(INPUT_POST, 'id', FILTER_SANITIZE_NUMBER_INT);
     if ($id) {
         $detallesJuego = mostrarDetallesJuego($id);
         if ($detallesJuego) {

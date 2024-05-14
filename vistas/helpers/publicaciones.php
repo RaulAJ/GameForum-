@@ -150,7 +150,7 @@ function listaPublicaciones()
 
         $listaHtml .= "<div class=\"publicacion\">
                 <h3 class=\"titulo-publicacion\">
-                    <form action='verPublicacion.php' method='get'>
+                    <form action='verPublicacion.php' method='post'>
                         <input type='hidden' name='id' value='$id'>
                         <button type='submit' class='titulo-button'><b>$nombre</b></button>
                     </form>
@@ -158,7 +158,7 @@ function listaPublicaciones()
                 <p class=\"fecha-publicacion\">$fecha</p>
                 <p class=\"tipo-publicacion\">Tipo: $tipo</p>
                 <p class=\"juego-publicacion\">Juego: 
-                    <form action='verJuego.php' method='get' style='grid-area: juego;'>
+                    <form action='verJuego.php' method='post' style='grid-area: juego;'>
                         <input type='hidden' name='id' value='$idJuego'>
                         <button type='submit' class='verJuego-button'>$juego</button>
                     </form>

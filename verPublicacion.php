@@ -8,9 +8,9 @@ $mensaje = '';
 $contenidoPrincipal = '';
 $tituloPagina = 'Detalles de la publicación';
 
-if (!isset($_GET['accion'])) {
-    if (isset($_GET['id'])) {
-        $id = filter_input(INPUT_GET, 'id', FILTER_SANITIZE_NUMBER_INT);
+if (!isset($_POST['accion'])) {
+    if (isset($_POST['id'])) {
+        $id = filter_input(INPUT_POST, 'id', FILTER_SANITIZE_NUMBER_INT);
         if ($id) {
             $detallesPublicacion = mostrarDetallesPublicacion($id);
             if ($detallesPublicacion) {
@@ -30,8 +30,8 @@ if (!isset($_GET['accion'])) {
     } else {
         $mensaje = "No se proporcionó un identificador de publicación.";
     }
-} elseif (isset($_GET['accion']) && $_GET['accion'] === 'agregarRespuesta' && isset($_GET['id'])) {
-    $id = filter_input(INPUT_GET, 'id', FILTER_SANITIZE_NUMBER_INT);
+} elseif (isset($_POST['accion']) && $_POST['accion'] === 'agregarRespuesta' && isset($_POST['id'])) {
+    $id = filter_input(INPUT_POST, 'id', FILTER_SANITIZE_NUMBER_INT);
     $contenidoPrincipal .= buildFormularioRespuesta($id);
 }
 $contenidoPrincipal .= $mensaje;

@@ -34,6 +34,9 @@ if (isset($_GET['error'])) {
         case 'errorSugerencia':
             $mensaje = '<div class="alerta error">Hubo un error al enviar la sugerencia del juego. Es posible que el juego ya exista o que el juego ya haya sido sugerido anteriormente.</div>';
             break;
+        case 'juegoDuplicado':
+            $mensaje = '<div class="alerta error">Ya existe un juego con ese nombre. Por favor, elige otro nombre.</div>';
+            break;
         default:
             break;
     }

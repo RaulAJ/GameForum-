@@ -134,7 +134,20 @@ class Juego
         if (!$conn) {
             return false;
         }
-        //Todo: evitar insertar juegos con el mismo nombre
+
+        // Verificar si ya existe un juego con el mismo nombre
+        $queryVerificacion = sprintf(
+            "SELECT COUNT(*) AS cantidad FROM videojuegos WHERE Juego = '%s'",
+            $conn->real_escape_string($juego->getNombreJuego())
+        );
+        $resultadoVerificacion = $conn->query($queryVerificacion);
+        $fila = $resultadoVerificacion->fetch_assoc();
+        $resultadoVerificacion->free();
+        if ($fila['cantidad'] > 0) {
+            // Ya existe un juego con este nombre, no insertar duplicados
+            return false;
+        }
+
         // Insertar en Videojuegos
         $query = sprintf(
             "INSERT INTO videojuegos (Juego, `Año de salida`, Desarrollador, Genero, Nota, Descripcion) VALUES ('%s', '%s', '%s', '%s', '%f', '%s')",
@@ -170,6 +183,19 @@ class Juego
     {
         $conn = BD::getInstance()->getConexionBd();
         if (!$conn) {
+            return false;
+        }
+        // Verificar si el juego ya existe en la tabla de videojuegos
+        $queryVerificacionVideojuegos = sprintf(
+            "SELECT COUNT(*) AS cantidad FROM videojuegos WHERE Juego = '%s'",
+            $conn->real_escape_string($nombreJuego)
+        );
+        $resultadoVerificacionVideojuegos = $conn->query($queryVerificacionVideojuegos);
+        $filaVideojuegos = $resultadoVerificacionVideojuegos->fetch_assoc();
+        $resultadoVerificacionVideojuegos->free();
+
+        if ($filaVideojuegos['cantidad'] > 0) {
+            // El juego ya existe en la tabla de videojuegos, no insertar la sugerencia
             return false;
         }
 
@@ -217,6 +243,21 @@ class Juego
             return false;
         }
 
+        // Verificar si ya existe un juego con el mismo nombre, excluyendo el juego actual
+        $queryVerificacion = sprintf(
+            "SELECT COUNT(*) AS cantidad FROM videojuegos WHERE Juego = '%s' AND ID != %d",
+            $conn->real_escape_string($juego->getNombreJuego()),
+            $juego->getId()
+        );
+        $resultadoVerificacion = $conn->query($queryVerificacion);
+        $fila = $resultadoVerificacion->fetch_assoc();
+        $resultadoVerificacion->free();
+
+        if ($fila['cantidad'] > 0) {
+            // Ya existe un juego con este nombre, no actualizar
+            return false;
+        }
+
         $query = sprintf(
             "UPDATE videojuegos SET Juego='%s', `Año de salida`='%s', Desarrollador='%s', Genero='%s', Nota=%f, Descripcion='%s' WHERE ID=%d",
             $conn->real_escape_string($juego->getNombreJuego()),
@@ -249,7 +290,7 @@ class Juego
         $notaActual = $juegoActual->getNota();
 
         // Calcular la nueva nota media
-        $nuevaNotaMedia = ((float)$notaActual * (int)$nReseniasAntes + (float)$nuevaNota) / ((int)$nReseniasAntes + 1);
+        $nuevaNotaMedia = ((float) $notaActual * (int) $nReseniasAntes + (float) $nuevaNota) / ((int) $nReseniasAntes + 1);
 
         // Actualizar la base de datos con los nuevos valores
         $query = sprintf(

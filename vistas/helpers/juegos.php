@@ -86,7 +86,7 @@ function listaSugerencias()
         $imagenesHtml = '<div class="imagenes-juego">';
         if ($imagenes) {
             foreach ($imagenes as $imagen) {
-                // Construct HTML for each image
+                // HTML para cada imagen
                 $imagenesHtml .= "<img src='{$imagen->getRuta()}' alt='{$imagen->getDescripcion()}' style='width: 100px; height: auto;'>";
             }
         } else {
@@ -94,7 +94,7 @@ function listaSugerencias()
         }
         $imagenesHtml .= '</div>';
         $listaHtml .= "<div class=\"juego\">
-                       <form action='verJuego.php' method='get'>
+                       <form action='verJuego.php' method='post'>
                             <input type='hidden' name='id' value='$id'>
                             <button type='submit' class='boton-juego'>$nombre</button>
                         </form>
@@ -139,7 +139,7 @@ function listaJuegos($orden = 'notaDesc')
 
         $listaHtml .= "<div class=\"juego\">
                            <div class=\"posicion-juego animacion-top\">Top $posicion</div>
-                           <form action='verJuego.php' method='get'>
+                           <form action='verJuego.php' method='post'>
                                 <input type='hidden' name='id' value='$id'>
                                 <button type='submit' class='juego-button'><b>$nombre</b></button>
                              </form>";
@@ -206,7 +206,7 @@ function mostrarDetallesJuego($id) {
         <p>Descripción: $descripcion</p>
     </div>";
 
-    // Retrieve and display images
+    // Imagenes
     $imagenes = Imagen::obtenerPorVideojuegoId($id);
 
     foreach ($imagenes as $imagen) {

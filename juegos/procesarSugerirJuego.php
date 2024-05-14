@@ -20,34 +20,40 @@ if ($titulo && $anioDeSalida && $desarrollador && $genero && $descripcion) {
     $sugerenciaId = Juego::sugiere($titulo, $anioDeSalida, $desarrollador, $genero, $descripcion);
     $errorEnImagen = false;
 
-    if ($sugerenciaId && isset($_FILES['imagen']) && $_FILES['imagen']['name'][0] != '') {
-        foreach ($_FILES['imagen']['name'] as $key => $value) {
-            if ($_FILES['imagen']['error'][$key] == 0 && $_FILES['imagen']['size'][$key] > 0) {
-                $file = [
-                    'name' => $_FILES['imagen']['name'][$key],
-                    'type' => $_FILES['imagen']['type'][$key],
-                    'tmp_name' => $_FILES['imagen']['tmp_name'][$key],
-                    'error' => $_FILES['imagen']['error'][$key],
-                    'size' => $_FILES['imagen']['size'][$key]
-                ];
-                $imagenId = Imagen::crea($file, null, null, null, null, $sugerenciaId);
+    if ($sugerenciaId === false) {
+        // Redirigir al formulario con un mensaje de error de sugerencia duplicada
+        Utils::redirige(Utils::buildUrl('/topJuegos.php', ['error' => 'errorSugerencia']));
+        exit();
+    } else {
+        if ($sugerenciaId && isset($_FILES['imagen']) && $_FILES['imagen']['name'][0] != '') {
+            foreach ($_FILES['imagen']['name'] as $key => $value) {
+                if ($_FILES['imagen']['error'][$key] == 0 && $_FILES['imagen']['size'][$key] > 0) {
+                    $file = [
+                        'name' => $_FILES['imagen']['name'][$key],
+                        'type' => $_FILES['imagen']['type'][$key],
+                        'tmp_name' => $_FILES['imagen']['tmp_name'][$key],
+                        'error' => $_FILES['imagen']['error'][$key],
+                        'size' => $_FILES['imagen']['size'][$key]
+                    ];
+                    $imagenId = Imagen::crea($file, null, null, null, null, $sugerenciaId);
 
-                if (!$imagenId) {
-                    error_log("Error al subir la imagen para la sugerencia ID: " . $sugerenciaId);
+                    if (!$imagenId) {
+                        error_log("Error al subir la imagen para la sugerencia ID: " . $sugerenciaId);
+                        $errorEnImagen = true;
+                    }
+                } else {
                     $errorEnImagen = true;
                 }
-            } else {
-                $errorEnImagen = true;
             }
         }
-    }
 
-    if ($errorEnImagen) {
-        Juego::borraDeSugerenciasJuegos($sugerenciaId); // Borrar sugerencia si la subida de la imagen falla
-        Utils::redirige(Utils::buildUrl('/topJuegos.php', ['error' => 'errorSubida']));
-    } else {
-        Utils::redirige(Utils::buildUrl('/topJuegos.php', ['exitoSugerencia' => '1']));
+        if ($errorEnImagen) {
+            Juego::borraDeSugerenciasJuegos($sugerenciaId); // Borrar sugerencia si la subida de la imagen falla
+            Utils::redirige(Utils::buildUrl('/topJuegos.php', ['error' => 'errorSubida']));
+        } else {
+            Utils::redirige(Utils::buildUrl('/topJuegos.php', ['exitoSugerencia' => '1']));
+        }
     }
 } else {
-    Utils::redirige(Utils::buildUrl('/topJuegos.php?accion=sugerirJuego', ['errorDatos' => 'datosInvalidos']));
+    Utils::redirige(Utils::buildUrl('/topJuegos.php?accion=sugerirJuego', ['error' => 'datosInvalidos']));
 }
