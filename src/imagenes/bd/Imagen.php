@@ -174,6 +174,7 @@ class Imagen
                 $query = sprintf("DELETE FROM imagenes WHERE id = %d", $id);
                 return $conn->query($query);
             }
+            $resultado->free();
         }
         return false;
     }
