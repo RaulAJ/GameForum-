@@ -28,15 +28,14 @@ $(document).ready(function() {
     });
 
     $("#campoUser").change(function(){
-        var url = "comprobarUsuario.php?user=" + $("#campoUser").val();
-        $.get(url,usuarioExiste);
+        let url = "comprobarUsuario.php?user=" + $("#campoUser").val();
+        $.get(url, usuarioExiste);
     });
 
     function correoValidoUCM(correo) {
         return correo.endsWith("@ucm.es") 
-				|| correo.endsWith("@gmail.com")
-				|| correo.endsWith("@hotmail.es") 
-				|| correo.endsWith("@yahoo.es");
+                || correo.endsWith("@gmail.com")
+                || correo.endsWith("@hotmail.es") 
+                || correo.endsWith("@yahoo.es");
     }
-	
 });

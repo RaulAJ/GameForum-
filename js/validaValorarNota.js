@@ -1,5 +1,5 @@
 function enviarFormulario() {
-    var notaSeleccionada = document.querySelector('input[name="nota"]:checked');
+    const notaSeleccionada = document.querySelector('input[name="nota"]:checked');
     if (!notaSeleccionada) {
         document.getElementById('mensaje-advertencia').style.display = 'block';
     } else {
@@ -7,8 +7,8 @@ function enviarFormulario() {
     }
 }
 
-var inputsNota = document.querySelectorAll('.input-nota');
-var notaSeleccionada = document.getElementById('notaSeleccionada');
+const inputsNota = document.querySelectorAll('.input-nota');
+const notaSeleccionada = document.getElementById('notaSeleccionada');
 
 inputsNota.forEach(function(input) {
     input.addEventListener('change', function() {
