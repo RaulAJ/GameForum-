@@ -3,6 +3,10 @@
 class Noticia {
 
     use MagicProperties;
+    // Constantes de longitud máxima para la tabla noticias
+    const NOTICIAS_MAX_TITULO_LENGTH = 50;
+    const NOTICIAS_MAX_USUARIO_LENGTH = 15;
+    const NOTICIAS_MAX_CONTENIDO_LENGTH = 1000;
 
     // Atributos
     private $id;
@@ -19,9 +23,21 @@ class Noticia {
         $this->fecha = $fecha;
         $this->contenido = $contenido;
     }
+    
+    // Método para validar los datos
+    private static function validaDatos($titulo, $usuario, $contenido) {
+        return strlen($titulo) <= self::NOTICIAS_MAX_TITULO_LENGTH &&
+               strlen($usuario) <= self::NOTICIAS_MAX_USUARIO_LENGTH &&
+               strlen($contenido) <= self::NOTICIAS_MAX_CONTENIDO_LENGTH;
+    }
 
     public static function crea($titulo, $usuario, $fecha, $contenido)
     {
+        if (!self::validaDatos($titulo, $usuario, $contenido)) {
+            error_log("Error: Datos demasiado largos para la creación.");
+            return false;
+        }
+
         $noticia = new Noticia($titulo, $usuario, $fecha, $contenido, null);
         if ($noticia->guarda()) {
             return $noticia->getId(); // Devuelve el ID en lugar de true
@@ -40,6 +56,10 @@ class Noticia {
 
     private static function inserta(Noticia $noticia)
     {
+        if (!self::validaDatos($noticia->getTitulo(), $noticia->getUsuario(), $noticia->getContenido())) {
+            error_log("Error: Datos demasiado largos para la inserción.");
+            return false;
+        }
         $conn = BD::getInstance()->getConexionBd();
         if (!$conn) {
             return false;
@@ -65,6 +85,10 @@ class Noticia {
 
     public static function actualiza(Noticia $noticia)
     {
+        if (!self::validaDatos($noticia->getTitulo(), $noticia->getUsuario(), $noticia->getContenido())) {
+            error_log("Error: Datos demasiado largos para la actualización.");
+            return false;
+        }
         $conn = BD::getInstance()->getConexionBd();
         if (!$conn) {
             return false;

@@ -35,7 +35,8 @@ if ($titulo && $anioDeSalida && $desarrollador && $genero && $descripcion) {
                         'error' => $_FILES['imagen']['error'][$key],
                         'size' => $_FILES['imagen']['size'][$key]
                     ];
-                    $imagenId = Imagen::crea($file, null, null, null, null, $sugerenciaId);
+                    $descripcion = 'Default image description';
+                    $imagenId = Imagen::crea($file, $descripcion, null, null, null, $sugerenciaId);
 
                     if (!$imagenId) {
                         error_log("Error al subir la imagen para la sugerencia ID: " . $sugerenciaId);

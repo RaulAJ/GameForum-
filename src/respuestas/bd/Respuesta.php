@@ -3,6 +3,8 @@
 class Respuesta {
 
     use MagicProperties;
+    // Constantes de longitud máxima para la tabla respuestas
+    const RESPUESTAS_MAX_CONTENIDO_LENGTH = 500;
 
     // Atributos
     private $id;
@@ -20,8 +22,17 @@ class Respuesta {
         $this->contenido = $contenido;
     }
 
+    // Método para validar los datos
+    private static function validaDatos($contenido) {
+        return strlen($contenido) <= self::RESPUESTAS_MAX_CONTENIDO_LENGTH;
+    }
+
     public static function crea($idforo, $usuario, $fecha, $contenido)
     {
+        if (!self::validaDatos($contenido)) {
+            error_log("Error: Datos demasiado largos para la creación.");
+            return false;
+        }
         $respuesta = new Respuesta($idforo, $usuario, $fecha, $contenido, null);
         return  $respuesta->guarda();
     }
@@ -36,6 +47,11 @@ class Respuesta {
 
     private static function inserta(Respuesta $respuesta)
     {
+        if (!self::validaDatos($respuesta->getContenido())) {
+            error_log("Error: Datos demasiado largos para la inserción.");
+            return false;
+        }
+
         $conn = BD::getInstance()->getConexionBd();
         if (!$conn) {
             return false;
@@ -60,6 +76,11 @@ class Respuesta {
 
     public static function actualiza(Respuesta $respuesta)
     {
+        if (!self::validaDatos($respuesta->getContenido())) {
+            error_log("Error: Datos demasiado largos para la actualización.");
+            return false;
+        }
+        
         $conn = BD::getInstance()->getConexionBd();
         if (!$conn) {
             return false;

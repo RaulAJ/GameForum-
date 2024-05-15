@@ -4,6 +4,14 @@ class Juego
 {
     use MagicProperties;
 
+    // Constantes de longitud máxima para la tabla videojuegos
+    const VIDEOJUEGOS_MAX_JUEGO_LENGTH = 20;
+    const VIDEOJUEGOS_MAX_DESARROLLADOR_LENGTH = 10;
+    const VIDEOJUEGOS_MAX_GENERO_LENGTH = 10;
+    const VIDEOJUEGOS_MAX_DESCRIPCION_LENGTH = 500;
+    const VIDEOJUEGOS_MAX_ANIO_DE_SALIDA = 9999;
+    const VIDEOJUEGOS_MAX_NOTA = 10;
+
     /** @var int El ID único del juego. */
     private $id;
     /** @var string El nombre del juego. */
@@ -43,6 +51,16 @@ class Juego
         $this->nota = $nota;
         $this->nResenias = $nResenias;
         $this->descripcion = $descripcion;
+    }
+
+    // Método para validar los datos
+    private static function validaDatos($nombreJuego, $anioDeSalida, $desarrollador, $genero, $nota, $descripcion) {
+        return strlen($nombreJuego) <= self::VIDEOJUEGOS_MAX_JUEGO_LENGTH &&
+               strlen($desarrollador) <= self::VIDEOJUEGOS_MAX_DESARROLLADOR_LENGTH &&
+               strlen($genero) <= self::VIDEOJUEGOS_MAX_GENERO_LENGTH &&
+               strlen($descripcion) <= self::VIDEOJUEGOS_MAX_DESCRIPCION_LENGTH &&
+               $anioDeSalida <= self::VIDEOJUEGOS_MAX_ANIO_DE_SALIDA &&
+               $nota <= self::VIDEOJUEGOS_MAX_NOTA && $nota >= 0;
     }
 
     public function getId()
@@ -94,6 +112,11 @@ class Juego
      */
     public static function crea($nombreJuego, $anioDeSalida, $desarrollador, $genero, $nota, $nResenias, $descripcion)
     {
+        if (!self::validaDatos($nombreJuego, $anioDeSalida, $desarrollador, $genero, $nota, $descripcion)) {
+            error_log("Error: Datos demasiado largos para la creación.");
+            return false;
+        }
+
         $juego = new Juego(null, $nombreJuego, $anioDeSalida, $desarrollador, $genero, $nota, $nResenias, $descripcion);
         return $juego->guarda();
     }
@@ -130,6 +153,11 @@ class Juego
      */
     private static function inserta(Juego $juego)
     {
+        if (!self::validaDatos($juego->getNombreJuego(), $juego->getAnioDeSalida(), $juego->getDesarrollador(), $juego->getGenero(), $juego->getNota(), $juego->getDescripcion())) {
+            error_log("Error: Datos demasiado largos para la inserción.");
+            return false;
+        }
+
         $conn = BD::getInstance()->getConexionBd();
         if (!$conn) {
             return false;
@@ -181,6 +209,11 @@ class Juego
      */
     public static function sugiere($nombreJuego, $anioDeSalida, $desarrollador, $genero, $descripcion)
     {
+        if (!self::validaDatos($nombreJuego, $anioDeSalida, $desarrollador, $genero, 0, $descripcion)) {
+            error_log("Error: Datos demasiado largos para la sugerencia.");
+            return false;
+        }
+
         $conn = BD::getInstance()->getConexionBd();
         if (!$conn) {
             return false;
@@ -238,6 +271,11 @@ class Juego
      */
     private static function actualiza(Juego $juego)
     {
+        if (!self::validaDatos($juego->getNombreJuego(), $juego->getAnioDeSalida(), $juego->getDesarrollador(), $juego->getGenero(), $juego->getNota(), $juego->getDescripcion())) {
+            error_log("Error: Datos demasiado largos para la actualización.");
+            return false;
+        }
+
         $conn = BD::getInstance()->getConexionBd();
         if (!$conn) {
             return false;
@@ -280,6 +318,9 @@ class Juego
 
     public static function nuevaResenia($idJuego, $nuevaNota)
     {
+        if ($nuevaNota > self::VIDEOJUEGOS_MAX_NOTA || $nuevaNota < 0) {
+            return false;
+        }
         $conn = BD::getInstance()->getConexionBd();
         if (!$conn) {
             return false;

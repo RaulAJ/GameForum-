@@ -2,7 +2,7 @@
 require_once '../config.php';
 require_once '../vistas/helpers/autorizacion.php';
 require_once '../src/foro/bd/Publicacion.php';
-require_once '../src/imagenes/bd/Imagen.php';  // Assuming similar image handling as news
+require_once '../src/imagenes/bd/Imagen.php';  
 
 verificaLogado(Utils::buildUrl('/foro.php'));
 
@@ -14,6 +14,12 @@ $juego = filter_input(INPUT_POST, 'juego', FILTER_SANITIZE_SPECIAL_CHARS);
 
 if ($titulo && idUsuarioLogado() && $fecha && $contenido && $tipo && $juego) {
     $publicacionId = Publicacion::crea($titulo, idUsuarioLogado(), $juego, $tipo, $fecha, $contenido);
+    
+    if ($publicacionId === false) {
+        Utils::redirige(Utils::buildUrl('/foro.php', ['error' => 'datosInvalidos']));
+        exit();
+    }
+    
     $errorEnImagen = false;
 
     if ($publicacionId && isset($_FILES['imagen']) && $_FILES['imagen']['name'][0] != '') {

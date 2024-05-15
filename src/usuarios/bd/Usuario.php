@@ -4,6 +4,11 @@ class Usuario
 {
 
     use MagicProperties;
+    const USUARIOS_MAX_NOMBRE_COMPLETO_LENGTH = 40;
+    const USUARIOS_MAX_CORREO_LENGTH = 30;
+    const USUARIOS_MAX_CONTRASENA_LENGTH = 255;
+    const USUARIOS_MAX_JUEGOS_VALORADOS_LENGTH = 200;
+    const USUARIOS_MAX_EDAD = 999;
 
     public static function login($nombreUsuario, $password)
     {
@@ -18,8 +23,21 @@ class Usuario
         return false;
     }
 
+    private static function validaDatos($nombreCompleto, $edad, $correo, $password, $juegosValorados) {
+        return strlen($nombreCompleto) <= self::USUARIOS_MAX_NOMBRE_COMPLETO_LENGTH &&
+               strlen($correo) <= self::USUARIOS_MAX_CORREO_LENGTH &&
+               strlen($password) <= self::USUARIOS_MAX_CONTRASENA_LENGTH &&
+               strlen($juegosValorados) <= self::USUARIOS_MAX_JUEGOS_VALORADOS_LENGTH &&
+               $edad <= self::USUARIOS_MAX_EDAD;
+    }
+
     public static function crea($nombreUsuario, $nombreCompleto, $edad, $correo, $password, $experto, $moderador, $admin, $juegosValorados)
     {
+        if (!self::validaDatos($nombreCompleto, $edad, $correo, $password, $juegosValorados)) {
+            error_log("Error: Datos demasiado largos para la creación.");
+            return false;
+        }
+
         $passwordHash = self::hashPassword($password);
         $user = new Usuario($nombreUsuario, $passwordHash, $nombreCompleto, $edad, $correo, $experto, $moderador, $admin, $juegosValorados);
         return $user->guarda();
@@ -85,6 +103,11 @@ class Usuario
 
     private static function inserta($usuario)
     {
+        if (!self::validaDatos($usuario->getNombreCompleto(), $usuario->getEdad(), $usuario->getCorreo(), $usuario->getPassword(), $usuario->getJuegosValorados())) {
+            error_log("Error: Datos demasiado largos para la inserción.");
+            return false;
+        }
+
         $result = false;
         $conn = BD::getInstance()->getConexionBd();
         $query = sprintf("INSERT INTO usuarios (Usuario, `Nombre Completo`, Edad, Correo, Contraseña, Experto, Moderador, Admin, JuegosValorados) 
@@ -119,6 +142,11 @@ class Usuario
 
     private static function actualiza($usuario)
     {
+        if (!self::validaDatos($usuario->getNombreCompleto(), $usuario->getEdad(), $usuario->getCorreo(), $usuario->getPassword(), $usuario->getJuegosValorados())) {
+            error_log("Error: Datos demasiado largos para la actualización.");
+            return false;
+        }
+        
         $result = false;
         $conn = BD::getInstance()->getConexionBd();
         $query = sprintf(

@@ -8,7 +8,7 @@ require_once '../src/imagenes/bd/Imagen.php';
 verificaLogado(Utils::buildUrl('/noticias.php'));
 
 if (!($_SESSION['admin'] || $_SESSION['moderador'] || $_SESSION['experto'])) {
-    // Si el usuario no tiene un rol permitido, redirige a topJuegos.php con un mensaje de error
+    // Si el usuario no tiene un rol permitido, redirige a noticias.php con un mensaje de error
     Utils::redirige(Utils::buildUrl('/noticias.php', ['error' => 'noAutorizado']));
     exit();
 }
@@ -19,13 +19,14 @@ $titulo = filter_input(INPUT_POST, 'titulo', FILTER_SANITIZE_SPECIAL_CHARS);
 $fecha = filter_input(INPUT_POST, 'fecha', FILTER_SANITIZE_SPECIAL_CHARS);
 $contenido = filter_input(INPUT_POST, 'contenido', FILTER_SANITIZE_SPECIAL_CHARS);
 
-if($titulo && idUsuarioLogado() && $fecha && $contenido) {
+if ($titulo && idUsuarioLogado() && $fecha && $contenido) {
     $noticia = new Noticia($titulo, $_SESSION['usuario'], $fecha, $contenido, $id);
-    Noticia::actualiza($noticia);
+    $updateSuccessful = Noticia::actualiza($noticia);
 
-    if (isset($_FILES['imagen'])) {
+    $errorEnImagen = false;
+    if (isset($_FILES['imagen']) && $_FILES['imagen']['name'][0] != '') {
         foreach ($_FILES['imagen']['name'] as $key => $value) {
-            if ($_FILES['imagen']['error'][$key] == 0) {
+            if ($_FILES['imagen']['error'][$key] == 0 && $_FILES['imagen']['size'][$key] > 0) {
                 $file = [
                     'name' => $_FILES['imagen']['name'][$key],
                     'type' => $_FILES['imagen']['type'][$key],
@@ -36,14 +37,23 @@ if($titulo && idUsuarioLogado() && $fecha && $contenido) {
                 $descripcion = 'Descripción de la imagen editada';
                 $imagenId = Imagen::crea($file, $descripcion, null, $id, null, null);
 
-                if (!$imagenend) {
+                if (!$imagenId) {
                     error_log("Error al subir la imagen editada para la noticia ID: " . $id);
+                    $errorEnImagen = true;
                 }
+            } else {
+                $errorEnImagen = true;
             }
         }
     }
 
-    Utils::redirige(Utils::buildUrl('/noticias.php', ['exito' => '1']));
+    if ($errorEnImagen) {
+        Utils::redirige(Utils::buildUrl('/noticias.php', ['error' => 'errorSubida']));
+    } elseif ($updateSuccessful) {
+        Utils::redirige(Utils::buildUrl('/noticias.php', ['exito' => '1']));
+    } else {
+        Utils::redirige(Utils::buildUrl('/noticias.php', ['error' => 'errorEditar']));
+    }
 } else {
     Utils::redirige(Utils::buildUrl('/noticias.php', ['error' => 'datosInvalidos']));
 }

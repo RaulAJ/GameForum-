@@ -29,6 +29,9 @@ if (isset($_GET['error'])) {
         case 'errorCrearNoticia':
             $mensaje .= '<div class="alerta error">Hubo un problema al crear la noticia. Por favor, intenta nuevamente.</div>';
             break;
+        case 'errorEditar':
+            $mensaje = '<div class="alerta error">Error al editar la noticia. Por favor, intentalo de nuevo.</div>';
+            break;
         default:
             $mensaje = '<div class="alerta error">Error desconocido. Por favor, intentalo de nuevo.</div>';
             break;

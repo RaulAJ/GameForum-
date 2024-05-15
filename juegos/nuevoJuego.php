@@ -30,7 +30,7 @@ if ($titulo && $anioDeSalida && $desarrollador && $genero && $nota !== false && 
 
     if ($juegoId === false) {
         // Redirigir al formulario con un mensaje de error de duplicado
-        Utils::redirige(Utils::buildUrl('/topJuegos.php', ['error' => 'juegoDuplicado']));
+        Utils::redirige(Utils::buildUrl('/topJuegos.php', ['error' => 'datosInvalidos']));
         exit();
     } else {
         if ($juegoId && isset($_FILES['imagen']) && $_FILES['imagen']['name'][0] != '') {
@@ -43,7 +43,8 @@ if ($titulo && $anioDeSalida && $desarrollador && $genero && $nota !== false && 
                         'error' => $_FILES['imagen']['error'][$key],
                         'size' => $_FILES['imagen']['size'][$key]
                     ];
-                    $imagenId = Imagen::crea($file, null, $juegoId, null, null, null);
+                    $descripcion = 'Default image description';
+                    $imagenId = Imagen::crea($file, $descripcion, $juegoId, null, null, null);
 
                     if (!$imagenId) {
                         error_log("Error al subir la imagen para el juego ID: " . $juegoId);

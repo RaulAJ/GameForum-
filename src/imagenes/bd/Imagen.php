@@ -2,6 +2,9 @@
 require_once __DIR__ . "/../../../config.php";
 class Imagen
 {
+    // Constantes de longitud máxima
+    const MAX_RUTA_LENGTH = 512;
+    const MAX_DESCRIPCION_LENGTH = 512;
 
     private $id;
     private $ruta;
@@ -23,6 +26,13 @@ class Imagen
         $this->sugerencia_juego_id = $sugerencia_juego_id;
     }
 
+    // Método para validar los datos
+    private static function validaDatos($ruta, $descripcion)
+    {
+        return strlen($ruta) <= self::MAX_RUTA_LENGTH &&
+            strlen($descripcion) <= self::MAX_DESCRIPCION_LENGTH;
+    }
+
     public function getId()
     {
         return $this->id;
@@ -40,6 +50,10 @@ class Imagen
 
     public static function crea($file, $descripcion = null, $videojuego_id = null, $noticia_id = null, $foro_id = null, $sugerencia_juego_id = null)
     {
+        if (!self::validaDatos($file['name'], $descripcion)) {
+            error_log("Error: Datos demasiado largos para la creación.");
+            return false;
+        }
         $imagen = new Imagen(null, $file['name'], $descripcion, $videojuego_id, $noticia_id, $foro_id, $sugerencia_juego_id);
         return $imagen->guarda($file);
     }
@@ -61,6 +75,11 @@ class Imagen
 
     private static function actualiza($id, $ruta, $descripcion, $videojuego_id = null, $noticia_id = null, $foro_id = null, $sugerencia_juego_id = null)
     {
+        if (!self::validaDatos($ruta, $descripcion)) {
+            error_log("Error: Datos demasiado largos para la actualización.");
+            return false;
+        }
+
         $conn = BD::getInstance()->getConexionBd();
         if (!$conn) {
             return false;
@@ -107,6 +126,12 @@ class Imagen
 
         // nombre original del archivo como descripción
         $descripcion = $file['name'];
+
+        // Verificar longitud antes de mover el archivo
+        if (!self::validaDatos($relative_path, $descripcion)) {
+            error_log("Error: Datos demasiado largos para la inserción.");
+            return false;
+        }
 
         // Intentar mover la imagen al directorio de destino
         if (!move_uploaded_file($file["tmp_name"], $target_file)) {
@@ -314,7 +339,7 @@ class Imagen
             return false;
         }
     }
-     /**
+    /**
      * Modifica una imagen, eliminando la referencia de sugerencias(null) y
      * reemplazandola por un  id que referencia a la tabla videojuegos
      *
@@ -344,5 +369,4 @@ class Imagen
             return false;
         }
     }
-
 }
