@@ -150,7 +150,7 @@ class Juego
 
         // Insertar en Videojuegos
         $query = sprintf(
-            "INSERT INTO videojuegos (Juego, `Año de salida`, Desarrollador, Genero, Nota, Descripcion) VALUES ('%s', '%s', '%s', '%s', '%f', '%s')",
+            "INSERT INTO videojuegos (Juego, `Año de salida`, Desarrollador, Genero, Nota, nResenias, Descripcion) VALUES ('%s', '%s', '%s', '%s', '%f', '%d', '%s')",
             $conn->real_escape_string($juego->getNombreJuego()),
             $conn->real_escape_string($juego->getAnioDeSalida()),
             $conn->real_escape_string($juego->getDesarrollador()),
@@ -259,7 +259,7 @@ class Juego
         }
 
         $query = sprintf(
-            "UPDATE videojuegos SET Juego='%s', `Año de salida`='%s', Desarrollador='%s', Genero='%s', Nota=%f, Descripcion='%s' WHERE ID=%d",
+            "UPDATE videojuegos SET Juego='%s', `Año de salida`='%s', Desarrollador='%s', Genero='%s', Nota=%f, nResenias=%d, Descripcion='%s' WHERE ID=%d",
             $conn->real_escape_string($juego->getNombreJuego()),
             $conn->real_escape_string($juego->getAnioDeSalida()),
             $conn->real_escape_string($juego->getDesarrollador()),
@@ -286,7 +286,7 @@ class Juego
         }
 
         $juegoActual = self::obtenerJuego($idJuego);
-        $nReseniasAntes = $juegoActual->getnResenias();
+        $nReseniasAntes = $juegoActual->getnResenias();//aqui
         $notaActual = $juegoActual->getNota();
 
         // Calcular la nueva nota media
