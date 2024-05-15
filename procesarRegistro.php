@@ -35,7 +35,7 @@ if (!$resultadoRegistro) {
     $htmlFormRegistro = buildFormularioRegistro($username, $password, $nombreCompleto, $edad, $correo);
     $contenidoPrincipal=<<<EOS
         <h1>Error</h1>
-        <p>No se pudo completar el registro. Por favor, inténtalo de nuevo.</p>
+        <p>No se pudo completar el registro. Es posible que el usuario/correo ya exista. Por favor, inténtalo de nuevo.</p>
         $htmlFormRegistro
     EOS;
     require 'vistas/comun/layout.php';

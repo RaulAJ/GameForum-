@@ -10,6 +10,38 @@ class Usuario
     const USUARIOS_MAX_JUEGOS_VALORADOS_LENGTH = 200;
     const USUARIOS_MAX_EDAD = 999;
 
+    private $nombreUsuario;
+
+    private $nombreCompleto;
+
+    private $edad;
+
+    private $correo;
+
+    private $experto;
+
+    private $moderador;
+
+    private $admin;
+
+    private $password;
+
+    private $juegosValorados;
+
+
+    private function __construct($nombreUsuario, $password, $nombreCompleto, $edad, $correo, $experto, $moderador, $admin, $juegosValorados)
+    {
+        $this->nombreUsuario = $nombreUsuario;
+        $this->password = $password;
+        $this->nombreCompleto = $nombreCompleto;
+        $this->edad = $edad;
+        $this->correo = $correo;
+        $this->experto = $experto;
+        $this->admin = $admin;
+        $this->moderador = $moderador;
+        $this->juegosValorados = $juegosValorados;
+    }
+
     public static function login($nombreUsuario, $password)
     {
         $usuario = self::buscaUsuario($nombreUsuario);
@@ -23,18 +55,23 @@ class Usuario
         return false;
     }
 
-    private static function validaDatos($nombreCompleto, $edad, $correo, $password, $juegosValorados) {
+    private static function validaDatos($nombreCompleto, $edad, $correo, $passwordLength, $juegosValorados) {
         return strlen($nombreCompleto) <= self::USUARIOS_MAX_NOMBRE_COMPLETO_LENGTH &&
                strlen($correo) <= self::USUARIOS_MAX_CORREO_LENGTH &&
-               strlen($password) <= self::USUARIOS_MAX_CONTRASENA_LENGTH &&
+               $passwordLength <= self::USUARIOS_MAX_CONTRASENA_LENGTH &&
                strlen($juegosValorados) <= self::USUARIOS_MAX_JUEGOS_VALORADOS_LENGTH &&
                $edad <= self::USUARIOS_MAX_EDAD;
     }
 
     public static function crea($nombreUsuario, $nombreCompleto, $edad, $correo, $password, $experto, $moderador, $admin, $juegosValorados)
     {
-        if (!self::validaDatos($nombreCompleto, $edad, $correo, $password, $juegosValorados)) {
+        if (!self::validaDatos($nombreCompleto, $edad, $correo, strlen($password), $juegosValorados)) {
             error_log("Error: Datos demasiado largos para la creación.");
+            return false;
+        }
+
+        if (self::existeNombreUsuarioOCorreo($nombreUsuario, $correo)) {
+            error_log("Error: Nombre de usuario o correo ya existen.");
             return false;
         }
 
@@ -103,7 +140,7 @@ class Usuario
 
     private static function inserta($usuario)
     {
-        if (!self::validaDatos($usuario->getNombreCompleto(), $usuario->getEdad(), $usuario->getCorreo(), $usuario->getPassword(), $usuario->getJuegosValorados())) {
+        if (!self::validaDatos($usuario->getNombreCompleto(), $usuario->getEdad(), $usuario->getCorreo(), $usuario->getPasswordLength(), $usuario->getJuegosValorados())) {
             error_log("Error: Datos demasiado largos para la inserción.");
             return false;
         }
@@ -142,11 +179,16 @@ class Usuario
 
     private static function actualiza($usuario)
     {
-        if (!self::validaDatos($usuario->getNombreCompleto(), $usuario->getEdad(), $usuario->getCorreo(), $usuario->getPassword(), $usuario->getJuegosValorados())) {
+        if (!self::validaDatos($usuario->getNombreCompleto(), $usuario->getEdad(), $usuario->getCorreo(), $usuario->getPasswordLength(), $usuario->getJuegosValorados())) {
             error_log("Error: Datos demasiado largos para la actualización.");
             return false;
         }
-        
+
+        if (self::existeNombreUsuarioOCorreo($usuario->getNombreUsuario(), $usuario->getCorreo())) {
+            error_log("Error: Nombre de usuario o correo ya existen.");
+            return false;
+        }
+
         $result = false;
         $conn = BD::getInstance()->getConexionBd();
         $query = sprintf(
@@ -191,38 +233,28 @@ class Usuario
         return true;
     }
 
-    private $nombreUsuario;
-
-    private $nombreCompleto;
-
-    private $edad;
-
-    private $correo;
-
-    private $experto;
-
-    private $moderador;
-
-    private $admin;
-
-    private $password;
-
-    private $juegosValorados;
-
-
-    private function __construct($nombreUsuario, $password, $nombreCompleto, $edad, $correo, $experto, $moderador, $admin, $juegosValorados)
+    private static function existeNombreUsuarioOCorreo($nombreUsuario, $correo)
     {
-        $this->nombreUsuario = $nombreUsuario;
-        $this->password = $password;
-        $this->nombreCompleto = $nombreCompleto;
-        $this->edad = $edad;
-        $this->correo = $correo;
-        $this->experto = $experto;
-        $this->admin = $admin;
-        $this->moderador = $moderador;
-        $this->juegosValorados = $juegosValorados;
+        $conn = BD::getInstance()->getConexionBd();
+        $query = sprintf("SELECT COUNT(*) as count FROM usuarios WHERE Usuario='%s' OR Correo='%s'", 
+                         $conn->real_escape_string($nombreUsuario),
+                         $conn->real_escape_string($correo));
+        $rs = $conn->query($query);
+        $result = false;
+        if ($rs) {
+            $fila = $rs->fetch_assoc();
+            $result = $fila['count'] > 0;
+            $rs->free();
+        } else {
+            error_log("Error BD ({$conn->errno}): {$conn->error}");
+        }
+        return $result;
     }
 
+    public function getPasswordLength()
+    {
+        return strlen($this->password);
+    }
 
     public function getNombreUsuario()
     {
