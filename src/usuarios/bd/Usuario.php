@@ -87,7 +87,7 @@ class Usuario
     {
         $result = false;
         $conn = BD::getInstance()->getConexionBd();
-        $query = sprintf("INSERT INTO Usuarios (Usuario, `Nombre Completo`, Edad, Correo, Contraseña, Experto, Moderador, Admin, JuegosValorados) 
+        $query = sprintf("INSERT INTO usuarios (Usuario, `Nombre Completo`, Edad, Correo, Contraseña, Experto, Moderador, Admin, JuegosValorados) 
         VALUES ('%s', '%s', %d, '%s', '%s', %d, %d, %d, '%s')"
             ,
             $conn->real_escape_string($usuario->nombreUsuario)
@@ -122,7 +122,7 @@ class Usuario
         $result = false;
         $conn = BD::getInstance()->getConexionBd();
         $query = sprintf(
-            "UPDATE Usuarios U SET nombreUsuario = '%s', nombre='%s', password='%s' WHERE U.id=%d"
+            "UPDATE usuarios U SET nombreUsuario = '%s', nombre='%s', password='%s' WHERE U.id=%d"
             ,
             $conn->real_escape_string($usuario->nombreUsuario)
             ,
@@ -153,7 +153,7 @@ class Usuario
         }
         $conn = BD::getInstance()->getConexionBd();
         $query = sprintf(
-            "DELETE FROM Usuarios WHERE Usuario = '%s'",
+            "DELETE FROM usuarios WHERE Usuario = '%s'",
             $conn->real_escape_string($nombreUsuario)
         );
         if (!$conn->query($query)) {
