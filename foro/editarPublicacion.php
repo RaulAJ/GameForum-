@@ -18,6 +18,11 @@ if ($titulo && idUsuarioLogado() && $fecha && $contenido && $tipo && $juego && $
     $publicacion = new Publicacion($titulo, idUsuarioLogado(), $juego, $tipo, $fecha, $contenido, $id);
     $updateSuccessful = Publicacion::actualiza($publicacion);
 
+    if (!$updateSuccessful) {
+        Utils::redirige(Utils::buildUrl('/foro.php', ['error' => 'errorEditar']));
+        exit();
+    }
+
     $errorEnImagen = false;
     if (isset($_FILES['imagen']) && $_FILES['imagen']['name'][0] != '') {
         foreach ($_FILES['imagen']['name'] as $key => $value) {
@@ -44,10 +49,8 @@ if ($titulo && idUsuarioLogado() && $fecha && $contenido && $tipo && $juego && $
 
     if ($errorEnImagen) {
         Utils::redirige(Utils::buildUrl('/foro.php', ['error' => 'errorSubida']));
-    } elseif ($updateSuccessful) {
-        Utils::redirige(Utils::buildUrl('/foro.php', ['exito' => '1']));
     } else {
-        Utils::redirige(Utils::buildUrl('/foro.php', ['error' => 'errorEditar']));
+        Utils::redirige(Utils::buildUrl('/foro.php', ['exito' => '1']));
     }
 } else {
     Utils::redirige(Utils::buildUrl('/foro.php', ['error' => 'datosInvalidos']));

@@ -23,6 +23,11 @@ if ($titulo && idUsuarioLogado() && $fecha && $contenido) {
     $noticia = new Noticia($titulo, $_SESSION['usuario'], $fecha, $contenido, $id);
     $updateSuccessful = Noticia::actualiza($noticia);
 
+    if (!$updateSuccessful) {
+        Utils::redirige(Utils::buildUrl('/noticias.php', ['error' => 'errorEditar']));
+        exit();
+    }
+
     $errorEnImagen = false;
     if (isset($_FILES['imagen']) && $_FILES['imagen']['name'][0] != '') {
         foreach ($_FILES['imagen']['name'] as $key => $value) {
@@ -49,10 +54,8 @@ if ($titulo && idUsuarioLogado() && $fecha && $contenido) {
 
     if ($errorEnImagen) {
         Utils::redirige(Utils::buildUrl('/noticias.php', ['error' => 'errorSubida']));
-    } elseif ($updateSuccessful) {
-        Utils::redirige(Utils::buildUrl('/noticias.php', ['exito' => '1']));
     } else {
-        Utils::redirige(Utils::buildUrl('/noticias.php', ['error' => 'errorEditar']));
+        Utils::redirige(Utils::buildUrl('/noticias.php', ['exito' => '1']));
     }
 } else {
     Utils::redirige(Utils::buildUrl('/noticias.php', ['error' => 'datosInvalidos']));
